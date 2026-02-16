@@ -52,7 +52,7 @@ def change_text(
         backup=backup,
     )
 
-    adapter = get_acad_adapter(use_mock=mock)
+    adapter = get_acad_adapter(use_mock=mock, folder=folder)
     result = batch_find_replace(adapter, request)
     print_operation_result(result)
 
@@ -76,7 +76,7 @@ def rename_layer(
         backup=backup,
     )
 
-    adapter = get_acad_adapter(use_mock=mock)
+    adapter = get_acad_adapter(use_mock=mock, folder=folder)
     result = batch_rename_layer(adapter, request)
     print_operation_result(result)
 
@@ -100,7 +100,7 @@ def standardize_layers(
         backup=backup,
     )
 
-    adapter = get_acad_adapter(use_mock=mock)
+    adapter = get_acad_adapter(use_mock=mock, folder=folder)
     result = batch_standardize_layers(adapter, request)
     print_operation_result(result)
 
@@ -117,7 +117,7 @@ def audit(
 
     request = AuditRequest(folder=folder, standard=standard)
 
-    adapter = get_acad_adapter(use_mock=mock)
+    adapter = get_acad_adapter(use_mock=mock, folder=folder)
     result = audit_drawings(adapter, request)
     print_audit_result(result)
 

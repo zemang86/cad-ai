@@ -40,7 +40,7 @@ MockAutoCADAdapter (any platform)  or  RealAutoCADAdapter (Windows + pywin32)
 
 **Dependency flow is one-way:** CLI/MCP → operations → acad port. Operations never import from `cli/` or `mcp_server/`.
 
-The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI commands accept `--mock` to force the mock adapter.
+The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI commands accept `--mock` to force the mock adapter. When `--mock` is used from CLI, the factory pre-populates the adapter with sample architectural drawing data (text entities and layers) for every `.dwg` file found in the target folder, so commands produce realistic output.
 
 ## Key Patterns
 
@@ -53,9 +53,33 @@ The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI
 
 - `conftest.py` provides `mock_adapter` (pre-loaded with two drawings) and `dwg_folder` (tmp_path with dummy .dwg files).
 - Operation tests define a local `_adapter_with_dwg_files(tmp_path)` helper that writes real dummy `.dwg` bytes to disk (so `get_dwg_files()` discovers them) AND registers those exact paths in MockAutoCADAdapter via `add_mock_drawing()`. Both steps are required.
-- CLI tests use `typer.testing.CliRunner` with `--mock` and `--no-backup` flags.
+- CLI tests use `typer.testing.CliRunner` with `--mock` and `--no-backup` flags. With `--mock`, the factory auto-populates sample data for files in the folder, so CLI tests get non-zero results.
 - All tests run on macOS via the mock adapter — no AutoCAD needed.
 
 ## Models (models.py)
 
 All Pydantic v2 models live in one file. Entities (`TextEntity`, `LayerEntity`) represent drawing objects. Request models (`TextReplaceRequest`, `LayerRenameRequest`, etc.) are operation inputs. Result models (`OperationResult`, `AuditResult`) are outputs.
+
+## Windows Deployment
+
+See `docs/windows-setup.md` for full guide. Key points:
+
+- Install with `pip install -e ".[windows]"` to get pywin32
+- AutoCAD must be **running** — the RealAutoCADAdapter connects via COM to the live instance
+- Set `SECURELOAD=0` in AutoCAD to allow COM automation
+- On Windows, the factory auto-selects `RealAutoCADAdapter` (no `--mock` needed)
+- CLI commands work the same, just without `--mock` — they operate on real DWG files
+
+## MCP Server
+
+The MCP server (`mcp_server/server.py`) exposes the same four operations as MCP tools. Launch with:
+
+```bash
+# Windows
+.venv\Scripts\python -m autocad_batch_commander.mcp_server.server
+
+# macOS (mock only)
+.venv/bin/python -m autocad_batch_commander.mcp_server.server
+```
+
+For Claude Desktop integration, add to `claude_desktop_config.json` — see `docs/windows-setup.md`.

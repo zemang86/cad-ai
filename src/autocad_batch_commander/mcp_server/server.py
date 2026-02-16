@@ -119,3 +119,7 @@ def audit_drawings_tool(
     request = AuditRequest(folder=Path(folder_path), standard=standard)
     result = audit_drawings(adapter, request)
     return result.model_dump()
+
+
+if __name__ == "__main__":
+    mcp.run()
