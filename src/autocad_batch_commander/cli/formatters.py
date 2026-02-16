@@ -5,7 +5,7 @@ from __future__ import annotations
 from rich.console import Console
 from rich.table import Table
 
-from autocad_batch_commander.models import AuditResult, OperationResult
+from autocad_batch_commander.models import AuditResult, ComplianceCheckResult, OperationResult
 
 console = Console()
 
@@ -50,6 +50,55 @@ def print_audit_result(result: AuditResult) -> None:
                 f"[{sev_style}]{f.severity}[/{sev_style}]",
                 f.finding_type,
                 f.message,
+            )
+
+        console.print(table)
+
+
+def print_regulation_result(query: str, content: dict[str, str]) -> None:
+    """Print regulation query results."""
+    console.print("\n[green bold]Regulation Query Results[/green bold]")
+    console.print("[dim]" + "━" * 40 + "[/dim]")
+    console.print(f"  Query:        {query}")
+    console.print(f"  Files loaded: {len(content)}")
+    console.print("[dim]" + "━" * 40 + "[/dim]")
+
+    if content:
+        for file_path, text in content.items():
+            console.print(f"\n[cyan bold]── {file_path} ──[/cyan bold]")
+            console.print(text)
+    else:
+        console.print("\n  [yellow]No matching regulation files found.[/yellow]")
+
+
+def print_compliance_result(result: ComplianceCheckResult) -> None:
+    """Print compliance check results."""
+    console.print("\n[green bold]Compliance Check Complete![/green bold]")
+    console.print("[dim]" + "━" * 40 + "[/dim]")
+    console.print(f"  Rule sets loaded: {result.rule_sets_loaded}")
+    console.print(f"  Applicable rules: {result.total_rules}")
+    console.print(f"  Total findings:   {len(result.findings)}")
+    console.print("[dim]" + "━" * 40 + "[/dim]")
+
+    if result.findings:
+        table = Table(title="Compliance Findings", show_lines=False)
+        table.add_column("Rule ID", style="cyan", no_wrap=True)
+        table.add_column("By-Law", style="bold")
+        table.add_column("Description")
+        table.add_column("Threshold")
+        table.add_column("Severity")
+        table.add_column("Status")
+
+        for f in result.findings:
+            sev_style = "red" if f.severity == "error" else "yellow"
+            threshold_str = f"{f.threshold} {f.unit}" if f.threshold is not None else ""
+            table.add_row(
+                f.rule_id,
+                f.by_law,
+                f.description,
+                threshold_str,
+                f"[{sev_style}]{f.severity}[/{sev_style}]",
+                f.status,
             )
 
         console.print(table)

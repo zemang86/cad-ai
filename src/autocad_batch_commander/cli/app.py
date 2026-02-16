@@ -10,14 +10,22 @@ from rich.console import Console
 
 from autocad_batch_commander import __version__
 from autocad_batch_commander.acad.factory import get_acad_adapter
-from autocad_batch_commander.cli.formatters import print_audit_result, print_operation_result
+from autocad_batch_commander.cli.formatters import (
+    print_audit_result,
+    print_compliance_result,
+    print_operation_result,
+    print_regulation_result,
+)
+from autocad_batch_commander.knowledge.loader import query_knowledge_base
 from autocad_batch_commander.models import (
     AuditRequest,
+    ComplianceCheckRequest,
     LayerRenameRequest,
     LayerStandardizeRequest,
     TextReplaceRequest,
 )
 from autocad_batch_commander.operations.audit_ops import audit_drawings
+from autocad_batch_commander.operations.compliance_ops import check_compliance, list_rule_sets
 from autocad_batch_commander.operations.layer_ops import batch_rename_layer, batch_standardize_layers
 from autocad_batch_commander.operations.text_ops import batch_find_replace
 
@@ -120,6 +128,63 @@ def audit(
     adapter = get_acad_adapter(use_mock=mock, folder=folder)
     result = audit_drawings(adapter, request)
     print_audit_result(result)
+
+
+@app.command()
+def query(
+    question: str = typer.Argument(..., help="Question about building regulations"),
+) -> None:
+    """Query Malaysian building regulations knowledge base."""
+    console.print(f"\nQuerying regulations: {question}")
+
+    content = query_knowledge_base(question)
+    print_regulation_result(question, content)
+
+
+@app.command()
+def check_compliance_cmd(
+    rule_sets: Optional[str] = typer.Option(
+        None, "--rules", "-r", help="Comma-separated rule set names (default: ubbl-spatial,ubbl-fire)"
+    ),
+    building_type: Optional[str] = typer.Option(
+        None, "--building-type", "-b", help="Building type: residential, commercial, office, etc."
+    ),
+    categories: Optional[str] = typer.Option(
+        None, "--categories", "-c", help="Comma-separated categories to filter"
+    ),
+    folder: Optional[Path] = typer.Option(None, "--folder", "-f", help="Folder containing DWG files"),
+    mock: bool = typer.Option(False, "--mock", help="Use mock adapter (testing)"),
+) -> None:
+    """Check compliance against Malaysian building regulation rules."""
+    rs = [s.strip() for s in rule_sets.split(",")] if rule_sets else ["ubbl-spatial", "ubbl-fire"]
+    cats = [s.strip() for s in categories.split(",")] if categories else None
+
+    console.print(f"\nChecking compliance: {', '.join(rs)}")
+    if building_type:
+        console.print(f"Building type: {building_type}")
+
+    request = ComplianceCheckRequest(
+        rule_sets=rs,
+        building_type=building_type,
+        categories=cats,
+        folder=folder,
+    )
+    result = check_compliance(request)
+    print_compliance_result(result)
+
+
+@app.command()
+def list_rules() -> None:
+    """List available compliance rule sets."""
+    rule_sets = list_rule_sets()
+    console.print("\n[bold]Available Compliance Rule Sets[/bold]")
+    console.print("[dim]" + "━" * 40 + "[/dim]")
+    if rule_sets:
+        for rs in rule_sets:
+            console.print(f"  • {rs}")
+    else:
+        console.print("  No rule sets found.")
+    console.print()
 
 
 @app.command()

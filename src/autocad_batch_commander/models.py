@@ -107,3 +107,81 @@ class AuditResult(BaseModel):
     findings: list[AuditFinding] = Field(default_factory=list)
     compliant_files: int = 0
     non_compliant_files: int = 0
+
+
+# ── Compliance rules ─────────────────────────────────────────────
+
+
+class ComplianceRule(BaseModel):
+    """A single machine-readable compliance rule."""
+
+    id: str
+    description: str
+    by_law: str
+    category: str
+    building_type: list[str] = Field(default_factory=list)
+    check_type: str  # min_dimension | max_dimension | min_percentage | min_duration
+    parameter: str
+    threshold: float
+    unit: str
+    severity: str = "error"
+    tags: list[str] = Field(default_factory=list)
+
+
+class ComplianceRuleSet(BaseModel):
+    """A set of compliance rules from a single source document."""
+
+    source_document: str
+    source_short: str
+    category: str
+    rules: list[ComplianceRule] = Field(default_factory=list)
+
+
+class ComplianceCheckRequest(BaseModel):
+    """Parameters for a compliance check operation."""
+
+    rule_sets: list[str] = Field(default_factory=lambda: ["ubbl-spatial", "ubbl-fire"])
+    building_type: str | None = None
+    categories: list[str] | None = None
+    folder: Path | None = None
+
+
+class ComplianceFinding(BaseModel):
+    """A single compliance finding."""
+
+    rule_id: str
+    description: str
+    by_law: str
+    severity: str = "error"
+    status: str = "to_verify"  # to_verify | pass | fail | error
+    check_type: str | None = None
+    parameter: str | None = None
+    threshold: float | None = None
+    unit: str | None = None
+    tags: list[str] = Field(default_factory=list)
+
+
+class ComplianceCheckResult(BaseModel):
+    """Result of a compliance check."""
+
+    rule_sets_loaded: int = 0
+    total_rules: int = 0
+    findings: list[ComplianceFinding] = Field(default_factory=list)
+
+
+# ── Knowledge / regulation queries ───────────────────────────────
+
+
+class RegulationQuery(BaseModel):
+    """A query to the regulation knowledge base."""
+
+    query: str
+    topics: list[str] | None = None
+
+
+class RegulationResult(BaseModel):
+    """Result of a regulation knowledge base query."""
+
+    query: str
+    files_loaded: int = 0
+    content: dict[str, str] = Field(default_factory=dict)

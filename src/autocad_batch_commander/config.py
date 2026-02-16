@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     backup_enabled: bool = True
     log_level: str = "INFO"
     standards_dir: Path = Path(__file__).resolve().parent.parent.parent / "standards"
+    knowledge_dir: Path = Path(__file__).resolve().parent.parent.parent / "knowledge"
     use_mock: bool = False
 
 

@@ -7,13 +7,16 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
 from autocad_batch_commander.acad.factory import get_acad_adapter
+from autocad_batch_commander.knowledge.loader import query_knowledge_base
 from autocad_batch_commander.models import (
     AuditRequest,
+    ComplianceCheckRequest,
     LayerRenameRequest,
     LayerStandardizeRequest,
     TextReplaceRequest,
 )
 from autocad_batch_commander.operations.audit_ops import audit_drawings
+from autocad_batch_commander.operations.compliance_ops import check_compliance, list_rule_sets
 from autocad_batch_commander.operations.layer_ops import batch_rename_layer, batch_standardize_layers
 from autocad_batch_commander.operations.text_ops import batch_find_replace
 
@@ -119,6 +122,63 @@ def audit_drawings_tool(
     request = AuditRequest(folder=Path(folder_path), standard=standard)
     result = audit_drawings(adapter, request)
     return result.model_dump()
+
+
+@mcp.tool()
+def query_regulations(
+    query: str,
+) -> dict:
+    """Query Malaysian building regulations knowledge base.
+
+    Searches the knowledge base for relevant regulations and returns
+    Markdown content with by-law citations. Use this to answer questions
+    about UBBL, Fire By-Laws, Bomba guidelines, and other Malaysian
+    building regulations.
+
+    Args:
+        query: Natural language question about building regulations.
+    """
+    content = query_knowledge_base(query)
+    return {
+        "query": query,
+        "files_loaded": len(content),
+        "content": content,
+    }
+
+
+@mcp.tool()
+def check_compliance_tool(
+    rule_sets: list[str] | None = None,
+    building_type: str | None = None,
+    categories: list[str] | None = None,
+) -> dict:
+    """Check applicable compliance rules from Malaysian building regulations.
+
+    Loads structured compliance rules and returns findings that apply to
+    the specified building type and categories. Rules include numeric
+    thresholds (dimensions, durations, percentages) with by-law references.
+
+    Args:
+        rule_sets: Rule set names to check (default: ubbl-spatial, ubbl-fire).
+        building_type: Filter rules by building type (residential, commercial, office, etc.).
+        categories: Filter rules by category (room_size, corridor, fire_resistance, etc.).
+    """
+    request = ComplianceCheckRequest(
+        rule_sets=rule_sets or ["ubbl-spatial", "ubbl-fire"],
+        building_type=building_type,
+        categories=categories,
+    )
+    result = check_compliance(request)
+    return result.model_dump()
+
+
+@mcp.tool()
+def list_available_rules() -> dict:
+    """List all available compliance rule sets.
+
+    Returns the names of all JSON rule files in standards/rules/.
+    """
+    return {"rule_sets": list_rule_sets()}
 
 
 if __name__ == "__main__":

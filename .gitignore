@@ -16,3 +16,4 @@ venv/
 .backups/
 *.bak
 .DS_Store
+knowledge/raw/*.pdf

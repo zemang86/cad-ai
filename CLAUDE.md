@@ -22,6 +22,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # CLI (entry point: autocad-cmd)
 .venv/bin/autocad-cmd version
 .venv/bin/autocad-cmd change-text --folder ./plans --find "OLD" --replace "NEW" --mock
+
+# Knowledge base / compliance commands
+.venv/bin/autocad-cmd query "minimum corridor width"
+.venv/bin/autocad-cmd check-compliance-cmd --rules ubbl-spatial --building-type residential --mock
+.venv/bin/autocad-cmd list-rules
 ```
 
 ## Architecture
@@ -31,7 +36,8 @@ Port/Adapter pattern — all business logic depends on `AutoCADPort` (Protocol),
 ```
 CLI (Typer) / MCP Server (FastMCP)
         ↓
-Operations (text_ops, layer_ops, audit_ops)  ← pure Python, testable
+Operations (text_ops, layer_ops, audit_ops, compliance_ops)  ← pure Python, testable
+Knowledge loader (knowledge/loader.py)                       ← reads Markdown knowledge base
         ↓
 AutoCADPort (Protocol in acad/port.py)
         ↓
@@ -46,7 +52,9 @@ The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI
 
 - **Operations** all follow the same shape: take an `AutoCADPort` adapter + a Pydantic request model, iterate `.dwg` files via `utils/file_ops.get_dwg_files()`, open/modify/save/close each file, return an `OperationResult` or `AuditResult`.
 - **Standards** are JSON files in `standards/` with `mappings` (old→new layer names) and `required_layers`. Used by `layer_ops.batch_standardize_layers()` and `audit_ops.audit_drawings()`.
-- **Config** uses pydantic-settings with env prefix `ACAD_CMD_` (e.g. `ACAD_CMD_LOG_LEVEL`). The `standards_dir` setting points to `<repo>/standards/` by default.
+- **Compliance rules** are JSON files in `standards/rules/` (e.g. `ubbl-spatial.json`, `ubbl-fire.json`). Each contains a `ComplianceRuleSet` with numeric thresholds, by-law references, and building-type filters. Used by `compliance_ops.check_compliance()`.
+- **Knowledge base** is Markdown files in `knowledge/qa/` organized by source (ubbl/, fire-bylaws/). A topic index (`_index.md`) maps keywords to files. The loader (`knowledge/loader.py`) finds relevant files via keyword matching and returns content for Claude to synthesize. No vector DB — the corpus is small enough for direct context loading.
+- **Config** uses pydantic-settings with env prefix `ACAD_CMD_` (e.g. `ACAD_CMD_LOG_LEVEL`). `standards_dir` points to `<repo>/standards/`, `knowledge_dir` points to `<repo>/knowledge/`.
 - **Backups** go to `.backups/` subdirectory relative to each DWG file, with timestamped filenames.
 
 ## Testing Patterns
@@ -58,7 +66,7 @@ The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI
 
 ## Models (models.py)
 
-All Pydantic v2 models live in one file. Entities (`TextEntity`, `LayerEntity`) represent drawing objects. Request models (`TextReplaceRequest`, `LayerRenameRequest`, etc.) are operation inputs. Result models (`OperationResult`, `AuditResult`) are outputs.
+All Pydantic v2 models live in one file. Entities (`TextEntity`, `LayerEntity`) represent drawing objects. Request models (`TextReplaceRequest`, `LayerRenameRequest`, `ComplianceCheckRequest`, etc.) are operation inputs. Result models (`OperationResult`, `AuditResult`, `ComplianceCheckResult`, `RegulationResult`) are outputs. Compliance models (`ComplianceRule`, `ComplianceRuleSet`, `ComplianceFinding`) represent structured regulation rules.
 
 ## Windows Deployment
 
@@ -72,7 +80,7 @@ See `docs/windows-setup.md` for full guide. Key points:
 
 ## MCP Server
 
-The MCP server (`mcp_server/server.py`) exposes the same four operations as MCP tools. Launch with:
+The MCP server (`mcp_server/server.py`) exposes seven MCP tools: the original four drawing operations plus `query_regulations`, `check_compliance_tool`, and `list_available_rules`. Launch with:
 
 ```bash
 # Windows
@@ -83,3 +91,26 @@ The MCP server (`mcp_server/server.py`) exposes the same four operations as MCP 
 ```
 
 For Claude Desktop integration, add to `claude_desktop_config.json` — see `docs/windows-setup.md`.
+
+## Knowledge Base
+
+Malaysian building regulations knowledge base in `knowledge/qa/`, covering UBBL, Fire By-Laws, and Bomba guidelines. Structure:
+
+```
+knowledge/
+  qa/
+    _index.md                   # Topic map — keyword → file mapping
+    ubbl/                       # 6 files: general, operations, spatial, fire, parking, accessibility
+    fire-bylaws/                # 2 files: fire certificate, fire escape
+  raw/                          # Source PDFs (gitignored)
+standards/
+  rules/                        # Machine-readable compliance rules
+    ubbl-spatial.json           # 17 dimensional rules (rooms, corridors, stairs, ventilation)
+    ubbl-fire.json              # 13 fire safety rules (resistance, compartmentation, escape)
+```
+
+Each Markdown file has YAML frontmatter (`source_document`, `source_short`, `sections_covered`, `last_verified`) and content with bold thresholds and `> **Citation**` blocks.
+
+Each JSON rule file contains a `ComplianceRuleSet` with rules that have: `id`, `by_law`, `check_type` (min_dimension/max_dimension/min_percentage/min_duration), `threshold`, `unit`, `building_type` filter, and `tags`.
+
+To add new regulations: create Markdown files under the appropriate `knowledge/qa/` subdirectory, add entries to `_index.md`, and optionally add structured rules to `standards/rules/`.
