@@ -1,0 +1,33 @@
+{
+  "name": "UBBL-Compliant Layer Standards",
+  "version": "1.0",
+  "description": "Uniform Building By-Laws (Malaysia) compliant layer naming",
+  "mappings": {
+    "WALL": "A-WALL",
+    "DOOR": "A-DOOR",
+    "WINDOW": "A-WIND",
+    "FURNITURE": "A-FURN",
+    "DIMENSION": "A-DIMS",
+    "TEXT": "A-TEXT",
+    "TITLE": "A-TTLB",
+    "GRID": "A-GRID",
+    "COLUMN": "S-COLS",
+    "FLOOR": "A-FLOR",
+    "CEILING": "A-CLNG",
+    "ROOF": "A-ROOF",
+    "STAIR": "A-STRS",
+    "TOILET": "A-PLMB",
+    "ELECTRICAL": "E-LITE",
+    "MECHANICAL": "M-HVAC",
+    "FIRE_ESCAPE": "A-FIRE",
+    "PARKING": "A-PARK",
+    "LANDSCAPE": "L-PLNT"
+  },
+  "required_layers": [
+    "A-WALL",
+    "A-DOOR",
+    "A-WIND",
+    "A-TEXT",
+    "A-TTLB"
+  ]
+}

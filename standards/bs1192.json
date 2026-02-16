@@ -1,0 +1,29 @@
+{
+  "name": "BS1192 Layer Standards",
+  "version": "1.0",
+  "description": "British Standard for construction drawing practice — layer naming",
+  "mappings": {
+    "WALL": "A-Wall-G",
+    "DOOR": "A-Door-G",
+    "WINDOW": "A-Window-G",
+    "FURNITURE": "A-Furn-G",
+    "DIMENSION": "A-Anno-Dim",
+    "TEXT": "A-Anno-Text",
+    "TITLE": "A-Anno-Ttlb",
+    "GRID": "A-Grid-G",
+    "COLUMN": "S-Cols-G",
+    "FLOOR": "A-Floor-G",
+    "CEILING": "A-Ceiling-G",
+    "ROOF": "A-Roof-G",
+    "STAIR": "A-Stair-G",
+    "TOILET": "A-Sanitary-G",
+    "ELECTRICAL": "E-Light-G",
+    "MECHANICAL": "M-Hvac-G"
+  },
+  "required_layers": [
+    "A-Wall-G",
+    "A-Door-G",
+    "A-Window-G",
+    "A-Anno-Text"
+  ]
+}
