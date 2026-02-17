@@ -4,35 +4,37 @@
   "category": "spatial",
   "rules": [
     {
-      "id": "UBBL-32-1a",
-      "description": "Minimum living room floor area",
-      "by_law": "By-Law 32(1)",
+      "id": "UBBL-42-1a",
+      "description": "Minimum first habitable room floor area",
+      "by_law": "By-Law 42",
       "category": "room_size",
       "building_type": ["residential"],
       "check_type": "min_dimension",
       "parameter": "living_room_area",
-      "threshold": 13.0,
+      "threshold": 11.0,
       "unit": "sq_metres",
       "severity": "error",
-      "tags": ["spatial", "room", "residential"]
+      "tags": ["spatial", "room", "residential"],
+      "note": "Corrected from 13.0 to 11.0 per UBBL By-Law 42 (KPKT official PDF). Earlier editions may reference By-Law 32."
     },
     {
-      "id": "UBBL-32-1b",
-      "description": "Minimum dining room floor area",
-      "by_law": "By-Law 32(1)",
+      "id": "UBBL-42-1b",
+      "description": "Minimum second habitable room floor area",
+      "by_law": "By-Law 42",
       "category": "room_size",
       "building_type": ["residential"],
       "check_type": "min_dimension",
       "parameter": "dining_room_area",
-      "threshold": 9.5,
+      "threshold": 9.3,
       "unit": "sq_metres",
       "severity": "error",
-      "tags": ["spatial", "room", "residential"]
+      "tags": ["spatial", "room", "residential"],
+      "note": "Corrected from 9.5 to 9.3 per UBBL By-Law 42 (KPKT official PDF). Earlier editions may reference By-Law 32."
     },
     {
-      "id": "UBBL-32-1c",
+      "id": "UBBL-42-1c",
       "description": "Minimum master bedroom floor area",
-      "by_law": "By-Law 32(1)",
+      "by_law": "By-Law 42",
       "category": "room_size",
       "building_type": ["residential"],
       "check_type": "min_dimension",
@@ -43,9 +45,9 @@
       "tags": ["spatial", "room", "residential"]
     },
     {
-      "id": "UBBL-32-1d",
+      "id": "UBBL-42-1d",
       "description": "Minimum bedroom floor area",
-      "by_law": "By-Law 32(1)",
+      "by_law": "By-Law 42",
       "category": "room_size",
       "building_type": ["residential"],
       "check_type": "min_dimension",
@@ -56,9 +58,9 @@
       "tags": ["spatial", "room", "residential"]
     },
     {
-      "id": "UBBL-32-1e",
+      "id": "UBBL-42-1e",
       "description": "Minimum kitchen floor area",
-      "by_law": "By-Law 32(1)",
+      "by_law": "By-Law 42",
       "category": "room_size",
       "building_type": ["residential"],
       "check_type": "min_dimension",
@@ -69,9 +71,9 @@
       "tags": ["spatial", "room", "residential"]
     },
     {
-      "id": "UBBL-32-2",
+      "id": "UBBL-42-2",
       "description": "Minimum width of any habitable room",
-      "by_law": "By-Law 32(2)",
+      "by_law": "By-Law 42",
       "category": "room_size",
       "building_type": ["residential"],
       "check_type": "min_dimension",
@@ -209,7 +211,8 @@
       "threshold": 10.0,
       "unit": "percent",
       "severity": "error",
-      "tags": ["spatial", "ventilation", "lighting"]
+      "tags": ["spatial", "ventilation", "lighting"],
+      "note": "2021 Amendment: By-Law 39 ventilation percentages reviewed. Mechanical ventilation may substitute where natural ventilation cannot achieve required percentages (min 4 l/s/person offices, 8 l/s/person special areas)."
     },
     {
       "id": "UBBL-38-2",
@@ -222,7 +225,8 @@
       "threshold": 5.0,
       "unit": "percent",
       "severity": "error",
-      "tags": ["spatial", "ventilation"]
+      "tags": ["spatial", "ventilation"],
+      "note": "2021 Amendment: By-Law 39 ventilation percentages reviewed. Air-conditioned buildings may use mechanical ventilation in lieu, subject to MS 1525."
     }
   ]
 }

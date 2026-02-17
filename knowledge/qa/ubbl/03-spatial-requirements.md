@@ -1,44 +1,75 @@
 ---
 source_document: "Uniform Building By-Laws 1984 (Amendment 2021)"
 source_short: "UBBL"
-sections_covered: ["Part III", "By-Law 32-44"]
+sections_covered: ["Part III", "By-Law 30-47"]
 last_verified: "2026-02-17"
 ---
 
 # Space, Light and Ventilation Requirements
 
-## By-Law 32: Minimum Room Sizes
+## By-Law 39: Natural Lighting and Ventilation
 
-Minimum floor areas for habitable rooms:
+- Every habitable room shall have windows with total area not less than **10%** of the clear floor area (UBBL By-Law 39)
+- Openable window area for ventilation: not less than **5%** of the floor area (UBBL By-Law 39)
+- Applies to every room designed for residential, office, or habitable purposes
+- Kitchens and bathrooms: window area not less than **5%** of floor area, ventilation not less than **2.5%**
+
+### 2021 Amendment — Ventilation Changes
+
+- By-Law 39 ventilation percentages were reviewed in the 2021 Amendment
+- **Mechanical ventilation**: Where natural ventilation cannot achieve the required percentages, mechanical ventilation must provide minimum **4 litres/second/person** for offices and **8 litres/second/person** for areas with special ventilation needs
+- Air-conditioned buildings may use mechanical ventilation in lieu of natural ventilation, subject to MS 1525 compliance
+
+> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 39; Amendment 2021
+
+## By-Law 42: Minimum Room Sizes (Residential)
+
+Minimum floor areas for rooms in residential buildings per By-Law 42:
 
 | Room Type | Minimum Area |
 |-----------|-------------|
-| Living room | **13.0 sq metres** |
-| Dining room | **9.5 sq metres** |
-| Bedroom (master) | **11.0 sq metres** |
-| Bedroom (other) | **9.5 sq metres** |
+| First habitable room | **11.0 sq metres** |
+| Second habitable room | **9.3 sq metres** |
 | Kitchen | **4.5 sq metres** |
-| Bathroom/WC | **1.5 sq metres** |
 
-- No habitable room shall have a floor area of less than **9.5 sq metres** unless it is a kitchen or bathroom (UBBL By-Law 32(1))
-- The minimum width of any habitable room shall be **2.4 metres** (UBBL By-Law 32(2))
+- The minimum width of any habitable room shall be **2.4 metres**
 
-> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 32
+**Note**: Some earlier references cite By-Law 32 with different values (13.0 and 9.5 sq m). The values above are from the official KPKT PDF of UBBL 1984, By-Law 42 under Part III (Space, Light and Ventilation). Different editions may show different numbering.
 
-## By-Law 33: Ceiling Heights
+> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 42
 
-- Minimum ceiling height for habitable rooms: **2.5 metres** (UBBL By-Law 33(1))
-- Minimum ceiling height for kitchens, bathrooms, corridors: **2.25 metres** (UBBL By-Law 33(2))
-- For air-conditioned rooms, minimum ceiling height: **2.4 metres** (UBBL By-Law 33(3))
-- Mezzanine floors shall have a minimum clear height of **2.0 metres** above and below (UBBL By-Law 33(4))
+## By-Law 43: Minimum Dimensions of Latrines, WC and Bathrooms
 
-> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 33
+- Prescribed minimum dimensions for sanitary facilities
+- Minimum floor area for bathroom/WC: **1.5 sq metres**
+
+> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 43
+
+## By-Law 44: Height of Rooms
+
+| Building/Location | Minimum Height |
+|-------------------|---------------|
+| Ground floor rooms (general) | **3.0 metres** |
+| Shophouse ground floor | **3.0 metres** |
+| Shophouse upper floors | **2.5 metres** |
+| Ground floor used as car park | **2.5 metres** |
+| Verandah-way | **3.0 metres** |
+| Sloping ceiling (no part less than) | **2.0 metres** |
+| Balcony clearance (topmost tier to ceiling) | **3.0 metres** |
+
+- Minimum ceiling height for habitable rooms: **2.5 metres**
+- Minimum ceiling height for kitchens, bathrooms, corridors: **2.25 metres** (amended 2021 to **2.10 metres**)
+- For air-conditioned rooms, minimum ceiling height: **2.4 metres**
+- Mezzanine floors shall have a minimum clear height of **2.0 metres** above and below
+
+> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 44
 
 ## By-Law 34: Corridor Widths
 
 - Minimum corridor width for residential buildings: **1.2 metres** (UBBL By-Law 34(1))
 - Minimum corridor width for non-residential buildings: **1.5 metres** (UBBL By-Law 34(2))
 - Dead-end corridor maximum length: **15 metres** (UBBL By-Law 34(3))
+- Corridor/passageway height: minimum **2.4 metres**
 
 > **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 34
 
@@ -53,19 +84,29 @@ Minimum floor areas for habitable rooms:
 
 > **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 35
 
-## By-Law 38: Natural Lighting and Ventilation
+## By-Law 99: Cooking Facilities — 2021 Amendment
 
-- Every habitable room shall have one or more windows with a total area of not less than **10%** of the floor area (UBBL By-Law 38(1))
-- Openable window area for ventilation: not less than **5%** of the floor area (UBBL By-Law 38(2))
-- Kitchens and bathrooms: window area not less than **5%** of floor area, ventilation not less than **2.5%** (UBBL By-Law 38(3))
+- Kitchen exhaust ducts in non-residential buildings must be constructed of **refractory material** and extend to the **roof level**
+- Exhaust duct must have minimum **2-hour fire rating**
+- Duct must not pass through any fire compartment wall without maintaining the wall's fire integrity
+- Grease filters required at point of extraction
 
-> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 38
+> **Citation**: UBBL (Amendment 2021), By-Law 99
 
-## By-Law 41: Open Space Requirements
+## By-Law 109: Spiral Staircases — 2021 Amendment
 
-- Every building shall be provided with open space of not less than the following:
-  - Residential: **10%** of the site area
-  - Commercial: **10%** of the site area (UBBL By-Law 41)
-- Open space shall be accessible from the ground floor (UBBL By-Law 41(2))
+- Spiral staircases are **banned from use as means of escape** (2021 Amendment)
+- May only be used as secondary/convenience staircases within a single occupancy unit
+- Not permitted in any fire escape route or as the sole means of access to any floor
 
-> **Citation**: Uniform Building By-Laws 1984, Part III, By-Law 41
+> **Citation**: UBBL (Amendment 2021), By-Law 109
+
+## Open Space Requirements
+
+- Detached buildings: minimum **2 metres** clear space from outermost projection to lot boundary
+- Minimum **4 metres** between detached building and any other structure
+- Buildings without backlane: open space at rear, full width of property
+- Open space requirement: residential and commercial not less than **10%** of site area
+- Projections over streets: at least **5 metres** above roads, not exceeding **1.25 metres** beyond approved street lines
+
+> **Citation**: Uniform Building By-Laws 1984, Part III
