@@ -11,6 +11,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Install with web server support
 .venv/bin/pip install -e ".[web]"
 
+# Install with AI chat support (OpenAI + Supabase)
+.venv/bin/pip install -e ".[web,ai]"
+
 # Run all tests
 .venv/bin/pytest
 
@@ -60,7 +63,7 @@ The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI
 - **Operations** all follow the same shape: take an `AutoCADPort` adapter + a Pydantic request model, iterate `.dwg` files via `utils/file_ops.get_dwg_files()`, open/modify/save/close each file, return an `OperationResult` or `AuditResult`.
 - **Standards** are JSON files in `standards/` with `mappings` (old→new layer names) and `required_layers`. Used by `layer_ops.batch_standardize_layers()` and `audit_ops.audit_drawings()`.
 - **Compliance rules** are JSON files in `standards/rules/` (e.g. `ubbl-spatial.json`, `ubbl-fire.json`). Each contains a `ComplianceRuleSet` with numeric thresholds, by-law references, and building-type filters. Used by `compliance_ops.check_compliance()`.
-- **Knowledge base** is Markdown files in `knowledge/qa/` organized by source (ubbl/, fire-bylaws/). A topic index (`_index.md`) maps keywords to files. The loader (`knowledge/loader.py`) finds relevant files via keyword matching and returns content for Claude to synthesize. No vector DB — the corpus is small enough for direct context loading.
+- **Knowledge base** is Markdown files in `knowledge/qa/` organized by source (ubbl/, fire-bylaws/). A topic index (`_index.md`) maps keywords to files. The loader (`knowledge/loader.py`) finds relevant files via keyword matching and returns content for Claude to synthesize. For AI Chat, the knowledge base is also embedded into Supabase pgvector (414 chunks) for semantic retrieval.
 - **Config** uses pydantic-settings with env prefix `ACAD_CMD_` (e.g. `ACAD_CMD_LOG_LEVEL`). `standards_dir` points to `<repo>/standards/`, `knowledge_dir` points to `<repo>/knowledge/`.
 - **Backups** go to `.backups/` subdirectory relative to each DWG file, with timestamped filenames.
 
@@ -148,6 +151,8 @@ standards/
     accessibility.json          # 12 accessibility rules (ramps, handrails, toilets, lifts)
 scripts/
   extract_ubbl.py               # PDF extraction tool — reads UBBL PDF, splits by Part/Schedule/By-law
+  embed_knowledge.py            # Embed knowledge base Markdown into Supabase pgvector
+  setup_supabase.sql            # DDL migration for chat tables, RPC, and view
 ```
 
 Each Markdown file has YAML frontmatter (`source_document`, `source_short`, `sections_covered`, `last_verified`) and content with bold thresholds and `> **Citation**` blocks.
@@ -176,20 +181,25 @@ FastAPI app in `web/api.py` exposes the knowledge base and compliance features o
 
 ### Tabs
 
+- **Setup Guide** — installation, CLI usage, MCP server configuration, Windows/AutoCAD setup, API docs, knowledge base coverage
+- **AI Chat** — conversational AI powered by OpenAI GPT-5 Mini with RAG retrieval from Supabase pgvector. Feature-flagged, hidden when `ACAD_CMD_CHAT_ENABLED=false`
+- **UBBL 2021** — interactive browser for UBBL content with TOC, filtering, and search
 - **Regulation Search** — keyword search across the knowledge base, renders Markdown results
 - **Compliance Check** — select rule sets and building type, returns matching rules with thresholds
 - **Rule Browser** — browse individual rule sets and their rules
-- **Setup Guide** — installation, CLI usage, MCP server configuration, Windows/AutoCAD setup, API docs, knowledge base coverage
 
 ### Endpoints
 
 ```
 GET  /                           — Web UI (single-page app)
-GET  /api/health                 — Health check
+GET  /api/health                 — Health check (includes chat_enabled flag)
 POST /api/query                  — Query knowledge base (body: {"question": "..."})
 GET  /api/rules                  — List all rule sets
 GET  /api/rules/{rule_set}       — Get rules in a specific rule set
 POST /api/compliance/check       — Check compliance (body: ComplianceCheckRequest)
+POST /api/chat/session           — Create chat session with consent
+POST /api/chat                   — Send chat message → SSE streamed response
+POST /api/feedback               — Submit thumbs up/down feedback
 ```
 
 Drawing operations (change-text, rename-layer, etc.) are CLI-only — they require Windows + AutoCAD and are not exposed via the web API.
@@ -206,3 +216,83 @@ docker build -t cad-ai . && docker run -p 8000:8000 cad-ai
 # Docker Compose
 docker compose up
 ```
+
+## AI Chat (RAG Pipeline)
+
+Conversational AI chat powered by OpenAI with Supabase pgvector for semantic retrieval. Feature-flagged via `ACAD_CMD_CHAT_ENABLED` (default: `false`).
+
+### Architecture
+
+```
+Frontend (SSE streaming) → FastAPI endpoints → RAG pipeline
+                                                  ↓
+                                    OpenAI embeddings → Supabase pgvector search
+                                    Few-shot examples ← feedback (thumbs up/down)
+                                    OpenAI GPT-5 Mini streaming completion
+                                                  ↓
+                                    Persist messages + context to Supabase
+```
+
+### Module: `chat/`
+
+| File | Purpose |
+|------|---------|
+| `chat/models.py` | Pydantic models: ChatMessage, ChatRequest, SessionConsentRequest, FeedbackRequest, ChunkMatch |
+| `chat/prompts.py` | System prompt template, few-shot formatting, context chunk formatting |
+| `chat/client.py` | Supabase client singleton (lazy-init from settings) |
+| `chat/embeddings.py` | OpenAI embed_text/embed_texts, pgvector search_similar, fetch_highly_rated_examples |
+| `chat/rag.py` | RAG pipeline: embed query → search → build messages → stream OpenAI → persist |
+
+### Chat API Endpoints
+
+```
+POST /api/chat/session   — Create session with consent
+POST /api/chat           — Send message → SSE streamed response
+POST /api/feedback       — Submit thumbs up/down on assistant message
+```
+
+All chat endpoints return 503 when `ACAD_CMD_CHAT_ENABLED=false`. Health endpoint includes `chat_enabled: bool`.
+
+### Config (env vars)
+
+```
+ACAD_CMD_OPENAI_API_KEY          — OpenAI API key
+ACAD_CMD_OPENAI_MODEL            — Model name (default: gpt-5-mini)
+ACAD_CMD_OPENAI_EMBEDDING_MODEL  — Embedding model (default: text-embedding-3-small)
+ACAD_CMD_SUPABASE_URL            — Supabase project URL
+ACAD_CMD_SUPABASE_KEY            — Supabase publishable key (sb_publishable_*) or legacy anon key
+ACAD_CMD_CHAT_ENABLED            — Feature flag (default: false)
+ACAD_CMD_CHAT_MAX_HISTORY        — Max conversation turns sent to LLM (default: 10)
+ACAD_CMD_CHAT_MAX_CONTEXT_CHUNKS — Max RAG chunks retrieved (default: 6)
+ACAD_CMD_CHAT_SIMILARITY_THRESHOLD — Minimum cosine similarity (default: 0.4)
+```
+
+### Setup
+
+1. Run `scripts/setup_supabase.sql` against your Supabase project (SQL Editor)
+2. Embed the knowledge base: `.venv/bin/python scripts/embed_knowledge.py`
+3. Start with chat enabled:
+   ```bash
+   ACAD_CMD_CHAT_ENABLED=true \
+   ACAD_CMD_OPENAI_API_KEY=sk-... \
+   ACAD_CMD_SUPABASE_URL=https://xxx.supabase.co \
+   ACAD_CMD_SUPABASE_KEY=sb_publishable_... \
+   .venv/bin/autocad-cmd serve
+   ```
+
+### Embedding Pipeline (`scripts/embed_knowledge.py`)
+
+Chunks Markdown files by H2/H3 headings, embeds via OpenAI, upserts to Supabase pgvector.
+
+```bash
+.venv/bin/python scripts/embed_knowledge.py              # incremental
+.venv/bin/python scripts/embed_knowledge.py --force       # re-embed all
+.venv/bin/python scripts/embed_knowledge.py --file ubbl/03-spatial-requirements.md
+.venv/bin/python scripts/embed_knowledge.py --dry-run     # preview chunks
+```
+
+### Dependencies
+
+Install with: `.venv/bin/pip install -e ".[web,ai]"`
+
+The `ai` extras group includes: `openai`, `supabase`, `tiktoken`, `sse-starlette`.

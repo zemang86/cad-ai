@@ -96,3 +96,90 @@ def query_knowledge_base(query: str) -> dict[str, str]:
     """
     relevant = find_relevant_files(query)
     return load_files(relevant)
+
+
+def _parse_frontmatter(text: str) -> tuple[dict[str, str | list[str]], str]:
+    """Parse YAML frontmatter from Markdown text.
+
+    Returns (metadata_dict, body_without_frontmatter).
+    """
+    if not text.startswith("---"):
+        return {}, text
+    end = text.find("---", 3)
+    if end == -1:
+        return {}, text
+    fm_block = text[3:end].strip()
+    body = text[end + 3:].strip()
+    meta: dict[str, str | list[str]] = {}
+    for line in fm_block.splitlines():
+        if ":" not in line:
+            continue
+        key, _, val = line.partition(":")
+        val = val.strip().strip('"').strip("'")
+        if val.startswith("["):
+            # Simple list parse: ["a", "b"]
+            items = val.strip("[]").split(",")
+            meta[key.strip()] = [i.strip().strip('"').strip("'") for i in items if i.strip()]
+        else:
+            meta[key.strip()] = val
+    return meta, body
+
+
+def _categorize(sections_covered: list[str]) -> str:
+    """Derive category from frontmatter sections_covered list."""
+    joined = " ".join(sections_covered)
+    if "Schedule" in joined:
+        return "schedules"
+    if "Amendment 2021" in joined:
+        return "amendment"
+    if "Part" in joined or "By-Law" in joined or "By-law" in joined:
+        return "parts"
+    return "specialized"
+
+
+def load_ubbl_content() -> list[dict]:
+    """Load all UBBL Markdown files with metadata for the interactive browser.
+
+    Auto-discovers files in knowledge/qa/ubbl/, sorted by filename.
+    Returns a list of section dicts with id, title, category, content,
+    and 2021 amendment status.
+    """
+    ubbl_dir = _knowledge_dir() / "qa" / "ubbl"
+    if not ubbl_dir.exists():
+        return []
+
+    files = sorted(ubbl_dir.glob("*.md"))
+    sections: list[dict] = []
+
+    for path in files:
+        text = path.read_text(encoding="utf-8")
+        meta, body = _parse_frontmatter(text)
+
+        # Extract first heading as title
+        title = path.stem.replace("-", " ").title()
+        for line in body.splitlines():
+            if line.startswith("# "):
+                title = line[2:].strip()
+                break
+
+        sections_covered = meta.get("sections_covered", [])
+        if isinstance(sections_covered, str):
+            sections_covered = [sections_covered]
+        source_short = meta.get("source_short", "")
+
+        # 2021 detection
+        is_new_2021 = source_short == "UBBL 2021" or "(NEW)" in text[:500]
+        has_2021_changes = "Amendment 2021" in text or "(Amendment 2021)" in text
+
+        sections.append({
+            "id": path.stem,
+            "title": title,
+            "category": _categorize(sections_covered),
+            "sections_covered": sections_covered,
+            "source_short": source_short,
+            "is_new_2021": is_new_2021,
+            "has_2021_changes": has_2021_changes,
+            "content": body,
+        })
+
+    return sections

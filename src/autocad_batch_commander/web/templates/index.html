@@ -146,7 +146,7 @@
         .layout {
             display: flex;
             width: 100%;
-            min-height: calc(100vh - 48px);
+            height: calc(100vh - 48px);
         }
 
         /* ── Sidebar ─────────────────────────────────── */
@@ -156,6 +156,7 @@
             border-right: 1px solid var(--border);
             padding: 1rem 0;
             flex-shrink: 0;
+            overflow-y: auto;
         }
         .sidebar-section {
             padding: 0 0.75rem;
@@ -511,6 +512,10 @@
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+        #ubbl.tab-content.active { display: flex; flex-direction: column; height: 100%; }
+        #chat.tab-content.active { display: flex; flex-direction: column; height: 100%; }
+        #ubbl .panel-header { flex-shrink: 0; }
+        #ubbl .loading-msg { flex-shrink: 0; }
 
         /* ── Setup guide styles ─────────────────────── */
         .guide-section {
@@ -625,6 +630,282 @@
         .method { font-weight: 600; }
         .method-get { color: var(--green); }
         .method-post { color: var(--orange); }
+
+        /* ── UBBL Browser ─────────────────────────────── */
+        .ubbl-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 1rem;
+            align-items: start;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .ubbl-toc {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem 0;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .ubbl-toc::-webkit-scrollbar { width: 4px; }
+        .ubbl-toc::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+        .ubbl-toc-header {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0.5rem 1rem 0.25rem;
+            margin-top: 0.25rem;
+        }
+        .ubbl-toc-header:first-child { margin-top: 0; }
+        .ubbl-toc-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 1rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s;
+            border-left: 2px solid transparent;
+        }
+        .ubbl-toc-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .ubbl-toc-item.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+        .ubbl-toc-item .toc-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .amendment-badge {
+            display: inline-block;
+            padding: 0.05rem 0.35rem;
+            border-radius: 3px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            background: rgba(255,169,77,0.15);
+            color: var(--orange);
+            flex-shrink: 0;
+        }
+        .new-badge {
+            display: inline-block;
+            padding: 0.05rem 0.35rem;
+            border-radius: 3px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            background: rgba(105,219,124,0.15);
+            color: var(--green);
+            flex-shrink: 0;
+        }
+        .ubbl-content-area {
+            min-width: 0;
+            overflow-y: auto;
+            height: 100%;
+        }
+        .ubbl-content-area::-webkit-scrollbar { width: 6px; }
+        .ubbl-content-area::-webkit-scrollbar-track { background: transparent; }
+        .ubbl-content-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        .ubbl-content-area::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        .ubbl-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .ubbl-section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .ubbl-section-body {
+            padding: 1rem 1.25rem;
+        }
+        .ubbl-filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+        .ubbl-filter-bar input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 0;
+        }
+        .ubbl-filter-chips {
+            display: flex;
+            gap: 0.3rem;
+        }
+        .search-highlight {
+            background: rgba(255,169,77,0.3);
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+        @media (max-width: 768px) {
+            .ubbl-layout {
+                grid-template-columns: 1fr;
+                overflow: visible;
+            }
+            .ubbl-toc {
+                height: auto;
+                max-height: 250px;
+            }
+            .ubbl-content-area {
+                height: auto;
+                overflow-y: visible;
+            }
+            #ubbl.tab-content.active { height: auto; }
+        }
+
+        /* ── Chat UI ─────────────────────────────────── */
+        #chat .panel-header { flex-shrink: 0; }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .chat-messages::-webkit-scrollbar { width: 6px; }
+        .chat-messages::-webkit-scrollbar-track { background: transparent; }
+        .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .chat-msg {
+            max-width: 80%;
+            padding: 0.65rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            word-wrap: break-word;
+        }
+        .chat-msg.user {
+            align-self: flex-end;
+            background: var(--accent-dim);
+            color: var(--text-primary);
+            border: 1px solid rgba(77,166,255,0.2);
+            border-bottom-right-radius: 2px;
+        }
+        .chat-msg.assistant {
+            align-self: flex-start;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 2px;
+        }
+        .chat-msg.assistant .md-content { font-size: 0.82rem; }
+        .chat-msg.assistant .md-content p:first-child { margin-top: 0; }
+        .chat-msg.assistant .md-content p:last-child { margin-bottom: 0; }
+
+        .chat-feedback {
+            display: flex;
+            gap: 0.35rem;
+            margin-top: 0.4rem;
+        }
+        .chat-feedback button {
+            background: none;
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            padding: 0.15rem 0.45rem;
+            cursor: pointer;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .chat-feedback button:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .chat-feedback button.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .chat-typing {
+            align-self: flex-start;
+            padding: 0.5rem 0.9rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .chat-typing .dots span {
+            display: inline-block;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            margin: 0 1px;
+            animation: chatDot 1.4s infinite both;
+        }
+        .chat-typing .dots span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-typing .dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes chatDot {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+
+        .chat-input-area {
+            flex-shrink: 0;
+            border-top: 1px solid var(--border);
+            padding: 0.75rem 0;
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-end;
+        }
+        .chat-input-area textarea {
+            flex: 1;
+            padding: 0.55rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-family: inherit;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            resize: none;
+            min-height: 40px;
+            max-height: 120px;
+            line-height: 1.5;
+            transition: border-color 0.15s;
+        }
+        .chat-input-area textarea::placeholder { color: var(--text-muted); }
+        .chat-input-area textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-dim);
+        }
+
+        .consent-banner {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem;
+            text-align: center;
+            margin: auto 0;
+        }
+        .consent-banner p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        .consent-banner .warn {
+            font-size: 0.75rem;
+            color: var(--orange);
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -657,6 +938,8 @@
     <!-- Mobile nav -->
     <div class="mobile-nav">
         <button class="chip active" data-tab="setup" onclick="switchTab('setup', this)">Setup</button>
+        <button class="chip" data-tab="chat" onclick="switchTab('chat', this)" id="mobile-nav-chat" style="display:none;">AI Chat</button>
+        <button class="chip" data-tab="ubbl" onclick="switchTab('ubbl', this)">UBBL 2021</button>
         <button class="chip" data-tab="search" onclick="switchTab('search', this)">Search</button>
         <button class="chip" data-tab="compliance" onclick="switchTab('compliance', this)">Compliance</button>
         <button class="chip" data-tab="rules" onclick="switchTab('rules', this)">Rules</button>
@@ -670,6 +953,14 @@
                 <div class="nav-item active" data-tab="setup" onclick="switchTab('setup', this)">
                     <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="6" x2="12" y2="14"/><polyline points="8 10 12 14 16 10"/></svg></div>
                     Setup Guide
+                </div>
+                <div class="nav-item" data-tab="chat" onclick="switchTab('chat', this)" id="nav-chat" style="display:none;">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                    AI Chat
+                </div>
+                <div class="nav-item" data-tab="ubbl" onclick="switchTab('ubbl', this)">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                    UBBL 2021
                 </div>
                 <div class="nav-item" data-tab="search" onclick="switchTab('search', this)">
                     <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
@@ -754,6 +1045,46 @@
                     <div class="chip-group" id="rule-set-list"></div>
                 </div>
                 <div id="rules-results"></div>
+            </div>
+
+            <!-- UBBL Browser Tab -->
+            <div id="ubbl" class="tab-content">
+                <div class="panel-header">
+                    <h2>UBBL 2021 Amendment</h2>
+                    <span class="cmd">BROWSE</span>
+                </div>
+                <div class="ubbl-filter-bar">
+                    <input type="text" id="ubbl-search" placeholder="Search UBBL content..." oninput="searchUBBL(this.value)">
+                    <div class="ubbl-filter-chips">
+                        <button class="chip active" onclick="filterUBBL('all', this)">All</button>
+                        <button class="chip" onclick="filterUBBL('parts', this)">Parts</button>
+                        <button class="chip" onclick="filterUBBL('schedules', this)">Schedules</button>
+                        <button class="chip" onclick="filterUBBL('2021', this)">2021 Changes</button>
+                    </div>
+                </div>
+                <div id="ubbl-loading" class="loading-msg" style="display:none;"><span class="spinner"></span> Loading UBBL content...</div>
+                <div class="ubbl-layout" id="ubbl-container" style="display:none;">
+                    <div class="ubbl-toc" id="ubbl-toc"></div>
+                    <div class="ubbl-content-area" id="ubbl-content"></div>
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div id="chat" class="tab-content">
+                <div class="panel-header">
+                    <h2>AI Chat</h2>
+                    <span class="cmd">ASK</span>
+                </div>
+                <div id="consent-banner" class="consent-banner">
+                    <p>Ask questions about Malaysian building regulations (UBBL, fire by-laws, standards) and get AI-powered answers with citations.</p>
+                    <p class="warn">Conversations are stored anonymously to improve the service. Do not share personal or confidential information.</p>
+                    <button class="btn" onclick="acceptConsent()">I Understand</button>
+                </div>
+                <div class="chat-messages" id="chat-messages" style="display:none;"></div>
+                <div class="chat-input-area" id="chat-input-area" style="display:none;">
+                    <textarea id="chat-input" placeholder="Ask about building regulations..." rows="1" onkeydown="chatKeyDown(event)"></textarea>
+                    <button class="btn" id="chat-send-btn" onclick="sendChat()">Send</button>
+                </div>
             </div>
 
             <!-- Setup Guide Tab -->
@@ -1200,6 +1531,421 @@ docker compose up</div>
                 setStatus('Error');
             }
         }
+
+        // ── UBBL Browser ────────────────────────────────
+        let ubblData = null;
+        let ubblLoaded = false;
+        let ubblActiveFilter = 'all';
+        let ubblSearchQuery = '';
+
+        // Hook into tab switching to lazy-load UBBL
+        const _origSwitchTab = switchTab;
+        switchTab = function(tabId, el) {
+            _origSwitchTab(tabId, el);
+            if (tabId === 'ubbl' && !ubblLoaded) {
+                initUBBL();
+            }
+        };
+
+        async function initUBBL() {
+            ubblLoaded = true;
+            document.getElementById('ubbl-loading').style.display = 'block';
+            try {
+                const res = await fetch('/api/ubbl');
+                ubblData = await res.json();
+                renderUBBLTOC(ubblData);
+                renderUBBLContent(ubblData);
+                document.getElementById('ubbl-container').style.display = 'grid';
+                setupUBBLScrollSpy();
+                setStatus(ubblData.length + ' UBBL sections loaded');
+            } catch (e) {
+                document.getElementById('ubbl-content').innerHTML = '<div class="card" style="color:var(--red);">Error loading UBBL content: ' + e.message + '</div>';
+            }
+            document.getElementById('ubbl-loading').style.display = 'none';
+        }
+
+        function ubblBadgeHTML(section) {
+            if (section.is_new_2021) return '<span class="new-badge">NEW</span>';
+            if (section.has_2021_changes) return '<span class="amendment-badge">2021</span>';
+            return '';
+        }
+
+        function renderUBBLTOC(data) {
+            const toc = document.getElementById('ubbl-toc');
+            const groups = { amendment: [], parts: [], schedules: [], specialized: [] };
+            const groupLabels = { amendment: '2021 Amendment', parts: 'Parts', schedules: 'Schedules', specialized: 'Specialized' };
+            data.forEach(s => {
+                const g = groups[s.category] || groups.specialized;
+                g.push(s);
+            });
+            let html = '';
+            for (const [key, items] of Object.entries(groups)) {
+                if (items.length === 0) continue;
+                html += '<div class="ubbl-toc-header" data-group="' + key + '">' + groupLabels[key] + '</div>';
+                items.forEach(s => {
+                    html += '<div class="ubbl-toc-item" data-id="' + s.id + '" data-category="' + s.category + '" onclick="scrollToUBBLSection(\'' + s.id + '\')">';
+                    html += '<span class="toc-title">' + s.title + '</span>';
+                    html += ubblBadgeHTML(s);
+                    html += '</div>';
+                });
+            }
+            toc.innerHTML = html;
+        }
+
+        function renderUBBLContent(data) {
+            const container = document.getElementById('ubbl-content');
+            let html = '';
+            data.forEach(s => {
+                html += '<div class="ubbl-section" id="ubbl-' + s.id + '" data-category="' + s.category + '" data-is2021="' + s.is_new_2021 + '" data-has2021="' + s.has_2021_changes + '">';
+                html += '<div class="ubbl-section-header">' + s.title + ' ' + ubblBadgeHTML(s) + '</div>';
+                html += '<div class="ubbl-section-body"><div class="md-content">' + marked.parse(s.content) + '</div></div>';
+                html += '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function scrollToUBBLSection(id) {
+            const el = document.getElementById('ubbl-' + id);
+            if (!el) return;
+            const scrollContainer = document.querySelector('.ubbl-content-area');
+            if (scrollContainer) {
+                const offset = el.offsetTop - scrollContainer.offsetTop;
+                scrollContainer.scrollTo({ top: offset, behavior: 'smooth' });
+            } else {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            // Update active TOC item
+            document.querySelectorAll('.ubbl-toc-item').forEach(t => t.classList.remove('active'));
+            const tocItem = document.querySelector('.ubbl-toc-item[data-id="' + id + '"]');
+            if (tocItem) tocItem.classList.add('active');
+        }
+
+        function setupUBBLScrollSpy() {
+            const sections = document.querySelectorAll('.ubbl-section');
+            if (!sections.length) return;
+            const scrollContainer = document.querySelector('.ubbl-content-area');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id.replace('ubbl-', '');
+                        document.querySelectorAll('.ubbl-toc-item').forEach(t => t.classList.remove('active'));
+                        const tocItem = document.querySelector('.ubbl-toc-item[data-id="' + id + '"]');
+                        if (tocItem) tocItem.classList.add('active');
+                    }
+                });
+            }, { root: scrollContainer, rootMargin: '0px 0px -70% 0px' });
+            sections.forEach(s => observer.observe(s));
+        }
+
+        function filterUBBL(category, btn) {
+            ubblActiveFilter = category;
+            // Update chip states
+            document.querySelectorAll('.ubbl-filter-chips .chip').forEach(c => c.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const sections = document.querySelectorAll('.ubbl-section');
+            const tocItems = document.querySelectorAll('.ubbl-toc-item');
+            const tocHeaders = document.querySelectorAll('.ubbl-toc-header');
+
+            sections.forEach(s => {
+                const cat = s.dataset.category;
+                const is2021 = s.dataset.is2021 === 'true';
+                const has2021 = s.dataset.has2021 === 'true';
+                let show = category === 'all' || cat === category || (category === '2021' && (is2021 || has2021));
+                s.style.display = show ? '' : 'none';
+            });
+
+            tocItems.forEach(t => {
+                const cat = t.dataset.category;
+                const id = t.dataset.id;
+                const section = document.getElementById('ubbl-' + id);
+                let show = category === 'all' || cat === category;
+                if (category === '2021' && section) {
+                    show = section.dataset.is2021 === 'true' || section.dataset.has2021 === 'true';
+                }
+                t.style.display = show ? '' : 'none';
+            });
+
+            // Hide empty group headers
+            tocHeaders.forEach(h => {
+                const group = h.dataset.group;
+                const visibleItems = document.querySelectorAll('.ubbl-toc-item[data-category="' + group + '"]');
+                let anyVisible = false;
+                visibleItems.forEach(i => { if (i.style.display !== 'none') anyVisible = true; });
+                // For '2021' filter, check across all groups
+                if (category === '2021') {
+                    let next = h.nextElementSibling;
+                    anyVisible = false;
+                    while (next && next.classList.contains('ubbl-toc-item')) {
+                        if (next.style.display !== 'none') anyVisible = true;
+                        next = next.nextElementSibling;
+                    }
+                }
+                h.style.display = anyVisible ? '' : 'none';
+            });
+
+            // Re-apply search if active
+            if (ubblSearchQuery) searchUBBL(ubblSearchQuery);
+        }
+
+        function searchUBBL(query) {
+            ubblSearchQuery = query.trim().toLowerCase();
+            const sections = document.querySelectorAll('.ubbl-section');
+            const tocItems = document.querySelectorAll('.ubbl-toc-item');
+
+            // Clear previous highlights
+            document.querySelectorAll('.search-highlight').forEach(el => {
+                const parent = el.parentNode;
+                parent.replaceChild(document.createTextNode(el.textContent), el);
+                parent.normalize();
+            });
+
+            if (!ubblSearchQuery) {
+                // Reset visibility to current filter
+                filterUBBL(ubblActiveFilter, document.querySelector('.ubbl-filter-chips .chip.active'));
+                return;
+            }
+
+            sections.forEach(s => {
+                // Only search among currently filter-visible sections
+                const cat = s.dataset.category;
+                const is2021 = s.dataset.is2021 === 'true';
+                const has2021 = s.dataset.has2021 === 'true';
+                let filterMatch = ubblActiveFilter === 'all' || cat === ubblActiveFilter || (ubblActiveFilter === '2021' && (is2021 || has2021));
+                if (!filterMatch) {
+                    s.style.display = 'none';
+                    return;
+                }
+                const text = s.textContent.toLowerCase();
+                const match = text.includes(ubblSearchQuery);
+                s.style.display = match ? '' : 'none';
+            });
+
+            // Sync TOC
+            tocItems.forEach(t => {
+                const id = t.dataset.id;
+                const section = document.getElementById('ubbl-' + id);
+                t.style.display = section && section.style.display !== 'none' ? '' : 'none';
+            });
+
+            // Hide empty TOC headers
+            document.querySelectorAll('.ubbl-toc-header').forEach(h => {
+                let next = h.nextElementSibling;
+                let anyVisible = false;
+                while (next && next.classList.contains('ubbl-toc-item')) {
+                    if (next.style.display !== 'none') anyVisible = true;
+                    next = next.nextElementSibling;
+                }
+                h.style.display = anyVisible ? '' : 'none';
+            });
+
+            // Count visible
+            const visible = document.querySelectorAll('.ubbl-section[style=""], .ubbl-section:not([style])').length;
+            setStatus(visible + ' section(s) matching "' + ubblSearchQuery + '"');
+        }
+
+        // ── Chat ─────────────────────────────────────────
+        let chatSessionId = sessionStorage.getItem('chat-session-id');
+        if (!chatSessionId) {
+            chatSessionId = crypto.randomUUID();
+            sessionStorage.setItem('chat-session-id', chatSessionId);
+        }
+        let chatHistory = [];
+        let chatConsentGiven = sessionStorage.getItem('chat-consent') === 'true';
+        let chatStreaming = false;
+
+        // Check if chat is enabled on load
+        async function checkChatEnabled() {
+            try {
+                const res = await fetch('/api/health');
+                const data = await res.json();
+                if (data.chat_enabled) {
+                    document.getElementById('nav-chat').style.display = '';
+                    const mobileBtn = document.getElementById('mobile-nav-chat');
+                    if (mobileBtn) mobileBtn.style.display = '';
+                    if (chatConsentGiven) showChatUI();
+                }
+            } catch (e) { /* ignore */ }
+        }
+        checkChatEnabled();
+
+        function showChatUI() {
+            document.getElementById('consent-banner').style.display = 'none';
+            document.getElementById('chat-messages').style.display = 'flex';
+            document.getElementById('chat-input-area').style.display = 'flex';
+        }
+
+        async function acceptConsent() {
+            try {
+                await fetch('/api/chat/session', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        session_id: chatSessionId,
+                        consent_given: true,
+                        user_agent: navigator.userAgent,
+                    }),
+                });
+            } catch (e) { /* proceed anyway */ }
+            chatConsentGiven = true;
+            sessionStorage.setItem('chat-consent', 'true');
+            showChatUI();
+            document.getElementById('chat-input').focus();
+        }
+
+        function chatKeyDown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChat();
+            }
+        }
+
+        function appendChatMsg(role, content, messageId) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'chat-msg ' + role;
+            if (role === 'assistant') {
+                div.innerHTML = '<div class="md-content">' + marked.parse(content || '') + '</div>';
+                if (messageId) {
+                    div.innerHTML += '<div class="chat-feedback" data-msg-id="' + messageId + '">'
+                        + '<button onclick="sendFeedback(\'' + messageId + '\', \'up\', this)" title="Helpful">&#128077;</button>'
+                        + '<button onclick="sendFeedback(\'' + messageId + '\', \'down\', this)" title="Not helpful">&#128078;</button>'
+                        + '</div>';
+                }
+            } else {
+                div.textContent = content;
+            }
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return div;
+        }
+
+        function showTypingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'chat-typing';
+            div.id = 'chat-typing';
+            div.innerHTML = '<span class="dots"><span></span><span></span><span></span></span>';
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const el = document.getElementById('chat-typing');
+            if (el) el.remove();
+        }
+
+        async function sendChat() {
+            if (chatStreaming) return;
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            input.value = '';
+            input.style.height = 'auto';
+            appendChatMsg('user', msg);
+            chatHistory.push({role: 'user', content: msg});
+
+            chatStreaming = true;
+            const sendBtn = document.getElementById('chat-send-btn');
+            sendBtn.disabled = true;
+            showTypingIndicator();
+            setStatus('AI thinking...');
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        session_id: chatSessionId,
+                        message: msg,
+                        conversation_history: chatHistory.slice(-20),
+                    }),
+                });
+
+                if (!res.ok) {
+                    throw new Error('Chat request failed: ' + res.status);
+                }
+
+                removeTypingIndicator();
+                const assistantDiv = appendChatMsg('assistant', '');
+                const mdContent = assistantDiv.querySelector('.md-content');
+                let fullText = '';
+                let messageId = null;
+
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+
+                while (true) {
+                    const {done, value} = await reader.read();
+                    if (done) break;
+                    buffer += decoder.decode(value, {stream: true});
+
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || '';
+
+                    for (const line of lines) {
+                        if (!line.startsWith('data: ')) continue;
+                        try {
+                            const event = JSON.parse(line.slice(6));
+                            if (event.type === 'delta') {
+                                fullText += event.content;
+                                mdContent.innerHTML = marked.parse(fullText);
+                                const container = document.getElementById('chat-messages');
+                                container.scrollTop = container.scrollHeight;
+                            } else if (event.type === 'done') {
+                                messageId = event.message_id;
+                            }
+                        } catch (e) { /* skip bad lines */ }
+                    }
+                }
+
+                // Add feedback buttons now that we have message_id
+                if (messageId) {
+                    const feedbackDiv = document.createElement('div');
+                    feedbackDiv.className = 'chat-feedback';
+                    feedbackDiv.dataset.msgId = messageId;
+                    feedbackDiv.innerHTML =
+                        '<button onclick="sendFeedback(\'' + messageId + '\', \'up\', this)" title="Helpful">&#128077;</button>'
+                        + '<button onclick="sendFeedback(\'' + messageId + '\', \'down\', this)" title="Not helpful">&#128078;</button>';
+                    assistantDiv.appendChild(feedbackDiv);
+                }
+
+                chatHistory.push({role: 'assistant', content: fullText});
+                setStatus('Ready');
+            } catch (e) {
+                removeTypingIndicator();
+                appendChatMsg('assistant', 'Sorry, an error occurred: ' + e.message);
+                setStatus('Error');
+            }
+
+            chatStreaming = false;
+            sendBtn.disabled = false;
+        }
+
+        async function sendFeedback(messageId, rating, btn) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            try {
+                await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        message_id: messageId,
+                        session_id: chatSessionId,
+                        rating: rating,
+                    }),
+                });
+            } catch (e) { /* ignore */ }
+        }
+
+        // Auto-resize textarea
+        document.getElementById('chat-input').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
 
         // ── Browse rule set ──────────────────────────────
         async function browseRuleSet(name, btn) {
