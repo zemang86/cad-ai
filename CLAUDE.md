@@ -261,14 +261,14 @@ The script outputs raw text files — final knowledge base files should be manua
 
 FastAPI app in `web/api.py` exposes the knowledge base and compliance features over HTTP. Single-page web UI in `web/templates/index.html` (vanilla HTML/CSS/JS, no build step). CAD-inspired dark/light theme with blueprint grid background, sidebar navigation, and bottom status bar. Theme preference persists via localStorage. No LLM API — search returns raw markdown from knowledge base files.
 
-### Tabs
+### Sidebar & Tabs
 
-- **Setup Guide** — installation, CLI usage, MCP server configuration, Windows/AutoCAD setup, API docs, knowledge base coverage
-- **AI Chat** — conversational AI powered by OpenAI GPT-5 Mini with RAG retrieval from Supabase pgvector. Feature-flagged, hidden when `ACAD_CMD_CHAT_ENABLED=false`
-- **UBBL 2021** — interactive browser for UBBL content with TOC, filtering, and search
-- **Regulation Search** — keyword search across the knowledge base, renders Markdown results
-- **Compliance Check** — select rule sets and building type, returns matching rules with thresholds
-- **Rule Browser** — browse individual rule sets and their rules
+Sidebar is organized into four sections:
+
+- **Product** — Setup Guide (installation, CLI, MCP, Windows/multi-CAD, API, knowledge base coverage), Documentation (architecture, operations reference, CLI reference, API reference, config, project structure)
+- **AI** — AI Chat (OpenAI GPT-5 Mini + Supabase pgvector RAG). Feature-flagged, entire section hidden when `ACAD_CMD_CHAT_ENABLED=false`. Has orange "AI" badge.
+- **Tools** — Regulation Search, Compliance Check, Rule Browser (collapsible group)
+- **Resources** — UBBL 2021 (interactive browser with TOC, filtering, search)
 
 ### Endpoints
 
