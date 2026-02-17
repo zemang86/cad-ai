@@ -39,3 +39,15 @@ last_verified: "2026-02-17"
 - Large-scale developments may need land allocation for PMU (Main Intake Substation), wayleaves, or right of way for 132kV/275kV lines
 
 > **Citation**: TNB Connection Guidelines; ESAH Handbook
+
+## Cross-References
+
+- **High-Rise Buildings** → Electrical supply for high-rise (`building-types/01-highrise.md`)
+- **Industrial Buildings** → Industrial electrical supply (`building-types/02-industrial.md`)
+- **Part I — General Provisions** → CCC multi-agency sign-off Forms G11–G15 (`ubbl/01-general-provisions.md`)
+- **Part II — Building Operations** → By-Law 25 CCC requiring TNB clearance (`ubbl/02-building-operations.md`)
+- **Part VIII — Fire Alarm Systems** → Emergency power By-Laws 243A, 253, isolation switch By-Law 240 (`ubbl/12-fire-alarm-systems.md`)
+- **Fire Fighting Systems** → Emergency power for fire systems (`fire-bylaws/03-fire-fighting-systems.md`)
+- **Solar & Renewable** → SEDA NEM scheme grid connection (`green-building/02-solar-renewable.md`)
+- **OSC Process** → TNB as OSC technical agency (`local-authority/01-osc-process.md`)
+- **DBKL Requirements** → Infrastructure coordination (`local-authority/02-dbkl-requirements.md`)

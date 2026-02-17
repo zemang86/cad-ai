@@ -73,3 +73,12 @@ Referenced by By-laws 165(4), 166(2), 170(b), 174(1), 174A(1)(b), 168(2), 175, 1
 - Minimum staircase width = **1,050 mm** for buildings with ≤2 storeys above the exit level; **1,200 mm** for buildings with >2 storeys
 
 > **Citation:** Seventh Schedule, UBBL 1984 (Amendment 2012/2021)
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Exit width calculation, By-Law 175–177 (`ubbl/04-fire-requirements.md`)
+- **Fifth Schedule** → Purpose group classifications (`ubbl/14-schedule-fifth.md`)
+- **Part III — Spatial Requirements** → Corridor widths, dead-end limits (`ubbl/03-spatial-requirements.md`)
+- **Part VI — Constructional Requirements** → Staircase dimensions (`ubbl/09-constructional-requirements.md`)
+- **Fire Escape** → Means of escape, occupant load factors (`fire-bylaws/02-fire-escape.md`)
+- **Schedule 11 — Staircase Landings** → Landing dimensions (`ubbl/18-schedule-eleventh.md`)

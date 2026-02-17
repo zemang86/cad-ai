@@ -229,3 +229,14 @@ Temporary permits may be issued for:
 - Half fees for places of religious worship, schools, or charitable purposes
 
 > **Citation:** By-law 29, UBBL 1984 (Amendment 2021)
+
+## Cross-References
+
+- **Part I — General Provisions** → Definitions, interpretation, By-Law 2 PSP definition (`ubbl/01-general-provisions.md`)
+- **Act 133 (SDBA)** → Section 70 CCC, penalties, local authority powers (`legislation/01-act133-sdba.md`)
+- **Act 172 (Planning)** → Planning permission prerequisite before building plan submission (`legislation/02-act172-planning.md`)
+- **LAM Architects** → PSP responsibilities, CCC self-certification (`professional/01-lam-architects.md`)
+- **BEM Engineers** → PEPC for structural plan submission (By-Law 16) (`professional/02-bem-engineers.md`)
+- **CIDB Requirements** → Contractor registration, site supervisor (By-Law 5) (`agencies/02-cidb-requirements.md`)
+- **OSC Process** → Multi-agency concurrent processing of building plans (`local-authority/01-osc-process.md`)
+- **Part IA — Demolition** → Demolition plan approval process (`ubbl/11-demolition.md`)

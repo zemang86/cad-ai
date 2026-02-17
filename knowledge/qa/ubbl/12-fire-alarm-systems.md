@@ -264,3 +264,15 @@ An atrium is permitted provided:
 - Duration: not less than **3 hours** in event of normal supply failure
 
 > **Citation:** By-law 253A, UBBL 1984 (Amendment 2012/2021)
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Fire resistance, compartmentation, escape routes (`ubbl/04-fire-requirements.md`)
+- **Tenth Schedule** → Fire alarm and extinguishment requirements by purpose group (`ubbl/17-schedule-tenth.md`)
+- **Fire Fighting Systems** → Sprinklers, hose reels, hydrants, risers (`fire-bylaws/03-fire-fighting-systems.md`)
+- **High-Rise Fire Safety** → Fire command centre, pressurized staircases (`fire-bylaws/05-highrise-fire.md`)
+- **Fire Certificate** → BOMBA certification process (`fire-bylaws/01-fire-certificate.md`)
+- **MS Fire Standards** → MS 1910 sprinklers, MS 1183 fire engineering (`standards/04-ms-fire-standards.md`)
+- **TNB Electrical** → Emergency power supply, By-Law 240 isolation switch (`infrastructure/01-tnb-electrical.md`)
+- **High-Rise Buildings** → Fire lifts, lift requirements By-Law 124 (`building-types/01-highrise.md`)
+- **2021 Amendment** → New fire system provisions (`ubbl/10-2021-amendment.md`)

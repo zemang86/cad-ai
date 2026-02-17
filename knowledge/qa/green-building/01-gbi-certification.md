@@ -54,3 +54,14 @@ Established in **2009** by PAM (Persatuan Arkitek Malaysia) and ACEM (Associatio
 - **50%+** of wood-based materials must be **FSC** (Forest Stewardship Council) or **MTCC** (Malaysian Timber Certification Council) certified
 
 > **Citation**: Green Building Index Malaysia, Materials & Resources criteria
+
+## Cross-References
+
+- **MS 1525 Energy Efficiency** → OTTV/RTTV/BEI energy criteria (`../standards/01-ms1525-energy.md`)
+- **MS 2680 Residential Energy** → Residential energy efficiency (`../standards/02-ms2680-residential-energy.md`)
+- **Part VI — Constructional Requirements** → Rainwater harvesting SPAH By-Law 115 (`../ubbl/09-constructional-requirements.md`)
+- **Water & Sewerage** → Water efficiency criterion (`../infrastructure/02-water-sewerage.md`)
+- **CIDB Requirements** → Construction materials criteria (`../agencies/02-cidb-requirements.md`)
+- **DOE Environmental** → Sustainable site planning, EIA (`../agencies/03-doe-environmental.md`)
+- **Act 172 (Planning)** → Planning permission for green features (`../legislation/02-act172-planning.md`)
+- **LAM Architects** → PAM established GBI (`../professional/01-lam-architects.md`)

@@ -38,3 +38,10 @@ last_verified: "2026-02-17"
 - MSC Malaysia status buildings follow **MSC Malaysia Telecommunication Infrastructure Building Guidelines, Revision 2010**
 
 > **Citation**: MCMC MTSFB TC G007:2016
+
+## Cross-References
+
+- **High-Rise Buildings** → Telecommunication room in high-rise infrastructure (`building-types/01-highrise.md`)
+- **DBKL Requirements** → Infrastructure coordination in KL (`local-authority/02-dbkl-requirements.md`)
+- **OSC Process** → OSC coordinates all utility agencies (`local-authority/01-osc-process.md`)
+- **Housing Development** → Developer FTTP responsibilities (`legislation/04-housing-development.md`)

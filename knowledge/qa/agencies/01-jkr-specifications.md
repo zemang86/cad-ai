@@ -66,3 +66,12 @@ The JKR Standard Specifications cover **25 sections** (A through Y):
 - For stormwater/drainage: refer to **MSMA (Urban Stormwater Management Manual for Malaysia) 2nd Edition** by JPS/DID
 
 > **Citation**: JKR Geotechnical Design Guidelines
+
+## Cross-References
+
+- **Part V — Structural Requirements** → Structural requirements referenced by JKR specs (`../ubbl/08-structural-requirements.md`)
+- **Part VI — Constructional Requirements** → Construction materials and methods (`../ubbl/09-constructional-requirements.md`)
+- **Part IX — Miscellaneous** → By-Law 257 MS equivalence rule (`../ubbl/13-miscellaneous.md`)
+- **OSC Process** → JPS drainage as OSC agency (`../local-authority/01-osc-process.md`)
+- **DBKL Requirements** → CCC multi-agency sign-off including JKR (`../local-authority/02-dbkl-requirements.md`)
+- **Part II — Building Operations** → CCC process requiring JKR clearance (`../ubbl/02-building-operations.md`)

@@ -67,3 +67,14 @@ Occupant load factors for calculating exit requirements:
 | Storage/warehouse | **30.0 sq metres** |
 
 > **Citation**: Uniform Building By-Laws 1984, Part VII, Schedule to By-Law 145
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Fire resistance, compartmentation, escape routes (`ubbl/04-fire-requirements.md`)
+- **Part III — Spatial Requirements** → Corridor widths, staircase dimensions (`ubbl/03-spatial-requirements.md`)
+- **Part VI — Constructional Requirements** → Staircase construction By-Law 106–109 (`ubbl/09-constructional-requirements.md`)
+- **Seventh Schedule** → Travel distances, occupant load factors, exit capacity (`ubbl/15-schedule-seventh.md`)
+- **Schedule 11 — Staircase Landings** → Landing dimensions by building type (`ubbl/18-schedule-eleventh.md`)
+- **Part VIII — Fire Alarm Systems** → Emergency lighting By-Law 253A (`ubbl/12-fire-alarm-systems.md`)
+- **Fire Fighting Systems** → Emergency lighting 90 min (`fire-bylaws/03-fire-fighting-systems.md`)
+- **Fire Certificate** → FSA 1988 certification process (`fire-bylaws/01-fire-certificate.md`)

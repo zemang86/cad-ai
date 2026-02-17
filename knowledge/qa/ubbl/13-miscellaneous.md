@@ -56,3 +56,10 @@ Shall within **1 week** of the failure (or further period specified by the local
 Further information may be required as specified by the local authority.
 
 > **Citation:** By-law 258, UBBL 1984 (Amendment 2012)
+
+## Cross-References
+
+- **JKR Specifications** → By-Law 257 MS equivalence rule (`agencies/01-jkr-specifications.md`)
+- **BEM Engineers** → By-Law 258 building failure reporting (`professional/02-bem-engineers.md`)
+- **Part VII — Fire Requirements** → Exemption conditions for fire provisions (`ubbl/04-fire-requirements.md`)
+- **Act 133 (SDBA)** → Penalty and enforcement framework (`legislation/01-act133-sdba.md`)

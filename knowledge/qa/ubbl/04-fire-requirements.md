@@ -5,7 +5,7 @@ sections_covered: ["Part VII", "Part VIII", "By-Law 133-224", "Schedule 5", "Sch
 last_verified: "2026-02-17"
 ---
 
-# Fire Requirements
+# Part VII — Fire Requirements
 
 ## Purpose Groups (By-Law 134 / Schedule 5)
 
@@ -214,3 +214,16 @@ The 2021 Amendment replaced By-Law 194:
 - Fire lift shall have minimum car size: **1.1m x 2.1m**
 
 > **Citation**: Uniform Building By-Laws 1984, Part VII, By-Law 153
+
+## Cross-References
+
+- **Fifth Schedule** → Purpose group classifications and compartment dimensions (`ubbl/14-schedule-fifth.md`)
+- **Ninth Schedule** → Fire resistance periods by building element (`ubbl/16-schedule-ninth.md`)
+- **Seventh Schedule** → Travel distances and occupant load factors (`ubbl/15-schedule-seventh.md`)
+- **Tenth Schedule** → Fire alarm and extinguishment requirements (`ubbl/17-schedule-tenth.md`)
+- **Part VIII — Fire Alarm Systems** → Smoke control, atriums, risers, emergency power (`ubbl/12-fire-alarm-systems.md`)
+- **Fire Escape** → Means of escape, exit calculations, dead-end limits (`fire-bylaws/02-fire-escape.md`)
+- **Fire Door Ratings** → Half-hour, 1-hour, 2-hour door specifications (`fire-bylaws/04-fire-door-ratings.md`)
+- **High-Rise Fire Safety** → Special requirements for buildings >30m (`fire-bylaws/05-highrise-fire.md`)
+- **MS Fire Standards** → MS 1910 sprinklers, MS 1073 fire testing, MS 1183 fire engineering (`standards/04-ms-fire-standards.md`)
+- **2021 Amendment** → Updated fire provisions and new By-Laws (`ubbl/10-2021-amendment.md`)

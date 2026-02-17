@@ -68,3 +68,10 @@ MS 1184:2014 (2nd revision) is the Code of Practice on Universal Design and Acce
 - Width: minimum **300 mm**
 
 > **Citation**: MS 1184:2014
+
+## Cross-References
+
+- **Part IIIA — Accessibility** → UBBL accessibility requirements By-Law 34A–34G (`../ubbl/06-accessibility-requirements.md`)
+- **Parking Requirements** → OKU parking bay standards (`../ubbl/05-parking-requirements.md`)
+- **MS Fire Standards** → MS 1183:2015 public building design (`04-ms-fire-standards.md`)
+- **Fire Door Ratings** → SIRIM QAS certification (`../fire-bylaws/04-fire-door-ratings.md`)

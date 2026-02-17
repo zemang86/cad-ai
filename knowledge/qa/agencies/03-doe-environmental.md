@@ -72,3 +72,12 @@ Planning Guidelines for Environmental Noise Limits and Control (DOE, 3rd Edition
 - Section 19: Prescribed premises require DOE approval before construction
 
 > **Citation**: Environmental Quality Act 1974 (Act 127)
+
+## Cross-References
+
+- **Act 172 (Planning)** → DPR may trigger EIA requirements (`../legislation/02-act172-planning.md`)
+- **Water & Sewerage** → Sewerage connection and effluent treatment (`../infrastructure/02-water-sewerage.md`)
+- **Part IA — Demolition** → Environmental controls during demolition (`../ubbl/11-demolition.md`)
+- **Industrial Buildings** → DOE approval required for industrial buildings (`../building-types/02-industrial.md`)
+- **Selangor PBTs** → MBSA requires DOE approval for industrial/commercial (`../local-authority/03-selangor-pbt.md`)
+- **Part II — Building Operations** → Plan approval process and prescribed premises (`../ubbl/02-building-operations.md`)

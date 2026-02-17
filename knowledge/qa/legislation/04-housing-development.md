@@ -46,3 +46,10 @@ Applies to **Peninsular Malaysia** only.
 - Housing Development (Advertising) Regulations 1989
 
 > **Citation**: Housing Development (Control and Licensing) Act 1966 (Act 118)
+
+## Cross-References
+
+- **Act 133 (SDBA)** → Building compliance required before CCC/CFO (`legislation/01-act133-sdba.md`)
+- **Strata Management** → Financial framework, defect liability linkage (`legislation/03-strata-management.md`)
+- **OSC Process** → APDL licensing from KPKT (`local-authority/01-osc-process.md`)
+- **Act 172 (Planning)** → Same geographic scope (Peninsular Malaysia) (`legislation/02-act172-planning.md`)

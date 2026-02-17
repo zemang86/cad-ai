@@ -5,7 +5,7 @@ sections_covered: ["Part VI", "By-Law 81-132"]
 last_verified: "2026-02-17"
 ---
 
-# Constructional Requirements
+# Part VI — Constructional Requirements
 
 ## General (By-Laws 81-100)
 
@@ -201,3 +201,16 @@ The following constructional by-laws were deleted or substantially replaced in 2
 - References updated from British Standards to Malaysian Standards (PM/MS) throughout Part VI
 
 > **Citation**: UBBL (Amendment 2021)
+
+## Cross-References
+
+- **Part III — Spatial Requirements** → Staircase and corridor dimensions (`ubbl/03-spatial-requirements.md`)
+- **Part V — Structural Requirements** → Load-bearing and foundation requirements (`ubbl/08-structural-requirements.md`)
+- **Schedule 11 — Staircase Landings** → Landing dimensions by building type (`ubbl/18-schedule-eleventh.md`)
+- **Schedule 7 — Travel Distances** → Exit width and staircase capacity (`ubbl/15-schedule-seventh.md`)
+- **Fire Escape** → Staircase as means of escape (`fire-bylaws/02-fire-escape.md`)
+- **High-Rise Buildings** → Lift requirements, fire mode, By-Law 124 (`building-types/01-highrise.md`)
+- **MS 1525 Energy Efficiency** → Roof U-values, SPAH rainwater harvesting (`standards/01-ms1525-energy.md`)
+- **2021 Amendment** → Updated constructional provisions, energy requirements (`ubbl/10-2021-amendment.md`)
+- **JKR Specifications** → MS equivalence rule, construction materials (`agencies/01-jkr-specifications.md`)
+- **GBI Certification** → Water efficiency, rainwater harvesting criterion (`green-building/01-gbi-certification.md`)

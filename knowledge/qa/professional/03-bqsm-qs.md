@@ -22,3 +22,10 @@ last_verified: "2026-02-17"
 - Applications processed within **4 months** from receipt
 
 > **Citation**: BQSM APC Guidelines
+
+## Cross-References
+
+- **LAM Architects** → Parallel professional Acts (`01-lam-architects.md`)
+- **BEM Engineers** → PAE/PCE pathway parallel (`02-bem-engineers.md`)
+- **JKR Specifications** → JKR under Ministry of Works (`../agencies/01-jkr-specifications.md`)
+- **Strata Management** → QS involved in subdivision cost apportionment (`../legislation/03-strata-management.md`)

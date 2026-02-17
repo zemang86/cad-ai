@@ -58,3 +58,12 @@ last_verified: "2026-02-17"
 | Landscape plans | Registered Landscape Architect |
 
 > **Citation**: DBKL submission guidelines
+
+## Cross-References
+
+- **Act 172 (Planning)** → KLCP 2020/2040 under Act 172 local plans (`../legislation/02-act172-planning.md`)
+- **Act 133 (SDBA)** → Act 133 governs building submission (`../legislation/01-act133-sdba.md`)
+- **Parking Requirements** → DBKL parking guidelines match UBBL (`../ubbl/05-parking-requirements.md`)
+- **OSC Process** → One Stop Centre coordination (`01-osc-process.md`)
+- **LAM Architects** → Registered Landscape Architect requirement (`../professional/01-lam-architects.md`)
+- **BEM Engineers** → Certified Town Planner for ≥5 acres (`../professional/02-bem-engineers.md`)

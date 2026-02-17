@@ -128,11 +128,15 @@ def _parse_frontmatter(text: str) -> tuple[dict[str, str | list[str]], str]:
 def _categorize(sections_covered: list[str]) -> str:
     """Derive category from frontmatter sections_covered list."""
     joined = " ".join(sections_covered)
-    if "Schedule" in joined:
-        return "schedules"
     if "Amendment 2021" in joined:
         return "amendment"
-    if "Part" in joined or "By-Law" in joined or "By-law" in joined:
+    has_part = "Part" in joined or "By-Law" in joined or "By-law" in joined
+    has_schedule = "Schedule" in joined
+    if has_part and has_schedule:
+        return "parts"
+    if has_schedule:
+        return "schedules"
+    if has_part:
         return "parts"
     return "specialized"
 

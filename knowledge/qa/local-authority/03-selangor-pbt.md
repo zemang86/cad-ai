@@ -42,3 +42,13 @@ last_verified: "2026-02-17"
 - Required documents: cover letter, processing fee per UUKBS, Form A, JBG forms, title copy, assessment rate receipt, quit-rent receipt
 
 > **Citation**: MPKJ OSC Unit guidelines
+
+## Cross-References
+
+- **Act 133 (SDBA)** → Act 133 s.70(1) construction permission (`../legislation/01-act133-sdba.md`)
+- **OSC Process** → OSC coordination for Selangor PBTs (`01-osc-process.md`)
+- **Strata Management** → Strata Title Act for MPKJ (`../legislation/03-strata-management.md`)
+- **CIDB Requirements** → CIDB context for industrial/commercial (`../agencies/02-cidb-requirements.md`)
+- **DOE Environmental** → DOE approval for industrial/commercial (`../agencies/03-doe-environmental.md`)
+- **Fire Certificate** → BOMBA approval for industrial/commercial (`../fire-bylaws/01-fire-certificate.md`)
+- **Industrial Buildings** → Triple approval for industrial buildings (`../building-types/02-industrial.md`)

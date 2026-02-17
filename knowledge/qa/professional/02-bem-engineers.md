@@ -36,3 +36,13 @@ last_verified: "2026-02-17"
 - PEPC engaged by contractor is responsible for designing, endorsing, and supervising temporary works
 
 > **Citation**: Registration of Engineers Act 1967 (Act 138)
+
+## Cross-References
+
+- **LAM Architects** → Parallel professional registration (Architects Act 1967) (`01-lam-architects.md`)
+- **Part II — Building Operations** → By-Law 16 structural plan submission, By-Law 25 CCC (`../ubbl/02-building-operations.md`)
+- **Act 133 (SDBA)** → CCC provision requiring PEPC (`../legislation/01-act133-sdba.md`)
+- **Part V — Structural Requirements** → Structural integrity, geotechnical supervision (`../ubbl/08-structural-requirements.md`)
+- **Part IA — Demolition** → Professional Engineer for demolition plans (`../ubbl/11-demolition.md`)
+- **Part IX — Miscellaneous** → By-Law 258 building failure reporting (`../ubbl/13-miscellaneous.md`)
+- **CIDB Requirements** → CIDB accredits site supervisors (`../agencies/02-cidb-requirements.md`)

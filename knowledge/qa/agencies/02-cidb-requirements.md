@@ -78,3 +78,12 @@ Assessment standard: **CIS 18:2023**
 - Levy exemption for projects using >50% IBS (apply before 40% structural progress)
 
 > **Citation**: CIS 18:2023 (CIDB IBS Standard)
+
+## Cross-References
+
+- **Part II — Building Operations** → By-Law 5 CIDB/LPIPM site supervisor (`../ubbl/02-building-operations.md`)
+- **Act 133 (SDBA)** → Building regulations context for CIDB (`../legislation/01-act133-sdba.md`)
+- **GBI Certification** → Green building materials criteria (`../green-building/01-gbi-certification.md`)
+- **Water & Sewerage** → SPAN Type-C/D license for sewerage contractors (`../infrastructure/02-water-sewerage.md`)
+- **Part VI — Constructional Requirements** → CIDB-certified construction materials (`../ubbl/09-constructional-requirements.md`)
+- **Housing Development** → Housing development cost context (`../legislation/04-housing-development.md`)

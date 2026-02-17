@@ -70,3 +70,14 @@ last_verified: "2026-02-17"
 All Malaysian Standards developed and distributed by **SIRIM Berhad** on behalf of the **Department of Standards Malaysia**.
 
 > **Citation**: Department of Standards Malaysia
+
+## Cross-References
+
+- **Fire Fighting Systems** → Sprinkler, hydrant, and riser systems (`../fire-bylaws/03-fire-fighting-systems.md`)
+- **Part VII — Fire Requirements** → Compartment doubling with sprinklers By-Law 136 (`../ubbl/04-fire-requirements.md`)
+- **Fifth Schedule** → Purpose group classifications for sprinkler doubling (`../ubbl/14-schedule-fifth.md`)
+- **Fire Door Ratings** → MS 1073 fire resistance testing (`../fire-bylaws/04-fire-door-ratings.md`)
+- **High-Rise Fire Safety** → MS 1183:2015 refuge floors, performance-based approach (`../fire-bylaws/05-highrise-fire.md`)
+- **High-Rise Buildings** → MS 1183 application in high-rise design (`../building-types/01-highrise.md`)
+- **Part VIII — Fire Alarm Systems** → By-Laws 228, 252A sprinkler provisions (`../ubbl/12-fire-alarm-systems.md`)
+- **Tenth Schedule** → Extinguisher requirements by purpose group (`../ubbl/17-schedule-tenth.md`)

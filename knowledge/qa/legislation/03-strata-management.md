@@ -58,3 +58,9 @@ Came into force **1 June 2015**, repealing the Building and Common Property (Mai
 - Disputes regarding failure to perform duties under SMA 2013
 
 > **Citation**: Strata Management Act 2013 (Act 757)
+
+## Cross-References
+
+- **High-Rise Buildings** → High-rise apartments require strata titles (`building-types/01-highrise.md`)
+- **Housing Development** → Developer obligations post-sale, defect liability (`legislation/04-housing-development.md`)
+- **BQSM Quantity Surveyors** → QS involved in strata subdivision cost apportionment (`professional/03-bqsm-qs.md`)

@@ -41,3 +41,13 @@ IWK appointed by SPAN as Certifying Agency under Section 174 of the Water Servic
 - Water supply connection coordinated through respective state water authorities
 
 > **Citation**: Water Services Industry Act 2006 (Act 655); SPAN MSIG
+
+## Cross-References
+
+- **Act 133 (SDBA)** → Parallel regulatory framework (`legislation/01-act133-sdba.md`)
+- **OSC Process** → IWK as OSC technical agency (`local-authority/01-osc-process.md`)
+- **Part II — Building Operations** → By-Law 25 CCC requiring IWK sign-off (`ubbl/02-building-operations.md`)
+- **CIDB Requirements** → CIDB registration required for sewerage contractors (`agencies/02-cidb-requirements.md`)
+- **DOE Environmental** → Fifth Schedule effluent standards (`agencies/03-doe-environmental.md`)
+- **JKR Specifications** → JPS drainage standards (`agencies/01-jkr-specifications.md`)
+- **GBI Certification** → Water efficiency criterion (`green-building/01-gbi-certification.md`)

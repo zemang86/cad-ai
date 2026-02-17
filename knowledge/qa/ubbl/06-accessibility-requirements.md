@@ -5,7 +5,7 @@ sections_covered: ["Part IIIA (MS 1184)", "By-Law 34A-34H"]
 last_verified: "2026-02-17"
 ---
 
-# Accessibility Requirements (OKU)
+# Part IIIA — Accessibility Requirements (OKU)
 
 ## By-Law 34A: Application
 
@@ -63,3 +63,11 @@ last_verified: "2026-02-17"
 - Wayfinding signage: minimum character height **15mm** per metre of viewing distance (UBBL By-Law 34F(3))
 
 > **Citation**: Uniform Building By-Laws 1984, Part IIIA, By-Law 34F
+
+## Cross-References
+
+- **MS 1184 Accessibility** → Full MS 1184:2014 standard details for OKU design (`standards/03-ms1184-accessibility.md`)
+- **Part III — Spatial Requirements** → Room sizes, corridors, ventilation (`ubbl/03-spatial-requirements.md`)
+- **Parking Requirements** → OKU parking: 2% of bays, 3.6m × 4.8m (`ubbl/05-parking-requirements.md`)
+- **Part VI — Constructional Requirements** → Staircase and lift dimensions (`ubbl/09-constructional-requirements.md`)
+- **Educational Buildings** → Child safety and accessible routes (`building-types/04-educational.md`)

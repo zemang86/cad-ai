@@ -32,3 +32,11 @@ MS 2680:2017 is the companion standard to MS 1525, specifically for **residentia
   - **Solar absorption**: colour and material of external surfaces
 
 > **Citation**: MS 2680:2017
+
+## Cross-References
+
+- **MS 1525 Energy Efficiency** → Companion standard for non-residential buildings (`01-ms1525-energy.md`)
+- **2021 Amendment** → OTTV/RTTV thresholds (`../ubbl/10-2021-amendment.md`)
+- **Part VI — Constructional Requirements** → Roof U-values By-Law 115 (`../ubbl/09-constructional-requirements.md`)
+- **Part III — Spatial Requirements** → Window area By-Law 39 (WWR impact) (`../ubbl/03-spatial-requirements.md`)
+- **High-Rise Buildings** → High-rise apartments energy requirements (`../building-types/01-highrise.md`)

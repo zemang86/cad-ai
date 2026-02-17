@@ -87,3 +87,16 @@ By-Law 224A is a comprehensive new by-law with **9 subsections** covering fire s
 - All patient areas must have smoke detectors — heat detectors alone are insufficient
 
 > **Citation**: UBBL (Amendment 2021), By-Law 224A
+
+## Cross-References
+
+- **2021 Amendment** → By-Law 224A hospital fire escape (NEW, 9 subsections) (`ubbl/10-2021-amendment.md`)
+- **Part VII — Fire Requirements** → Purpose Group II fire resistance, By-Law 133 (`ubbl/04-fire-requirements.md`)
+- **Fifth Schedule** → Purpose Group II institutional classifications (`ubbl/14-schedule-fifth.md`)
+- **Ninth Schedule** → Fire resistance periods for healthcare (`ubbl/16-schedule-ninth.md`)
+- **Part VIII — Fire Alarm Systems** → Fire alarm zone mapping, emergency power By-Law 253 (`ubbl/12-fire-alarm-systems.md`)
+- **Tenth Schedule** → Hospital fire alarm and extinguishment requirements (`ubbl/17-schedule-tenth.md`)
+- **Schedule 11 — Staircase Landings** → By-Law 224A(8)(b) bed lift dimensions (`ubbl/18-schedule-eleventh.md`)
+- **Fire Door Ratings** → Patient ward door ratings (`fire-bylaws/04-fire-door-ratings.md`)
+- **High-Rise Fire Safety** → Refuge floor concept for hospitals (`fire-bylaws/05-highrise-fire.md`)
+- **Act 133 (SDBA)** → Parallel licensing framework (`legislation/01-act133-sdba.md`)

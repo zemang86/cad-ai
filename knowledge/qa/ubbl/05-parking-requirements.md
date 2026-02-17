@@ -5,7 +5,7 @@ sections_covered: ["Parking ratios", "Bay dimensions", "Ramp requirements", "OKU
 last_verified: "2026-02-17"
 ---
 
-# Parking Requirements
+# Parking Requirements (Local Authority)
 
 **Important**: Parking requirements are governed by **local authority guidelines** (e.g., DBKL Guidelines for Car Parking and Internal Traffic Circulation 2014), NOT by UBBL Part IX. UBBL Part IX (By-Laws 254-258) covers miscellaneous provisions. Each local authority sets its own parking standards.
 
@@ -66,3 +66,10 @@ Standard parking bay sizes per DBKL guidelines:
 - OKU bays shall be marked with the international symbol of access
 
 > **Citation**: MS 1184:2014 and local authority guidelines
+
+## Cross-References
+
+- **DBKL Requirements** → DBKL parking guidelines, 2.4m × 4.8m bays, ramp gradients (`local-authority/02-dbkl-requirements.md`)
+- **Part IIIA — Accessibility** → OKU parking: 2% of bays, 3.6m × 4.8m (`ubbl/06-accessibility-requirements.md`)
+- **MS 1184 Accessibility** → OKU parking bay standards (`standards/03-ms1184-accessibility.md`)
+- **Part III — Spatial Requirements** → Building setbacks affecting parking layout (`ubbl/03-spatial-requirements.md`)

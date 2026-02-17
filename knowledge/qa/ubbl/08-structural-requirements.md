@@ -5,7 +5,7 @@ sections_covered: ["Part V", "By-Law 53-80"]
 last_verified: "2026-02-17"
 ---
 
-# Structural Requirements
+# Part V — Structural Requirements
 
 ## General Requirements (By-Laws 53-70)
 
@@ -94,3 +94,12 @@ The following structural by-laws were **deleted** in the 2021 Amendment as they 
 - Temporary works (shoring, propping) during construction must be designed by a competent engineer
 
 > **Citation**: Uniform Building By-Laws 1984, Part V
+
+## Cross-References
+
+- **Part VI — Constructional Requirements** → Construction materials and methods (`ubbl/09-constructional-requirements.md`)
+- **JKR Specifications** → Standard specifications for structural works (`agencies/01-jkr-specifications.md`)
+- **BEM Engineers** → PEPC for structural design, accredited checkers (`professional/02-bem-engineers.md`)
+- **Part IV — Temporary Works** → Structural requirements for scaffolding and shoring (`ubbl/07-temporary-works.md`)
+- **2021 Amendment** → Updated structural provisions, geotechnical requirements (`ubbl/10-2021-amendment.md`)
+- **Industrial Buildings** → Structural load requirements for factories/warehouses (`building-types/02-industrial.md`)

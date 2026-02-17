@@ -97,3 +97,11 @@ Referenced by By-laws 142(3), 147, 158(1), 162, 213, 216(2).
 - The fire resistance period applies to all elements of structure including walls, floors, columns, beams, and structural frames
 
 > **Citation:** Ninth Schedule, UBBL 1984
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Fire resistance requirements by building element (`ubbl/04-fire-requirements.md`)
+- **Fifth Schedule** → Purpose group classifications for resistance periods (`ubbl/14-schedule-fifth.md`)
+- **Fire Door Ratings** → Door fire resistance ratings (`fire-bylaws/04-fire-door-ratings.md`)
+- **Industrial Buildings** → Purpose Group VI fire resistance (`building-types/02-industrial.md`)
+- **Healthcare Buildings** → Purpose Group II fire resistance (`building-types/03-healthcare.md`)

@@ -43,3 +43,15 @@ Industrial buildings require approval from three external authorities **before**
 - Flammable storehouses require ventilation and BOMBA/DOSH compliance
 
 > **Citation**: UBBL Part VII (Purpose Group VI); DOSH guidelines
+
+## Cross-References
+
+- **DOE Environmental** → DOE approval and EIA requirements (`agencies/03-doe-environmental.md`)
+- **Fire Certificate** → BOMBA fire certificate for industrial buildings (`fire-bylaws/01-fire-certificate.md`)
+- **Fire Fighting Systems** → Industrial fire suppression systems (`fire-bylaws/03-fire-fighting-systems.md`)
+- **Part VII — Fire Requirements** → Purpose Group VI compartment limits, By-Law 136, 139 (`ubbl/04-fire-requirements.md`)
+- **Fifth Schedule** → Purpose Group VI classifications (`ubbl/14-schedule-fifth.md`)
+- **Ninth Schedule** → Fire resistance for industrial buildings (`ubbl/16-schedule-ninth.md`)
+- **Part V — Structural Requirements** → Structural load requirements (`ubbl/08-structural-requirements.md`)
+- **Selangor PBTs** → MBSA triple approval for industrial (`local-authority/03-selangor-pbt.md`)
+- **TNB Electrical** → Industrial electrical supply (`infrastructure/01-tnb-electrical.md`)

@@ -5,7 +5,7 @@ sections_covered: ["Part 1A", "By-Law 2a-2g"]
 last_verified: "2026-02-17"
 ---
 
-# Building Demolition (Part 1A)
+# Part IA — Building Demolition
 
 Part 1A was introduced by the 2021 Amendment, adding By-Laws 2a through 2g to regulate demolition works.
 
@@ -71,3 +71,11 @@ Part 1A was introduced by the 2021 Amendment, adding By-Laws 2a through 2g to re
 - The site must be cleared of debris and hazardous materials
 
 > **Citation**: UBBL (Amendment 2021), By-Law 2g
+
+## Cross-References
+
+- **Part II — Building Operations** → Plan approval process before demolition (`ubbl/02-building-operations.md`)
+- **Act 133 (SDBA)** → Local authority powers for demolition orders (`legislation/01-act133-sdba.md`)
+- **BEM Engineers** → Professional Engineer required for demolition plans (`professional/02-bem-engineers.md`)
+- **Part IV — Temporary Works** → Hoarding and safety measures during demolition (`ubbl/07-temporary-works.md`)
+- **DOE Environmental** → Noise limits and environmental controls (`agencies/03-doe-environmental.md`)

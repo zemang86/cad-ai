@@ -5,7 +5,7 @@ sections_covered: ["Part IV", "By-Law 48-52"]
 last_verified: "2026-02-17"
 ---
 
-# Temporary Works in Connection with Building Operations
+# Part IV — Temporary Works
 
 ## By-Law 48: Hoarding
 
@@ -40,3 +40,10 @@ last_verified: "2026-02-17"
 - Local authority may order removal of any temporary structure that poses a hazard
 
 > **Citation**: Uniform Building By-Laws 1984, Part IV, By-Laws 51-52
+
+## Cross-References
+
+- **Part II — Building Operations** → Plan submission for temporary structures (`ubbl/02-building-operations.md`)
+- **Part V — Structural Requirements** → Structural integrity of temporary works (`ubbl/08-structural-requirements.md`)
+- **Part IA — Demolition** → Hoarding and safety during demolition (`ubbl/11-demolition.md`)
+- **BEM Engineers** → PEPC supervision of shoring and temporary structures (`professional/02-bem-engineers.md`)

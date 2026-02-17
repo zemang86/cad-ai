@@ -48,3 +48,13 @@ MS 1525:2019 is the Code of Practice on Energy Efficiency and Use of Renewable E
 - Facade design with optimised window-to-wall ratio
 
 > **Citation**: MS 1525:2019
+
+## Cross-References
+
+- **2021 Amendment** → By-Law 38a OTTV/RTTV mandatory for non-residential >4,000 sq m (`../ubbl/10-2021-amendment.md`)
+- **Part III — Spatial Requirements** → Mechanical ventilation MS 1525 compliance (`../ubbl/03-spatial-requirements.md`)
+- **Part VI — Constructional Requirements** → Roof U-values By-Law 115 (`../ubbl/09-constructional-requirements.md`)
+- **MS 2680 Residential Energy** → Companion standard for residential buildings (`02-ms2680-residential-energy.md`)
+- **GBI Certification** → Energy Efficiency criterion (`../green-building/01-gbi-certification.md`)
+- **High-Rise Buildings** → BEI 136 kWh/sq m/year for offices (`../building-types/01-highrise.md`)
+- **TNB Electrical** → Electrical supply for large buildings (`../infrastructure/01-tnb-electrical.md`)

@@ -56,3 +56,12 @@ A concept masterplan submitted for planning permission must include a land use s
 | 2007 | Act A1313 | Solid waste and public cleansing management provisions |
 
 > **Citation**: Town and Country Planning Act 1976 (Amendments)
+
+## Cross-References
+
+- **Act 133 (SDBA)** → Building approval after planning permission (`legislation/01-act133-sdba.md`)
+- **OSC Process** → OSC processes planning permission concurrently (`local-authority/01-osc-process.md`)
+- **DBKL Requirements** → KLCP under Act 172 local plans (`local-authority/02-dbkl-requirements.md`)
+- **Selangor PBTs** → Selangor local plans under Act 172 (`local-authority/03-selangor-pbt.md`)
+- **DOE Environmental** → EIA requirements align with Development Proposal Report (`agencies/03-doe-environmental.md`)
+- **Part II — Building Operations** → Building by-laws subordinate to development plans (`ubbl/02-building-operations.md`)

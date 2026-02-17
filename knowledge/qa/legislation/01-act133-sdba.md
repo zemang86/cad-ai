@@ -58,3 +58,14 @@ The parent Act under which the UBBL is made. Applies to **Peninsular Malaysia** 
 - Local authority no longer issues occupancy certificates
 
 > **Citation**: Street, Drainage and Building Act 1974 (Amendment 2007), Section 70
+
+## Cross-References
+
+- **Part I — General Provisions** → UBBL definitions and interpretation (`ubbl/01-general-provisions.md`)
+- **Part II — Building Operations** → Plan submission, CCC process under UBBL (`ubbl/02-building-operations.md`)
+- **Act 172 (Planning)** → Planning permission prerequisite (`legislation/02-act172-planning.md`)
+- **LAM Architects** → PSP professional responsibility under CCC (`professional/01-lam-architects.md`)
+- **BEM Engineers** → PEPC certification role (`professional/02-bem-engineers.md`)
+- **OSC Process** → OSC under KPKT for multi-agency approvals (`local-authority/01-osc-process.md`)
+- **DBKL Requirements** → Act 133 governs KL building submission (`local-authority/02-dbkl-requirements.md`)
+- **Part IA — Demolition** → Demolition plan approval under local authority powers (`ubbl/11-demolition.md`)

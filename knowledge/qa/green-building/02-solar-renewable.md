@@ -32,3 +32,10 @@ last_verified: "2026-02-17"
 - Installations after 31 December 2024: subject to monthly standby charge of **RM14/kWp** for non-domestic installations exceeding **72 kWp**
 
 > **Citation**: Energy Commission Guidelines for Solar PV Installation, effective 1 January 2025
+
+## Cross-References
+
+- **TNB Electrical** → TNB grid connection for NEM scheme (`../infrastructure/01-tnb-electrical.md`)
+- **MS 1525 Energy Efficiency** → Energy efficiency context (`../standards/01-ms1525-energy.md`)
+- **Industrial Buildings** → Non-domestic >72kWp solar (`../building-types/02-industrial.md`)
+- **Housing Development** → Residential solar subsidies context (`../legislation/04-housing-development.md`)

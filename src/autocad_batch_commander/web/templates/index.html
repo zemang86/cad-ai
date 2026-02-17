@@ -771,6 +771,47 @@
             #ubbl.tab-content.active { height: auto; }
         }
 
+        /* ── Sidebar collapsible group ───────────────── */
+        .sidebar-label-toggle {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.15s;
+        }
+        .sidebar-label-toggle:hover { color: var(--text-secondary); }
+        .sidebar-label-toggle .chevron { transition: transform 0.2s; }
+        .sidebar-label-toggle.collapsed .chevron { transform: rotate(-90deg); }
+        .tools-group.hidden { display: none; }
+
+        /* ── Guide action buttons ────────────────────── */
+        .guide-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        .guide-action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+        .guide-action-btn.copied {
+            border-color: var(--green);
+            color: var(--green);
+            background: rgba(105,219,124,0.1);
+        }
+
         /* ── Chat UI ─────────────────────────────────── */
         #chat .panel-header { flex-shrink: 0; }
         .chat-messages {
@@ -939,7 +980,7 @@
     <div class="mobile-nav">
         <button class="chip active" data-tab="setup" onclick="switchTab('setup', this)">Setup</button>
         <button class="chip" data-tab="chat" onclick="switchTab('chat', this)" id="mobile-nav-chat" style="display:none;">AI Chat</button>
-        <button class="chip" data-tab="ubbl" onclick="switchTab('ubbl', this)">UBBL 2021</button>
+        <button class="chip" data-tab="ubbl" onclick="switchTab('ubbl', this)">UBBL</button>
         <button class="chip" data-tab="search" onclick="switchTab('search', this)">Search</button>
         <button class="chip" data-tab="compliance" onclick="switchTab('compliance', this)">Compliance</button>
         <button class="chip" data-tab="rules" onclick="switchTab('rules', this)">Rules</button>
@@ -949,7 +990,7 @@
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="sidebar-section">
-                <div class="sidebar-label">Tools</div>
+                <div class="sidebar-label">Navigate</div>
                 <div class="nav-item active" data-tab="setup" onclick="switchTab('setup', this)">
                     <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="6" x2="12" y2="14"/><polyline points="8 10 12 14 16 10"/></svg></div>
                     Setup Guide
@@ -962,17 +1003,24 @@
                     <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
                     UBBL 2021
                 </div>
-                <div class="nav-item" data-tab="search" onclick="switchTab('search', this)">
-                    <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-                    Regulation Search
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label sidebar-label-toggle" onclick="toggleToolsGroup(this)">
+                    Tools <span class="chevron" style="font-size:0.5rem; margin-left:0.3rem;">&#9660;</span>
                 </div>
-                <div class="nav-item" data-tab="compliance" onclick="switchTab('compliance', this)">
-                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-                    Compliance Check
-                </div>
-                <div class="nav-item" data-tab="rules" onclick="switchTab('rules', this)">
-                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-                    Rule Browser
+                <div class="tools-group">
+                    <div class="nav-item" data-tab="search" onclick="switchTab('search', this)">
+                        <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                        Regulation Search
+                    </div>
+                    <div class="nav-item" data-tab="compliance" onclick="switchTab('compliance', this)">
+                        <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                        Compliance Check
+                    </div>
+                    <div class="nav-item" data-tab="rules" onclick="switchTab('rules', this)">
+                        <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                        Rule Browser
+                    </div>
                 </div>
             </div>
             <div class="sidebar-section">
@@ -1092,6 +1140,19 @@
                 <div class="panel-header">
                     <h2>Setup Guide</h2>
                     <span class="cmd">INSTALL</span>
+                    <div style="margin-left:auto; display:flex; gap:0.4rem; align-items:center;">
+                        <a href="https://github.com/zemang86/cad-ai" target="_blank" class="guide-action-btn" title="View on GitHub">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        </a>
+                        <button class="guide-action-btn" onclick="downloadSetupGuide()" title="Download as Markdown">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <span>.md</span>
+                        </button>
+                        <button class="guide-action-btn" onclick="copySetupGuide(this)" title="Copy Markdown for AI">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span>Copy for AI</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Step 1: Installation -->
@@ -1105,7 +1166,7 @@
                     <div class="guide-body">
                         <p>Clone the repository and set up a Python virtual environment:</p>
                         <div class="code-block"><span class="comment"># Clone the repo</span>
-git clone https://github.com/your-org/cad-ai.git
+git clone https://github.com/zemang86/cad-ai.git
 cd cad-ai
 
 <span class="comment"># Create virtual environment</span>
@@ -1123,6 +1184,9 @@ pip install -e .
 
 <span class="comment"># With web server support</span>
 pip install -e ".[web]"
+
+<span class="comment"># With web + AI chat (OpenAI + Supabase)</span>
+pip install -e ".[web,ai]"
 
 <span class="comment"># With Windows AutoCAD support (Windows only)</span>
 pip install -e ".[windows]"
@@ -1298,6 +1362,9 @@ autocad-cmd audit --folder "C:\Projects\Plans" --standard aia</div>
                                 <tr><td><span class="method method-get">GET</span></td><td><code>/api/rules</code></td><td>List all rule sets</td></tr>
                                 <tr><td><span class="method method-get">GET</span></td><td><code>/api/rules/{name}</code></td><td>Get rules in a set</td></tr>
                                 <tr><td><span class="method method-post">POST</span></td><td><code>/api/compliance/check</code></td><td>Run compliance check</td></tr>
+                                <tr><td><span class="method method-post">POST</span></td><td><code>/api/chat/session</code></td><td>Create chat session (AI Chat)</td></tr>
+                                <tr><td><span class="method method-post">POST</span></td><td><code>/api/chat</code></td><td>Send message, SSE stream (AI Chat)</td></tr>
+                                <tr><td><span class="method method-post">POST</span></td><td><code>/api/feedback</code></td><td>Submit thumbs up/down (AI Chat)</td></tr>
                             </tbody>
                         </table>
 
@@ -1742,6 +1809,94 @@ docker compose up</div>
             // Count visible
             const visible = document.querySelectorAll('.ubbl-section[style=""], .ubbl-section:not([style])').length;
             setStatus(visible + ' section(s) matching "' + ubblSearchQuery + '"');
+        }
+
+        // ── Sidebar tools group toggle ────────────────────
+        function toggleToolsGroup(label) {
+            label.classList.toggle('collapsed');
+            const group = label.nextElementSibling;
+            if (group) group.classList.toggle('hidden');
+        }
+
+        // Auto-expand tools group when a tool tab is selected
+        const _origSwitchTab2 = switchTab;
+        switchTab = function(tabId, el) {
+            _origSwitchTab2(tabId, el);
+            if (['search', 'compliance', 'rules'].includes(tabId)) {
+                const label = document.querySelector('.sidebar-label-toggle');
+                const group = document.querySelector('.tools-group');
+                if (label && label.classList.contains('collapsed')) {
+                    label.classList.remove('collapsed');
+                }
+                if (group && group.classList.contains('hidden')) {
+                    group.classList.remove('hidden');
+                }
+            }
+        };
+
+        // ── Setup Guide export ────────────────────────────
+        function getSetupGuideMarkdown() {
+            const sections = [
+                '# CAD Commander — Setup Guide\n',
+                '**Repository:** https://github.com/zemang86/cad-ai\n',
+            ];
+            document.querySelectorAll('#setup .guide-section').forEach(sec => {
+                const header = sec.querySelector('.guide-section-header h3');
+                if (header) sections.push('## ' + header.textContent.trim() + '\n');
+                const body = sec.querySelector('.guide-body');
+                if (!body) return;
+                body.querySelectorAll('h4, p, ul, ol, .code-block, .config-json, table').forEach(el => {
+                    if (el.tagName === 'H4') {
+                        sections.push('### ' + el.textContent.trim() + '\n');
+                    } else if (el.tagName === 'P') {
+                        sections.push(el.textContent.trim() + '\n');
+                    } else if (el.tagName === 'UL' || el.tagName === 'OL') {
+                        el.querySelectorAll('li').forEach(li => {
+                            sections.push('- ' + li.textContent.trim());
+                        });
+                        sections.push('');
+                    } else if (el.classList.contains('code-block') || el.classList.contains('config-json')) {
+                        const lines = el.textContent.split('\n').filter(l => !l.includes('Copy'));
+                        sections.push('```\n' + lines.join('\n').trim() + '\n```\n');
+                    } else if (el.tagName === 'TABLE') {
+                        const rows = el.querySelectorAll('tr');
+                        rows.forEach((row, i) => {
+                            const cells = Array.from(row.querySelectorAll('th, td')).map(c => c.textContent.trim());
+                            sections.push('| ' + cells.join(' | ') + ' |');
+                            if (i === 0) sections.push('| ' + cells.map(() => '---').join(' | ') + ' |');
+                        });
+                        sections.push('');
+                    }
+                });
+            });
+            return sections.join('\n');
+        }
+
+        function downloadSetupGuide() {
+            const md = getSetupGuideMarkdown();
+            const blob = new Blob([md], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cad-commander-setup-guide.md';
+            a.click();
+            URL.revokeObjectURL(url);
+            setStatus('Downloaded setup guide');
+        }
+
+        function copySetupGuide(btn) {
+            const md = getSetupGuideMarkdown();
+            navigator.clipboard.writeText(md).then(() => {
+                const span = btn.querySelector('span');
+                const orig = span.textContent;
+                span.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    span.textContent = orig;
+                    btn.classList.remove('copied');
+                }, 2000);
+                setStatus('Setup guide copied to clipboard');
+            });
         }
 
         // ── Chat ─────────────────────────────────────────

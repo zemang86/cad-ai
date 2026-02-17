@@ -65,3 +65,15 @@ last_verified: "2026-02-17"
 - Active fire protection submissions must include schematic drawings for sprinkler, hydrant, hose reel, intercom, and alarm systems
 
 > **Citation**: BOMBA guidelines
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Compartment floors, fire lifts By-Law 153 (`ubbl/04-fire-requirements.md`)
+- **Part VIII — Fire Alarm Systems** → Fire command centre, pressurized staircases (`ubbl/12-fire-alarm-systems.md`)
+- **High-Rise Buildings** → Full high-rise building requirements (`building-types/01-highrise.md`)
+- **Fire Fighting Systems** → Dry/wet risers, sprinklers (`fire-bylaws/03-fire-fighting-systems.md`)
+- **Fire Certificate** → BOMBA pre-consultation process (`fire-bylaws/01-fire-certificate.md`)
+- **MS Fire Standards** → MS 1183:2015 performance-based fire engineering (`standards/04-ms-fire-standards.md`)
+- **Tenth Schedule** → Fire system requirements by purpose group (`ubbl/17-schedule-tenth.md`)
+- **Part VI — Constructional Requirements** → Lift shaft fire-rated construction By-Law 124 (`ubbl/09-constructional-requirements.md`)
+- **2021 Amendment** → Updated pressurization threshold >45m (`ubbl/10-2021-amendment.md`)

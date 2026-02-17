@@ -40,3 +40,16 @@ last_verified: "2026-02-17"
 - **By-Law 224A** (2021): Hospital fire escape bed lift provision
 
 > **Citation**: UBBL By-Law 124; By-Law 224A (Amendment 2021)
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Compartment floors, fire lifts By-Law 153 (`ubbl/04-fire-requirements.md`)
+- **Part VIII — Fire Alarm Systems** → Fire lifts By-Law 243, smoke control (`ubbl/12-fire-alarm-systems.md`)
+- **High-Rise Fire Safety** → Full high-rise fire provisions (`fire-bylaws/05-highrise-fire.md`)
+- **MS Fire Standards** → MS 1183:2015 refuge floors, performance-based design (`standards/04-ms-fire-standards.md`)
+- **Part VI — Constructional Requirements** → Lift requirements By-Law 124 (`ubbl/09-constructional-requirements.md`)
+- **Strata Management** → Strata titles for apartments (`legislation/03-strata-management.md`)
+- **MS 1525 Energy Efficiency** → BEI for high-rise offices (`standards/01-ms1525-energy.md`)
+- **MS 2680 Residential Energy** → OTTV/RTTV for residential towers (`standards/02-ms2680-residential-energy.md`)
+- **TNB Electrical** → Electrical supply and substation requirements (`infrastructure/01-tnb-electrical.md`)
+- **Healthcare Buildings** → By-Law 224A hospital fire escape bed lift (`building-types/03-healthcare.md`)

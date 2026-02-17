@@ -100,3 +100,14 @@ last_verified: "2026-02-17"
 - Must serve: fire lifts, emergency lighting, fire pumps, smoke control systems, fire alarm systems
 
 > **Citation**: UBBL Part VIII; BOMBA requirements
+
+## Cross-References
+
+- **Part VIII — Fire Alarm Systems** → By-Laws 225–253 system requirements (`ubbl/12-fire-alarm-systems.md`)
+- **Tenth Schedule** → Fire alarm and extinguishment by purpose group (`ubbl/17-schedule-tenth.md`)
+- **Part VII — Fire Requirements** → Compartment doubling with sprinklers By-Law 136 (`ubbl/04-fire-requirements.md`)
+- **Fifth Schedule** → Purpose group classifications (`ubbl/14-schedule-fifth.md`)
+- **High-Rise Fire Safety** → Dry/wet riser thresholds for tall buildings (`fire-bylaws/05-highrise-fire.md`)
+- **MS Fire Standards** → MS 1910 sprinklers, NFPA 13 (`standards/04-ms-fire-standards.md`)
+- **Fire Certificate** → BOMBA certification (`fire-bylaws/01-fire-certificate.md`)
+- **2021 Amendment** → New fire system provisions (`ubbl/10-2021-amendment.md`)

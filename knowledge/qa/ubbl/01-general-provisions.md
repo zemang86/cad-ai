@@ -5,7 +5,7 @@ sections_covered: ["Part I", "Part II", "By-Law 1-29"]
 last_verified: "2026-02-17"
 ---
 
-# General Provisions
+# Part I — General Provisions
 
 ## By-Law 2: Definitions
 
@@ -105,3 +105,12 @@ The **Certificate of Completion and Compliance (CCC)** replaced the CFO via the 
 - **JKR**: Road and drainage infrastructure (where applicable)
 
 > **Citation**: Uniform Building By-Laws 1984, By-Law 25; Amendment 2021; Street, Drainage and Building Act 1974 (Amendment 2007), Section 70
+
+## Cross-References
+
+- **Part II — Building Operations** → Plan submission, PSP duties, CCC process (`ubbl/02-building-operations.md`)
+- **Act 133 (SDBA)** → Parent legislation for UBBL, local authority powers (`legislation/01-act133-sdba.md`)
+- **OSC Process** → One Stop Centre for multi-agency approvals (`local-authority/01-osc-process.md`)
+- **LAM Architects** → PSP professional requirements and CCC role (`professional/01-lam-architects.md`)
+- **BEM Engineers** → PEPC role in structural/M&E certification (`professional/02-bem-engineers.md`)
+- **TNB Electrical** → Forms G11–G15 for CCC multi-agency sign-off (`infrastructure/01-tnb-electrical.md`)

@@ -5,7 +5,7 @@ sections_covered: ["Part III", "By-Law 30-47"]
 last_verified: "2026-02-17"
 ---
 
-# Space, Light and Ventilation Requirements
+# Part III — Space, Light and Ventilation
 
 ## By-Law 39: Natural Lighting and Ventilation
 
@@ -110,3 +110,13 @@ Minimum floor areas for rooms in residential buildings per By-Law 42:
 - Projections over streets: at least **5 metres** above roads, not exceeding **1.25 metres** beyond approved street lines
 
 > **Citation**: Uniform Building By-Laws 1984, Part III
+
+## Cross-References
+
+- **Part VI — Constructional Requirements** → Staircase dimensions By-Law 106–109 (`ubbl/09-constructional-requirements.md`)
+- **Schedule 11 — Staircase Landings** → Landing dimensions for various building types (`ubbl/18-schedule-eleventh.md`)
+- **Schedule 7 — Travel Distances** → Exit widths and travel distance limits (`ubbl/15-schedule-seventh.md`)
+- **Part IIIA — Accessibility** → OKU access requirements By-Law 34A–34G (`ubbl/06-accessibility-requirements.md`)
+- **MS 1525 Energy Efficiency** → Mechanical ventilation compliance for AC spaces (`standards/01-ms1525-energy.md`)
+- **2021 Amendment** → Energy efficiency By-Law 38a, ventilation changes (`ubbl/10-2021-amendment.md`)
+- **Fire Escape** → Corridor width and dead-end limits for escape routes (`fire-bylaws/02-fire-escape.md`)

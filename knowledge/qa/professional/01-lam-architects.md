@@ -50,3 +50,14 @@ Three building categories:
 - LAM has power to impose penalties from fines to suspension or revocation
 
 > **Citation**: Architects Act 1967 (Act 117)
+
+## Cross-References
+
+- **Part II — Building Operations** → PSP duties By-Laws 3–7 (`../ubbl/02-building-operations.md`)
+- **Part I — General Provisions** → By-Law 2 PSP definition (`../ubbl/01-general-provisions.md`)
+- **Act 133 (SDBA)** → Section 70 CCC Amendment 2007 (`../legislation/01-act133-sdba.md`)
+- **BEM Engineers** → Parallel professional registration (`02-bem-engineers.md`)
+- **BQSM Quantity Surveyors** → QS fee scales parallel (`03-bqsm-qs.md`)
+- **GBI Certification** → PAM established GBI (`../green-building/01-gbi-certification.md`)
+- **DBKL Requirements** → Registered Landscape Architect requirement (`../local-authority/02-dbkl-requirements.md`)
+- **CIDB Requirements** → Body corporate capital requirements (`../agencies/02-cidb-requirements.md`)

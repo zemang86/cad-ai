@@ -243,3 +243,11 @@ Referenced by By-laws 225(1), 226A, 227, 228, 237, 238, 239.
 - "Opening" must be to outside/unenclosed space; openings <600 mm² or <25mm width are excluded
 
 > **Citation:** Tenth Schedule, UBBL 1984 (Amendment 2012/2021)
+
+## Cross-References
+
+- **Part VIII — Fire Alarm Systems** → By-Laws 225–253 system requirements (`ubbl/12-fire-alarm-systems.md`)
+- **Fire Fighting Systems** → Sprinklers, hose reels, hydrants, risers (`fire-bylaws/03-fire-fighting-systems.md`)
+- **Fifth Schedule** → Purpose group classifications for system requirements (`ubbl/14-schedule-fifth.md`)
+- **MS Fire Standards** → MS 1910 sprinklers, MS 1539 extinguishers (`standards/04-ms-fire-standards.md`)
+- **Healthcare Buildings** → Hospital fire alarm requirements (`building-types/03-healthcare.md`)

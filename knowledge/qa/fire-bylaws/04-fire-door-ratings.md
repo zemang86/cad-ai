@@ -55,3 +55,11 @@ last_verified: "2026-02-17"
 - Regular inspection of fire doors required as condition of Fire Certificate
 
 > **Citation**: BOMBA Arahan Keselamatan Kebakaran Bil. 2/2012; SIRIM QAS
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Fire resistance requirements, By-Law 133 (`ubbl/04-fire-requirements.md`)
+- **Ninth Schedule** → Fire resistance periods by building element (`ubbl/16-schedule-ninth.md`)
+- **MS Fire Standards** → MS 1073 fire resistance testing (`standards/04-ms-fire-standards.md`)
+- **Fire Certificate** → BOMBA certification and SIRIM QAS (`fire-bylaws/01-fire-certificate.md`)
+- **High-Rise Fire Safety** → BOMBA pre-consultation requirements (`fire-bylaws/05-highrise-fire.md`)

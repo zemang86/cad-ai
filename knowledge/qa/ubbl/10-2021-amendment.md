@@ -101,3 +101,14 @@ The 2021 Amendment to the Uniform Building By-Laws 1984 is the most significant 
 | Heavy load roof (50 kg/sq m and above) | **0.6 W/m2K** |
 
 > **Citation**: UBBL (Amendment 2021)
+
+## Cross-References
+
+- **Part III — Spatial Requirements** → Ventilation and energy changes (`ubbl/03-spatial-requirements.md`)
+- **Part V — Structural Requirements** → Updated structural provisions (`ubbl/08-structural-requirements.md`)
+- **Part VI — Constructional Requirements** → Roof U-values, SPAH (`ubbl/09-constructional-requirements.md`)
+- **Part VII — Fire Requirements** → Updated fire provisions (`ubbl/04-fire-requirements.md`)
+- **Part VIII — Fire Alarm Systems** → New fire system By-Laws (`ubbl/12-fire-alarm-systems.md`)
+- **MS 1525 Energy Efficiency** → OTTV/RTTV thresholds for non-residential (`standards/01-ms1525-energy.md`)
+- **MS 2680 Residential Energy** → OTTV/RTTV for residential buildings (`standards/02-ms2680-residential-energy.md`)
+- **Healthcare Buildings** → By-Law 224A hospital fire escape (NEW) (`building-types/03-healthcare.md`)

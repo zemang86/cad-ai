@@ -52,3 +52,15 @@ The OSC was launched on **13 April 2007** by KPKT for all local authorities. **O
 - **JKR** (public works)
 
 > **Citation**: KPKT OSC 3.0 Plus Guidelines
+
+## Cross-References
+
+- **Act 133 (SDBA)** → Local authority powers under Act 133 (`../legislation/01-act133-sdba.md`)
+- **Act 172 (Planning)** → Planning permission under Act 172 (`../legislation/02-act172-planning.md`)
+- **DBKL Requirements** → DBKL OSC at Menara DBKL II (`02-dbkl-requirements.md`)
+- **Selangor PBTs** → MPKJ OSC timeline 3/6 months (`03-selangor-pbt.md`)
+- **Water & Sewerage** → IWK as OSC technical agency (`../infrastructure/02-water-sewerage.md`)
+- **TNB Electrical** → TNB as OSC technical agency (`../infrastructure/01-tnb-electrical.md`)
+- **JKR Specifications** → JPS drainage as OSC agency (`../agencies/01-jkr-specifications.md`)
+- **DOE Environmental** → DOE as OSC technical agency (`../agencies/03-doe-environmental.md`)
+- **Fire Certificate** → BOMBA as OSC technical agency (`../fire-bylaws/01-fire-certificate.md`)

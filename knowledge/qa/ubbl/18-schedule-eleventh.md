@@ -29,3 +29,11 @@ Referenced by By-law 224A(8)(b).
 - The Eleventh Schedule is specifically referenced for hospital buildings under **By-law 224A** (2021 Amendment)
 
 > **Citation:** Eleventh Schedule, UBBL 1984 (Amendment 2021)
+
+## Cross-References
+
+- **Part VI — Constructional Requirements** → Staircase construction By-Law 106–109 (`ubbl/09-constructional-requirements.md`)
+- **Part III — Spatial Requirements** → Corridor and staircase width requirements (`ubbl/03-spatial-requirements.md`)
+- **Seventh Schedule** → Travel distances and exit capacity (`ubbl/15-schedule-seventh.md`)
+- **Fire Escape** → Staircase as means of escape (`fire-bylaws/02-fire-escape.md`)
+- **Healthcare Buildings** → By-Law 224A hospital bed lift dimensions (`building-types/03-healthcare.md`)

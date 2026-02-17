@@ -40,3 +40,15 @@ last_verified: "2026-02-17"
 - Additional considerations for child safety in vertical circulation
 
 > **Citation**: MOE; PLANMalaysia
+
+## Cross-References
+
+- **Part III — Spatial Requirements** → Room sizes, corridors, ventilation By-Laws 34, 35, 39, 44 (`ubbl/03-spatial-requirements.md`)
+- **Part VI — Constructional Requirements** → Staircase dimensions By-Law 106 (`ubbl/09-constructional-requirements.md`)
+- **Act 172 (Planning)** → PLANMalaysia planning guidelines for schools (`legislation/02-act172-planning.md`)
+- **DOE Environmental** → EIA thresholds for large school sites (`agencies/03-doe-environmental.md`)
+- **Part VII — Fire Requirements** → Fire safety for educational buildings (`ubbl/04-fire-requirements.md`)
+- **High-Rise Buildings** → Fire safety for high-rise schools (`building-types/01-highrise.md`)
+- **Fifth Schedule** → Purpose Group II educational occupancy (`ubbl/14-schedule-fifth.md`)
+- **Tenth Schedule** → Education occupancy fire alarm requirements (`ubbl/17-schedule-tenth.md`)
+- **Part IIIA — Accessibility** → Accessible routes for children (`ubbl/06-accessibility-requirements.md`)

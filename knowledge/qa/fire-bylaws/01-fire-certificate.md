@@ -79,3 +79,13 @@ The fire certificate may impose conditions including:
 - Falsifying Fire Certificate: criminal offence
 
 > **Citation**: Fire Services Act 1988, Part IV, Section 33
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → UBBL fire resistance and compartmentation (`ubbl/04-fire-requirements.md`)
+- **Part VIII — Fire Alarm Systems** → Fire detection, alarm, and suppression systems (`ubbl/12-fire-alarm-systems.md`)
+- **Fire Escape** → Means of escape requirements (`fire-bylaws/02-fire-escape.md`)
+- **Fire Fighting Systems** → Sprinklers, hydrants, risers (`fire-bylaws/03-fire-fighting-systems.md`)
+- **High-Rise Fire Safety** → BOMBA pre-consultation for high-rise (`fire-bylaws/05-highrise-fire.md`)
+- **Act 133 (SDBA)** → Building approval and CCC framework (`legislation/01-act133-sdba.md`)
+- **OSC Process** → BOMBA as technical agency in OSC (`local-authority/01-osc-process.md`)

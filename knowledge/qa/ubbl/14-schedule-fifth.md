@@ -54,3 +54,12 @@ Referenced by By-laws 134 and 138.
 - Where sprinkler systems are installed, compartment size limits may be **doubled** (By-law 136)
 
 > **Citation:** Fifth Schedule, UBBL 1984 (Amendment 2021)
+
+## Cross-References
+
+- **Part VII — Fire Requirements** → Compartmentation rules, sprinkler doubling By-Law 136 (`ubbl/04-fire-requirements.md`)
+- **Ninth Schedule** → Fire resistance periods by purpose group (`ubbl/16-schedule-ninth.md`)
+- **Seventh Schedule** → Travel distances and occupant load by purpose group (`ubbl/15-schedule-seventh.md`)
+- **Healthcare Buildings** → Purpose Group II institutional requirements (`building-types/03-healthcare.md`)
+- **Industrial Buildings** → Purpose Group VI factory compartment limits (`building-types/02-industrial.md`)
+- **Educational Buildings** → Purpose Group II educational occupancy (`building-types/04-educational.md`)
