@@ -1,15 +1,17 @@
 ---
-source_document: "Uniform Building By-Laws 1984 (Amendment 2021)"
-source_short: "UBBL"
-sections_covered: ["Part IX", "By-Law 188-200"]
+source_document: "Local Authority Guidelines (DBKL, MBPJ, etc.)"
+source_short: "LA Guidelines"
+sections_covered: ["Parking ratios", "Bay dimensions", "Ramp requirements", "OKU parking"]
 last_verified: "2026-02-17"
 ---
 
 # Parking Requirements
 
-## By-Law 188: Parking Ratios
+**Important**: Parking requirements are governed by **local authority guidelines** (e.g., DBKL Guidelines for Car Parking and Internal Traffic Circulation 2014), NOT by UBBL Part IX. UBBL Part IX (By-Laws 254-258) covers miscellaneous provisions. Each local authority sets its own parking standards.
 
-Minimum car parking provision:
+## Parking Ratios (Typical Local Authority Requirements)
+
+Minimum car parking provision (varies by local authority):
 
 | Building Use | Parking Ratio |
 |-------------|--------------|
@@ -23,14 +25,15 @@ Minimum car parking provision:
 | School | 1 lot per **2 classrooms** |
 | Place of worship | 1 lot per **10 seats** |
 
-- Motorcycle parking: **20%** of car parking requirement (UBBL By-Law 188(2))
-- Bicycle parking: **5%** of car parking requirement (UBBL By-Law 188(3))
+- Motorcycle parking: **20%** of car parking requirement
+- Bicycle parking: **5%** of car parking requirement
+- Visitor parking: typically **10%** of total parking requirement
 
-> **Citation**: Uniform Building By-Laws 1984, Part IX, By-Law 188
+> **Citation**: DBKL Guidelines for Car Parking and Internal Traffic Circulation 2014; individual PBT guidelines
 
-## By-Law 190: Parking Bay Dimensions
+## Parking Bay Dimensions
 
-Standard parking bay sizes:
+Standard parking bay sizes per DBKL guidelines:
 
 | Type | Width | Length |
 |------|-------|--------|
@@ -39,25 +42,27 @@ Standard parking bay sizes:
 | OKU (disabled) bay | **3.6 metres** | **4.8 metres** |
 | Motorcycle bay | **1.0 metre** | **2.0 metres** |
 
-- Aisle width for 90° parking: **6.1 metres** (UBBL By-Law 190(2))
-- Aisle width for 60° parking: **4.5 metres** (UBBL By-Law 190(3))
-- Aisle width for parallel parking: **3.6 metres** (UBBL By-Law 190(4))
+- Aisle width: **3.7 metres** to **7.3 metres** (varies by parking angle)
+- Aisle width for 90-degree parking: **6.1 metres**
+- Aisle width for 60-degree parking: **4.5 metres**
+- Aisle width for parallel parking: **3.6 metres**
 
-> **Citation**: Uniform Building By-Laws 1984, Part IX, By-Law 190
+> **Citation**: DBKL Guidelines for Car Parking and Internal Traffic Circulation 2014
 
-## By-Law 192: Ramp Requirements
+## Ramp Requirements
 
-- Maximum ramp gradient: **1:8** (12.5%) for multi-storey car parks (UBBL By-Law 192(1))
-- Minimum ramp width: **3.3 metres** for single-lane, **6.1 metres** for two-lane (UBBL By-Law 192(2))
-- Minimum headroom clearance: **2.4 metres** (UBBL By-Law 192(3))
-- Transition gradient at top/bottom: maximum **1:12** (UBBL By-Law 192(4))
+- Maximum ramp gradient: **1:10** (10%) for steep sections
+- Transition gradient at top/bottom: **1:25** (ramp approach)
+- Minimum ramp width: **3.3 metres** for single-lane, **6.1 metres** for two-lane
+- Minimum headroom clearance: **2.4 metres**
+- Car park floor height (UBBL): **2.5 metres** minimum
 
-> **Citation**: Uniform Building By-Laws 1984, Part IX, By-Law 192
+> **Citation**: DBKL Guidelines for Car Parking and Internal Traffic Circulation 2014
 
-## By-Law 195: OKU Parking
+## OKU Parking
 
-- Minimum **2%** of total car parking or at least **2 lots** (whichever is greater) shall be designated OKU parking (UBBL By-Law 195(1))
-- OKU parking bays shall be located nearest to building entrances and lifts (UBBL By-Law 195(2))
-- OKU bays shall be marked with the international symbol of access (UBBL By-Law 195(3))
+- Minimum **2%** of total car parking or at least **2 lots** (whichever is greater) shall be designated OKU parking
+- OKU parking bays shall be located nearest to building entrances and lifts
+- OKU bays shall be marked with the international symbol of access
 
-> **Citation**: Uniform Building By-Laws 1984, Part IX, By-Law 195
+> **Citation**: MS 1184:2014 and local authority guidelines

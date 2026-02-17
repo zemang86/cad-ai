@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCAD Batch Commander</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+        header h1 { font-size: 1.5rem; font-weight: 600; }
+        header p { opacity: 0.8; font-size: 0.9rem; margin-top: 0.25rem; }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0;
+        }
+        .tab {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .tab:hover { color: #1a1a2e; }
+        .tab.active { color: #1a1a2e; border-bottom-color: #0f3460; font-weight: 600; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            margin-bottom: 1rem;
+        }
+
+        /* Forms */
+        label { display: block; font-weight: 500; margin-bottom: 0.4rem; font-size: 0.9rem; }
+        input[type="text"], select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #0f3460;
+            box-shadow: 0 0 0 2px rgba(15,52,96,0.15);
+        }
+        button.btn {
+            background: #0f3460;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        button.btn:hover { background: #1a4a7a; }
+        button.btn:disabled { background: #999; cursor: not-allowed; }
+
+        /* Results */
+        .results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #fafbfc;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .results h3 { font-size: 1rem; margin-bottom: 0.75rem; color: #0f3460; }
+        .results .file-section { margin-bottom: 1.5rem; }
+        .results .file-section h4 {
+            font-size: 0.85rem;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .results .md-content { font-size: 0.9rem; }
+        .results .md-content h1 { font-size: 1.2rem; margin: 0.8rem 0 0.4rem; }
+        .results .md-content h2 { font-size: 1.05rem; margin: 0.7rem 0 0.3rem; }
+        .results .md-content h3 { font-size: 0.95rem; margin: 0.5rem 0 0.25rem; }
+        .results .md-content blockquote {
+            border-left: 3px solid #0f3460;
+            padding: 0.4rem 0.8rem;
+            margin: 0.5rem 0;
+            background: #f0f4f8;
+            font-size: 0.85rem;
+        }
+        .results .md-content ul, .results .md-content ol { padding-left: 1.5rem; }
+        .results .md-content table { border-collapse: collapse; width: 100%; margin: 0.5rem 0; font-size: 0.85rem; }
+        .results .md-content th, .results .md-content td { border: 1px solid #ddd; padding: 0.35rem 0.6rem; text-align: left; }
+        .results .md-content th { background: #f0f4f8; }
+        .empty { color: #999; font-style: italic; }
+
+        /* Finding cards */
+        .finding {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .finding .rule-id { font-weight: 600; color: #0f3460; }
+        .finding .by-law { font-size: 0.8rem; color: #888; }
+        .finding .threshold { font-weight: 500; color: #333; }
+        .finding .tags { margin-top: 0.3rem; }
+        .finding .tag {
+            display: inline-block;
+            background: #e8f0fe;
+            color: #0f3460;
+            padding: 0.1rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            margin-right: 0.3rem;
+        }
+        .severity-error { border-left: 3px solid #e74c3c; }
+        .severity-warning { border-left: 3px solid #f39c12; }
+        .severity-info { border-left: 3px solid #3498db; }
+
+        /* Rule browser */
+        .rule-set-btn {
+            display: inline-block;
+            margin: 0.25rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .rule-set-btn:hover { border-color: #0f3460; color: #0f3460; }
+        .rule-set-btn.active { background: #0f3460; color: white; border-color: #0f3460; }
+
+        .spinner {
+            display: inline-block;
+            width: 16px; height: 16px;
+            border: 2px solid #ddd;
+            border-top-color: #0f3460;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 640px) {
+            .container { padding: 1rem; }
+            header { padding: 1rem; }
+            .tabs { overflow-x: auto; }
+            .tab { white-space: nowrap; font-size: 0.85rem; padding: 0.6rem 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AutoCAD Batch Commander</h1>
+        <p>Malaysian Building Regulations Knowledge Base & Compliance Checker</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" data-tab="search">Regulation Search</button>
+            <button class="tab" data-tab="compliance">Compliance Checker</button>
+            <button class="tab" data-tab="rules">Rule Browser</button>
+        </div>
+
+        <!-- Search Tab -->
+        <div id="search" class="tab-content active">
+            <div class="card">
+                <label for="query-input">Search building regulations</label>
+                <input type="text" id="query-input" placeholder="e.g. minimum corridor width, fire escape requirements, parking ratio">
+                <button class="btn" id="search-btn" onclick="doSearch()">Search</button>
+            </div>
+            <div id="search-results"></div>
+        </div>
+
+        <!-- Compliance Tab -->
+        <div id="compliance" class="tab-content">
+            <div class="card">
+                <label for="rule-select">Rule Sets</label>
+                <select id="rule-select" multiple style="height: 120px;">
+                    <!-- populated dynamically -->
+                </select>
+                <label for="building-type">Building Type (optional)</label>
+                <input type="text" id="building-type" placeholder="e.g. residential, commercial, office">
+                <button class="btn" id="compliance-btn" onclick="doCompliance()">Check Compliance</button>
+            </div>
+            <div id="compliance-results"></div>
+        </div>
+
+        <!-- Rules Tab -->
+        <div id="rules" class="tab-content">
+            <div class="card">
+                <p style="margin-bottom: 0.75rem; font-size: 0.9rem; color: #666;">Select a rule set to browse its rules:</p>
+                <div id="rule-set-list"></div>
+            </div>
+            <div id="rules-results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Enter key for search
+        document.getElementById('query-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') doSearch();
+        });
+
+        // Load rule sets on page load
+        async function loadRuleSets() {
+            try {
+                const res = await fetch('/api/rules');
+                const data = await res.json();
+                const select = document.getElementById('rule-select');
+                const list = document.getElementById('rule-set-list');
+                data.rule_sets.forEach(name => {
+                    const opt = document.createElement('option');
+                    opt.value = name;
+                    opt.textContent = name;
+                    select.appendChild(opt);
+
+                    const btn = document.createElement('button');
+                    btn.className = 'rule-set-btn';
+                    btn.textContent = name;
+                    btn.onclick = () => browseRuleSet(name, btn);
+                    list.appendChild(btn);
+                });
+            } catch (e) {
+                console.error('Failed to load rule sets:', e);
+            }
+        }
+        loadRuleSets();
+
+        // Search
+        async function doSearch() {
+            const q = document.getElementById('query-input').value.trim();
+            if (!q) return;
+            const container = document.getElementById('search-results');
+            container.innerHTML = '<div class="card"><span class="spinner"></span> Searching...</div>';
+            try {
+                const res = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({question: q}),
+                });
+                const data = await res.json();
+                if (data.files_loaded === 0) {
+                    container.innerHTML = '<div class="card"><p class="empty">No results found.</p></div>';
+                    return;
+                }
+                let html = `<div class="results"><h3>${data.files_loaded} file(s) found</h3>`;
+                for (const [file, content] of Object.entries(data.results)) {
+                    html += `<div class="file-section"><h4>${file}</h4><div class="md-content">${marked.parse(content)}</div></div>`;
+                }
+                html += '</div>';
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<div class="card" style="color:#e74c3c;">Error: ${e.message}</div>`;
+            }
+        }
+
+        // Compliance check
+        async function doCompliance() {
+            const select = document.getElementById('rule-select');
+            const selected = Array.from(select.selectedOptions).map(o => o.value);
+            if (selected.length === 0) {
+                alert('Please select at least one rule set.');
+                return;
+            }
+            const bt = document.getElementById('building-type').value.trim() || null;
+            const container = document.getElementById('compliance-results');
+            container.innerHTML = '<div class="card"><span class="spinner"></span> Checking compliance...</div>';
+            try {
+                const res = await fetch('/api/compliance/check', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({rule_sets: selected, building_type: bt}),
+                });
+                const data = await res.json();
+                let html = `<div class="results"><h3>${data.total_rules} rules checked across ${data.rule_sets_loaded} rule set(s)</h3>`;
+                if (data.findings.length === 0) {
+                    html += '<p class="empty">No applicable rules found for the selected filters.</p>';
+                } else {
+                    data.findings.forEach(f => {
+                        html += `<div class="finding severity-${f.severity}">
+                            <span class="rule-id">${f.rule_id}</span>
+                            <span class="by-law">${f.by_law}</span>
+                            <div>${f.description}</div>`;
+                        if (f.threshold != null) {
+                            html += `<div class="threshold">${f.check_type}: ${f.parameter} ${f.threshold} ${f.unit}</div>`;
+                        }
+                        if (f.tags && f.tags.length) {
+                            html += '<div class="tags">' + f.tags.map(t => `<span class="tag">${t}</span>`).join('') + '</div>';
+                        }
+                        html += '</div>';
+                    });
+                }
+                html += '</div>';
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<div class="card" style="color:#e74c3c;">Error: ${e.message}</div>`;
+            }
+        }
+
+        // Browse rule set
+        async function browseRuleSet(name, btn) {
+            document.querySelectorAll('.rule-set-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const container = document.getElementById('rules-results');
+            container.innerHTML = '<div class="card"><span class="spinner"></span> Loading rules...</div>';
+            try {
+                const res = await fetch(`/api/rules/${name}`);
+                const data = await res.json();
+                let html = `<div class="results"><h3>${data.source_short} &mdash; ${data.category}</h3>
+                    <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">${data.source_document}</p>`;
+                data.rules.forEach(r => {
+                    html += `<div class="finding severity-${r.severity}">
+                        <span class="rule-id">${r.id}</span>
+                        <span class="by-law">${r.by_law}</span>
+                        <div>${r.description}</div>
+                        <div class="threshold">${r.check_type}: ${r.parameter} ${r.threshold} ${r.unit}</div>`;
+                    if (r.tags && r.tags.length) {
+                        html += '<div class="tags">' + r.tags.map(t => `<span class="tag">${t}</span>`).join('') + '</div>';
+                    }
+                    html += '</div>';
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<div class="card" style="color:#e74c3c;">Error: ${e.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

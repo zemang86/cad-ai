@@ -19,19 +19,43 @@ Buildings requiring a fire certificate (designated premises):
 - Shopping complexes and hypermarkets
 - Factories and warehouses with hazardous materials
 
+**Exemptions**: Single private dwellings and places of worship (Section 28(3))
+
 > **Citation**: Fire Services Act 1988, Part IV, Section 28
 
 ## Section 29: Application for Fire Certificate
 
-- Application for fire certificate shall be made to the **Director General of Fire and Rescue Department (Bomba)** (FSA Section 29(1))
-- Application must be submitted **before** the building is occupied (FSA Section 29(2))
+- Application submitted using **Form I** to the Director General of Fire and Rescue Department (Bomba)
+- Application must be submitted **before** the building is occupied
 - Documents required:
-  - Approved building plans
-  - Fire safety plans showing escape routes, fire equipment locations
-  - Fire safety systems documentation (alarm, sprinkler, hydrant)
-  - Form JBPM (Jabatan Bomba dan Penyelamat Malaysia) application
+  - Copy of CCC/CFO
+  - BOMBA-certified building plan
+  - Latest premises ownership letter
+  - Land ownership rights
+  - Copy of gate tax
+  - Business license
+- Apply at State JBPM Headquarters, Fire Zone Office, or online at **bless.gov.my**
+- If inspection satisfactory, certificate issued within **5 days** of payment
+- If unsatisfactory, applicant receives notice and has **360 days** to comply
 
 > **Citation**: Fire Services Act 1988, Part IV, Section 29
+
+## SPKA (Automatic Fire Monitoring System)
+
+- All designated buildings must have **SPKA** connecting fire alarm to nearest fire station
+- Replaced the former Computerized Monitoring System (CMS)
+- **No Fire Certificate will be issued without SPKA connection**
+
+> **Citation**: BOMBA directive
+
+## Validity and Renewal
+
+- Fire certificate valid for **12 months**
+- Renewal via **Form III**, submitted at least **30 days** before expiry
+- Late renewal penalty: **RM100**
+- All renewals subject to BOMBA inspection
+
+> **Citation**: Fire Services Act 1988, Part IV
 
 ## Section 32: Conditions of Fire Certificate
 
@@ -41,12 +65,17 @@ The fire certificate may impose conditions including:
 - Maintenance schedule for fire safety systems
 - Fire drill frequency (minimum **once per year**)
 - Appointment of a **fire safety manager** for the building
+- No changes that render fire protection system ineffective (Section 32, FSA 1988)
+- Must submit design to BOMBA for approval before renovation
+- New Fire Certificate required after changes to fire systems
 
 > **Citation**: Fire Services Act 1988, Part IV, Section 32
 
-## Section 34: Penalties
+## Section 33: Penalties
 
-- Occupying a designated premises without a fire certificate: fine up to **RM50,000** or imprisonment up to **3 years** or both (FSA Section 34(1))
-- Contravention of fire certificate conditions: fine up to **RM50,000** or imprisonment up to **3 years** or both (FSA Section 34(2))
+- Occupying a designated premises without a fire certificate: fine up to **RM10,000** or imprisonment up to **5 years** or both (FSA Section 33)
+- Continued daily offence: further penalty of **RM100/day**
+- Modifications without notification: fine and/or imprisonment
+- Falsifying Fire Certificate: criminal offence
 
-> **Citation**: Fire Services Act 1988, Part IV, Section 34
+> **Citation**: Fire Services Act 1988, Part IV, Section 33

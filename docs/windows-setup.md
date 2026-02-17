@@ -80,6 +80,8 @@ Claude can now run CLI commands directly, e.g.:
 
 ## Step 5: MCP Server Setup (for Claude Desktop or other MCP clients)
 
+### Windows (full AutoCAD + knowledge base)
+
 Add to your Claude Desktop config (`%APPDATA%\Claude\claude_desktop_config.json`):
 
 ```json
@@ -87,17 +89,69 @@ Add to your Claude Desktop config (`%APPDATA%\Claude\claude_desktop_config.json`
   "mcpServers": {
     "autocad-batch-commander": {
       "command": "C:\\path\\to\\cad-ai\\.venv\\Scripts\\python.exe",
-      "args": ["-m", "autocad_batch_commander.mcp_server.server"]
+      "args": ["-m", "autocad_batch_commander.mcp_server.server"],
+      "cwd": "C:\\path\\to\\cad-ai"
     }
   }
 }
 ```
 
-This gives Claude Desktop four tools:
+### macOS (knowledge base only — no AutoCAD needed)
+
+Config location: `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "autocad-batch-commander": {
+      "command": "/path/to/cad-ai/.venv/bin/python",
+      "args": ["-m", "autocad_batch_commander.mcp_server.server"],
+      "cwd": "/path/to/cad-ai"
+    }
+  }
+}
+```
+
+> The `cwd` field is required so the server can locate the knowledge base and standards files.
+
+After adding the config, **restart Claude Desktop**. The server starts automatically.
+
+### Available MCP Tools
+
+**Drawing operations** (Windows with AutoCAD running):
 - `batch_change_text` — find/replace text across drawings
 - `batch_rename_layer_tool` — rename layers
 - `standardize_layers` — apply AIA/BS1192/UBBL standards
 - `audit_drawings_tool` — check layer compliance
+
+**Knowledge base & compliance** (any platform):
+- `query_regulations` — ask natural language questions about Malaysian building regulations (UBBL, fire safety, planning, environmental, professional practice, etc.)
+- `check_compliance_tool` — run structured compliance checks against rule sets (e.g. `ubbl-spatial`, `ubbl-fire-expanded`, `energy-efficiency`, `accessibility`, `environmental`, `bomba-fire-systems`)
+- `list_available_rules` — show all available compliance rule sets
+
+### Example prompts in Claude Desktop
+
+Once configured, just chat naturally:
+- "What is the minimum corridor width for commercial buildings?"
+- "What are the fire certificate requirements from Bomba?"
+- "Check fire compliance for a commercial high-rise"
+- "What are the EIA thresholds for housing development?"
+- "What are the architect fees under LAM?"
+- "List all available compliance rule sets"
+
+### Test the server manually
+
+Before configuring Claude Desktop, verify the server starts:
+
+```bash
+# Windows
+.venv\Scripts\python -m autocad_batch_commander.mcp_server.server
+
+# macOS
+.venv/bin/python -m autocad_batch_commander.mcp_server.server
+```
+
+If it starts without errors, you're good to add it to the config.
 
 ## Troubleshooting
 

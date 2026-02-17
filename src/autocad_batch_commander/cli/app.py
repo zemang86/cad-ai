@@ -188,6 +188,25 @@ def list_rules() -> None:
 
 
 @app.command()
+def serve(
+    host: str = typer.Option("0.0.0.0", "--host", "-h", help="Bind host"),
+    port: int = typer.Option(8000, "--port", "-p", help="Bind port"),
+) -> None:
+    """Launch the web API and UI server."""
+    try:
+        import uvicorn
+    except ImportError:
+        console.print(
+            "[red]Web dependencies not installed. Run:[/red]\n"
+            "  pip install autocad-batch-commander[web]"
+        )
+        raise typer.Exit(1)
+
+    console.print(f"\nStarting web server at http://{host}:{port}")
+    uvicorn.run("autocad_batch_commander.web.api:app", host=host, port=port)
+
+
+@app.command()
 def version() -> None:
     """Show version information."""
     console.print(f"\n[bold]AutoCAD Batch Commander[/bold]  v{__version__}")

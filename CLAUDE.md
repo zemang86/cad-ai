@@ -8,6 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Install (uses venv at .venv/)
 .venv/bin/pip install -e ".[dev]"
 
+# Install with web server support
+.venv/bin/pip install -e ".[web]"
+
 # Run all tests
 .venv/bin/pytest
 
@@ -27,6 +30,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 .venv/bin/autocad-cmd query "minimum corridor width"
 .venv/bin/autocad-cmd check-compliance-cmd --rules ubbl-spatial --building-type residential --mock
 .venv/bin/autocad-cmd list-rules
+
+# Web server (requires [web] extras)
+.venv/bin/autocad-cmd serve
+.venv/bin/autocad-cmd serve --port 3000
 ```
 
 ## Architecture
@@ -34,7 +41,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Port/Adapter pattern — all business logic depends on `AutoCADPort` (Protocol), never on `win32com` directly.
 
 ```
-CLI (Typer) / MCP Server (FastMCP)
+CLI (Typer) / MCP Server (FastMCP) / Web API (FastAPI)
         ↓
 Operations (text_ops, layer_ops, audit_ops, compliance_ops)  ← pure Python, testable
 Knowledge loader (knowledge/loader.py)                       ← reads Markdown knowledge base
@@ -94,19 +101,32 @@ For Claude Desktop integration, add to `claude_desktop_config.json` — see `doc
 
 ## Knowledge Base
 
-Malaysian building regulations knowledge base in `knowledge/qa/`, covering UBBL, Fire By-Laws, and Bomba guidelines. Structure:
+Malaysian building regulations knowledge base in `knowledge/qa/`, covering UBBL, Fire By-Laws, legislation, agencies, standards, green building, local authorities, professional practice, infrastructure, and building types. Structure:
 
 ```
 knowledge/
   qa/
-    _index.md                   # Topic map — keyword → file mapping
-    ubbl/                       # 6 files: general, operations, spatial, fire, parking, accessibility
-    fire-bylaws/                # 2 files: fire certificate, fire escape
+    _index.md                   # Topic map — keyword → file mapping (~130 keyword entries)
+    ubbl/                       # 10 files: general, operations, spatial, fire, parking, accessibility, temporary works, structural, constructional, 2021 amendment
+    fire-bylaws/                # 5 files: fire certificate, fire escape, fire fighting systems, fire door ratings, highrise fire
+    legislation/                # 4 files: Act 133 SDBA, Act 172 planning, strata management, housing development
+    agencies/                   # 3 files: JKR, CIDB, DOE
+    standards/                  # 4 files: MS 1525 energy, MS 2680 residential energy, MS 1184 accessibility, MS fire standards
+    green-building/             # 2 files: GBI certification, solar/renewable
+    local-authority/            # 3 files: OSC process, DBKL, Selangor PBTs
+    professional/               # 3 files: LAM architects, BEM engineers, BQSM quantity surveyors
+    infrastructure/             # 3 files: TNB electrical, water/sewerage, telecom
+    building-types/             # 4 files: high-rise, industrial, healthcare, educational
   raw/                          # Source PDFs (gitignored)
 standards/
-  rules/                        # Machine-readable compliance rules
+  rules/                        # Machine-readable compliance rules (7 rule sets)
     ubbl-spatial.json           # 17 dimensional rules (rooms, corridors, stairs, ventilation)
     ubbl-fire.json              # 13 fire safety rules (resistance, compartmentation, escape)
+    ubbl-fire-expanded.json     # 14 expanded fire rules (purpose group compartments, travel distances, exit width)
+    bomba-fire-systems.json     # 12 fire fighting system rules (hose reel, hydrant, dry riser, fire doors)
+    energy-efficiency.json      # 8 energy rules (OTTV, RTTV, roof U-values, BEI)
+    environmental.json          # 10 environmental rules (EIA thresholds, effluent, noise)
+    accessibility.json          # 12 accessibility rules (ramps, handrails, toilets, lifts)
 ```
 
 Each Markdown file has YAML frontmatter (`source_document`, `source_short`, `sections_covered`, `last_verified`) and content with bold thresholds and `> **Citation**` blocks.
@@ -114,3 +134,33 @@ Each Markdown file has YAML frontmatter (`source_document`, `source_short`, `sec
 Each JSON rule file contains a `ComplianceRuleSet` with rules that have: `id`, `by_law`, `check_type` (min_dimension/max_dimension/min_percentage/min_duration), `threshold`, `unit`, `building_type` filter, and `tags`.
 
 To add new regulations: create Markdown files under the appropriate `knowledge/qa/` subdirectory, add entries to `_index.md`, and optionally add structured rules to `standards/rules/`.
+
+## Web API & UI
+
+FastAPI app in `web/api.py` exposes the knowledge base and compliance features over HTTP. Single-page web UI in `web/templates/index.html` (vanilla HTML/CSS/JS, no build step).
+
+### Endpoints
+
+```
+GET  /                           — Web UI (single-page app)
+GET  /api/health                 — Health check
+POST /api/query                  — Query knowledge base (body: {"question": "..."})
+GET  /api/rules                  — List all rule sets
+GET  /api/rules/{rule_set}       — Get rules in a specific rule set
+POST /api/compliance/check       — Check compliance (body: ComplianceCheckRequest)
+```
+
+Drawing operations (change-text, rename-layer, etc.) are CLI-only — they require Windows + AutoCAD and are not exposed via the web API.
+
+### Deployment
+
+```bash
+# Local
+autocad-cmd serve
+
+# Docker
+docker build -t cad-ai . && docker run -p 8000:8000 cad-ai
+
+# Docker Compose
+docker compose up
+```

@@ -1,0 +1,111 @@
+{
+  "source_document": "MS 1525:2019, MS 2680:2017, UBBL By-Law 38a (Amendment 2021)",
+  "source_short": "MS 1525/UBBL",
+  "category": "energy_efficiency",
+  "rules": [
+    {
+      "id": "MS1525-OTTV-1",
+      "description": "Maximum Overall Thermal Transfer Value for non-residential buildings",
+      "by_law": "MS 1525:2019; UBBL By-Law 38a",
+      "category": "thermal",
+      "building_type": ["commercial", "office", "institutional"],
+      "check_type": "max_dimension",
+      "parameter": "ottv",
+      "threshold": 50,
+      "unit": "W_per_sq_m",
+      "severity": "error",
+      "tags": ["energy", "thermal", "envelope"]
+    },
+    {
+      "id": "MS1525-RTTV-1",
+      "description": "Maximum Roof Thermal Transfer Value for non-residential buildings",
+      "by_law": "MS 1525:2019; UBBL By-Law 38a",
+      "category": "thermal",
+      "building_type": ["commercial", "office", "institutional"],
+      "check_type": "max_dimension",
+      "parameter": "rttv",
+      "threshold": 25,
+      "unit": "W_per_sq_m",
+      "severity": "error",
+      "tags": ["energy", "thermal", "roof"]
+    },
+    {
+      "id": "MS2680-OTTV-1",
+      "description": "Maximum Overall Thermal Transfer Value for residential buildings",
+      "by_law": "MS 2680:2017",
+      "category": "thermal",
+      "building_type": ["residential"],
+      "check_type": "max_dimension",
+      "parameter": "ottv",
+      "threshold": 50,
+      "unit": "W_per_sq_m",
+      "severity": "warning",
+      "tags": ["energy", "thermal", "envelope", "residential"]
+    },
+    {
+      "id": "MS2680-RTTV-1",
+      "description": "Maximum Roof Thermal Transfer Value for residential buildings",
+      "by_law": "MS 2680:2017",
+      "category": "thermal",
+      "building_type": ["residential"],
+      "check_type": "max_dimension",
+      "parameter": "rttv",
+      "threshold": 25,
+      "unit": "W_per_sq_m",
+      "severity": "warning",
+      "tags": ["energy", "thermal", "roof", "residential"]
+    },
+    {
+      "id": "UBBL-38a-1",
+      "description": "Energy efficiency mandatory threshold — AC space exceeding limit must comply with MS 1525",
+      "by_law": "UBBL By-Law 38a (Amendment 2021)",
+      "category": "energy_compliance",
+      "building_type": ["commercial", "office", "institutional"],
+      "check_type": "min_dimension",
+      "parameter": "ac_space_mandatory_threshold",
+      "threshold": 4000,
+      "unit": "sq_metres",
+      "severity": "error",
+      "tags": ["energy", "mandatory", "compliance"]
+    },
+    {
+      "id": "UBBL-38a-2",
+      "description": "Maximum roof U-value for light load roof (below 50 kg/sq m)",
+      "by_law": "UBBL By-Law 38a (Amendment 2021)",
+      "category": "thermal",
+      "building_type": [],
+      "check_type": "max_dimension",
+      "parameter": "roof_u_value_light",
+      "threshold": 0.4,
+      "unit": "W_per_sq_m_K",
+      "severity": "error",
+      "tags": ["energy", "thermal", "roof", "u_value"]
+    },
+    {
+      "id": "UBBL-38a-3",
+      "description": "Maximum roof U-value for heavy load roof (50 kg/sq m and above)",
+      "by_law": "UBBL By-Law 38a (Amendment 2021)",
+      "category": "thermal",
+      "building_type": [],
+      "check_type": "max_dimension",
+      "parameter": "roof_u_value_heavy",
+      "threshold": 0.6,
+      "unit": "W_per_sq_m_K",
+      "severity": "error",
+      "tags": ["energy", "thermal", "roof", "u_value"]
+    },
+    {
+      "id": "MS1525-BEI-1",
+      "description": "Building Energy Intensity benchmark for office buildings",
+      "by_law": "MS 1525:2019",
+      "category": "energy_performance",
+      "building_type": ["office"],
+      "check_type": "max_dimension",
+      "parameter": "building_energy_intensity",
+      "threshold": 136,
+      "unit": "kWh_per_sq_m_per_year",
+      "severity": "warning",
+      "tags": ["energy", "performance", "benchmark"]
+    }
+  ]
+}
