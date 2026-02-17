@@ -17,3 +17,4 @@ venv/
 *.bak
 .DS_Store
 knowledge/raw/*.pdf
+sample/
