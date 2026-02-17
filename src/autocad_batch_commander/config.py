@@ -2,9 +2,35 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from pydantic_settings import BaseSettings
+
+
+def _find_project_root() -> Path:
+    """Find the project root by walking up from this file or cwd.
+
+    Works both in development (src layout) and when installed as a package
+    (e.g. on Vercel where __file__ points to site-packages).
+    """
+    # From source: src/autocad_batch_commander/config.py → repo root
+    src_root = Path(__file__).resolve().parent.parent.parent
+    if (src_root / "knowledge").is_dir():
+        return src_root
+
+    # Installed package: try VERCEL_PROJECT_ROOT or cwd
+    for candidate in [
+        Path(os.environ.get("VERCEL_PROJECT_ROOT", "")),
+        Path.cwd(),
+    ]:
+        if candidate.is_dir() and (candidate / "knowledge").is_dir():
+            return candidate
+
+    return src_root  # fallback
+
+
+_PROJECT_ROOT = _find_project_root()
 
 
 class Settings(BaseSettings):
@@ -14,8 +40,8 @@ class Settings(BaseSettings):
 
     backup_enabled: bool = True
     log_level: str = "INFO"
-    standards_dir: Path = Path(__file__).resolve().parent.parent.parent / "standards"
-    knowledge_dir: Path = Path(__file__).resolve().parent.parent.parent / "knowledge"
+    standards_dir: Path = _PROJECT_ROOT / "standards"
+    knowledge_dir: Path = _PROJECT_ROOT / "knowledge"
     use_mock: bool = False
 
     # AI Chat settings

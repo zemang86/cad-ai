@@ -63,7 +63,7 @@ The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI
 - **Operations** all follow the same shape: take an `AutoCADPort` adapter + a Pydantic request model, iterate `.dwg` files via `utils/file_ops.get_dwg_files()`, open/modify/save/close each file, return an `OperationResult` or `AuditResult`.
 - **Standards** are JSON files in `standards/` with `mappings` (old→new layer names) and `required_layers`. Used by `layer_ops.batch_standardize_layers()` and `audit_ops.audit_drawings()`.
 - **Compliance rules** are JSON files in `standards/rules/` (e.g. `ubbl-spatial.json`, `ubbl-fire.json`). Each contains a `ComplianceRuleSet` with numeric thresholds, by-law references, and building-type filters. Used by `compliance_ops.check_compliance()`.
-- **Knowledge base** is Markdown files in `knowledge/qa/` organized by source (ubbl/, fire-bylaws/). A topic index (`_index.md`) maps keywords to files. The loader (`knowledge/loader.py`) finds relevant files via keyword matching and returns content for Claude to synthesize. For AI Chat, the knowledge base is also embedded into Supabase pgvector (414 chunks) for semantic retrieval.
+- **Knowledge base** is Markdown files in `knowledge/qa/` organized by source (ubbl/, fire-bylaws/). A topic index (`_index.md`) maps keywords to files. The loader (`knowledge/loader.py`) finds relevant files via keyword matching and returns content for Claude to synthesize. For AI Chat, the knowledge base is also embedded into Supabase pgvector (463 chunks) for semantic retrieval. Each file includes a `## Cross-References` section linking related By-Laws, Schedules, Acts, and Standards across the knowledge base.
 - **Config** uses pydantic-settings with env prefix `ACAD_CMD_` (e.g. `ACAD_CMD_LOG_LEVEL`). `standards_dir` points to `<repo>/standards/`, `knowledge_dir` points to `<repo>/knowledge/`.
 - **Backups** go to `.backups/` subdirectory relative to each DWG file, with timestamped filenames.
 
@@ -210,12 +210,30 @@ Drawing operations (change-text, rename-layer, etc.) are CLI-only — they requi
 # Local
 autocad-cmd serve
 
+# Vercel (production)
+# Auto-deploys from main branch. Entrypoint: api/index.py
+# Set env vars in Vercel dashboard: ACAD_CMD_CHAT_ENABLED, ACAD_CMD_OPENAI_API_KEY,
+# ACAD_CMD_SUPABASE_URL, ACAD_CMD_SUPABASE_KEY
+
 # Docker
 docker build -t cad-ai . && docker run -p 8000:8000 cad-ai
 
 # Docker Compose
 docker compose up
 ```
+
+### Vercel Deployment
+
+The app deploys to Vercel as a serverless FastAPI function. Key files:
+
+- `api/index.py` — Vercel entrypoint, sets `sys.path` and env defaults for knowledge/standards dirs
+- `vercel.json` — Region config (sin1 Singapore)
+- `.python-version` — Pins Python 3.12 for Vercel runtime
+- `requirements.txt` — Fallback deps list (Vercel primarily uses `pyproject.toml`)
+
+Web+AI deps (fastapi, openai, supabase, etc.) are in base `dependencies` in `pyproject.toml` so Vercel auto-installs them. `config.py` uses `_find_project_root()` to resolve knowledge/standards paths in both dev (src layout) and Vercel (installed package) environments.
+
+**Local dev is unaffected** — the Vercel files are only used during Vercel builds.
 
 ## AI Chat (RAG Pipeline)
 
