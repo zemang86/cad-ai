@@ -12,7 +12,10 @@ from pydantic import BaseModel
 
 from autocad_batch_commander import __version__
 from autocad_batch_commander.config import settings
-from autocad_batch_commander.knowledge.loader import load_ubbl_content, query_knowledge_base
+from autocad_batch_commander.knowledge.loader import (
+    load_ubbl_content,
+    query_knowledge_base,
+)
 from autocad_batch_commander.operations.compliance_ops import (
     check_compliance,
     list_rule_sets,

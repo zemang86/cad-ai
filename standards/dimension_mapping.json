@@ -1,0 +1,47 @@
+{
+  "_comment": "Maps layer names to compliance rule parameters for automated measurement checking.",
+  "mappings": [
+    {
+      "layer_patterns": ["CORRIDOR", "A-CORR", "HALL"],
+      "rule_parameter": "corridor_width",
+      "dimension_type": "linear",
+      "measurement": "min_perpendicular"
+    },
+    {
+      "layer_patterns": ["DOOR", "A-DOOR"],
+      "rule_parameter": "door_width",
+      "dimension_type": "linear",
+      "measurement": "min_value"
+    },
+    {
+      "layer_patterns": ["ROOM", "A-ROOM", "BEDROOM", "LIVING"],
+      "rule_parameter": "room_area",
+      "dimension_type": "area",
+      "measurement": "min_area"
+    },
+    {
+      "layer_patterns": ["STAIR", "A-STAIR"],
+      "rule_parameter": "stair_width",
+      "dimension_type": "linear",
+      "measurement": "min_value"
+    },
+    {
+      "layer_patterns": ["WINDOW", "A-WIND", "A-GLAZ"],
+      "rule_parameter": "window_area",
+      "dimension_type": "area",
+      "measurement": "min_percentage"
+    },
+    {
+      "layer_patterns": ["RAMP", "A-RAMP"],
+      "rule_parameter": "ramp_width",
+      "dimension_type": "linear",
+      "measurement": "min_value"
+    },
+    {
+      "layer_patterns": ["PARKING", "PARK", "CAR-PARK"],
+      "rule_parameter": "parking_bay_width",
+      "dimension_type": "linear",
+      "measurement": "min_value"
+    }
+  ]
+}

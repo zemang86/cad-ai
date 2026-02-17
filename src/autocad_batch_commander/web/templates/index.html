@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAD Commander</title>
+    <title>ARAIDEN</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         :root[data-theme="dark"] {
@@ -623,6 +623,7 @@
         .badge-win { background: rgba(77,166,255,0.12); color: var(--accent); }
         .badge-mac { background: rgba(105,219,124,0.12); color: var(--green); }
         .badge-all { background: rgba(102,217,232,0.12); color: var(--cyan); }
+        .badge-ai { background: rgba(255,169,77,0.15); color: var(--orange); font-size: 0.6rem; padding: 0.1rem 0.4rem; }
         .endpoint-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin: 0.5rem 0; }
         .endpoint-table th, .endpoint-table td { border: 1px solid var(--border); padding: 0.35rem 0.65rem; text-align: left; }
         .endpoint-table th { background: var(--bg-tertiary); color: var(--text-primary); font-weight: 600; }
@@ -961,7 +962,7 @@
                     <path d="M13 13h4M13 17h4"/>
                 </svg>
             </div>
-            <span class="app-title"><span>CAD</span> Commander</span>
+            <span class="app-title"><span>ARA</span>IDEN</span>
         </div>
         <div class="header-right">
             <span class="status-bar"><span class="status-dot"></span>READY</span>
@@ -979,29 +980,33 @@
     <!-- Mobile nav -->
     <div class="mobile-nav">
         <button class="chip active" data-tab="setup" onclick="switchTab('setup', this)">Setup</button>
+        <button class="chip" data-tab="docs" onclick="switchTab('docs', this)">Docs</button>
         <button class="chip" data-tab="chat" onclick="switchTab('chat', this)" id="mobile-nav-chat" style="display:none;">AI Chat</button>
-        <button class="chip" data-tab="ubbl" onclick="switchTab('ubbl', this)">UBBL</button>
         <button class="chip" data-tab="search" onclick="switchTab('search', this)">Search</button>
         <button class="chip" data-tab="compliance" onclick="switchTab('compliance', this)">Compliance</button>
         <button class="chip" data-tab="rules" onclick="switchTab('rules', this)">Rules</button>
+        <button class="chip" data-tab="ubbl" onclick="switchTab('ubbl', this)">UBBL</button>
     </div>
 
     <div class="layout">
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="sidebar-section">
-                <div class="sidebar-label">Navigate</div>
+                <div class="sidebar-label">Product</div>
                 <div class="nav-item active" data-tab="setup" onclick="switchTab('setup', this)">
                     <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="6" x2="12" y2="14"/><polyline points="8 10 12 14 16 10"/></svg></div>
                     Setup Guide
                 </div>
-                <div class="nav-item" data-tab="chat" onclick="switchTab('chat', this)" id="nav-chat" style="display:none;">
-                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-                    AI Chat
+                <div class="nav-item" data-tab="docs" onclick="switchTab('docs', this)">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+                    Documentation
                 </div>
-                <div class="nav-item" data-tab="ubbl" onclick="switchTab('ubbl', this)">
-                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-                    UBBL 2021
+            </div>
+            <div class="sidebar-section" id="sidebar-ai-section" style="display:none;">
+                <div class="sidebar-label">AI</div>
+                <div class="nav-item" data-tab="chat" onclick="switchTab('chat', this)" id="nav-chat">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                    AI Chat <span class="badge badge-ai" style="margin-left:auto;">AI</span>
                 </div>
             </div>
             <div class="sidebar-section">
@@ -1024,6 +1029,13 @@
                 </div>
             </div>
             <div class="sidebar-section">
+                <div class="sidebar-label">Resources</div>
+                <div class="nav-item" data-tab="ubbl" onclick="switchTab('ubbl', this)">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                    UBBL 2021
+                </div>
+            </div>
+            <div class="sidebar-section">
                 <div class="sidebar-label">Info</div>
                 <div class="nav-item" style="cursor:default; font-size:0.72rem; color:var(--text-muted);">
                     <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
@@ -1038,6 +1050,19 @@
                         <div style="color:var(--text-secondary);" id="rule-count-text">Loading...</div>
                         <div>Rule sets</div>
                     </div>
+                </div>
+            </div>
+            <div class="sidebar-section" style="border-left:2px solid var(--orange); padding-left:0.6rem; margin:0.5rem 0.75rem;">
+                <div class="sidebar-label" style="color:var(--orange);">&#9888; Pre-Release</div>
+                <div style="font-size:0.65rem; color:var(--text-muted); line-height:1.5; padding:0.2rem 0;">
+                    This tool is in early development and provided as-is for reference purposes only. Always seek professional consultation from qualified architects, engineers, or relevant authorities for regulatory compliance decisions.
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label">Author</div>
+                <div style="font-size:0.72rem; color:var(--text-muted); padding:0.2rem 0.75rem; line-height:1.6;">
+                    <div style="color:var(--text-secondary);">Hazman Hassan</div>
+                    <div><a href="https://zemang.my" target="_blank" style="color:var(--accent); text-decoration:none;">zemang.my</a> &middot; <a href="https://github.com/zemang86" target="_blank" style="color:var(--accent); text-decoration:none;">GitHub</a></div>
                 </div>
             </div>
         </nav>
@@ -1123,15 +1148,309 @@
                     <h2>AI Chat</h2>
                     <span class="cmd">ASK</span>
                 </div>
+                <div style="padding:0.5rem 1rem; font-size:0.7rem; color:var(--text-muted); border-bottom:1px solid var(--border-subtle); line-height:1.5;">
+                    <div>Powered by GPT-5 Mini | Advanced models available for partners (Claude Sonnet &amp; Opus)</div>
+                    <div style="margin-top:0.3rem; color:var(--orange); display:flex; align-items:flex-start; gap:0.35rem;">
+                        <span style="flex-shrink:0;">&#9888;</span>
+                        <span>This AI assistant is for reference only. Always consult qualified professionals for final decisions.</span>
+                    </div>
+                </div>
                 <div id="consent-banner" class="consent-banner">
-                    <p>Ask questions about Malaysian building regulations (UBBL, fire by-laws, standards) and get AI-powered answers with citations.</p>
-                    <p class="warn">Conversations are stored anonymously to improve the service. Do not share personal or confidential information.</p>
+                    <p><strong>ARAIDEN AI Chat</strong> &mdash; Ask questions about Malaysian building regulations (UBBL, fire by-laws, standards) and get AI-powered answers with citations.</p>
+                    <p class="warn">Conversations are stored anonymously to improve the service. Do not share personal or confidential information. This tool is for reference only &mdash; always seek professional consultation for regulatory compliance decisions.</p>
                     <button class="btn" onclick="acceptConsent()">I Understand</button>
                 </div>
                 <div class="chat-messages" id="chat-messages" style="display:none;"></div>
                 <div class="chat-input-area" id="chat-input-area" style="display:none;">
                     <textarea id="chat-input" placeholder="Ask about building regulations..." rows="1" onkeydown="chatKeyDown(event)"></textarea>
                     <button class="btn" id="chat-send-btn" onclick="sendChat()">Send</button>
+                </div>
+            </div>
+
+            <!-- Documentation Tab -->
+            <div id="docs" class="tab-content">
+                <div class="panel-header">
+                    <h2>Documentation</h2>
+                    <span class="cmd">DOCS</span>
+                </div>
+                <div class="guide-container">
+
+                    <!-- Architecture -->
+                    <div class="guide-section">
+                        <div class="guide-section-header" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                            <span class="step-num">1</span>
+                            <h3>Architecture Overview</h3>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                        <div class="guide-body">
+                            <p>ARAIDEN uses a <strong>Port/Adapter pattern</strong> where all business logic depends on the <code>AutoCADPort</code> protocol, never on COM or platform APIs directly. This enables testing on any platform.</p>
+
+                            <h4>System Layers</h4>
+                            <div class="code-block"><span class="comment"># Three entry points share the same operations layer</span>
+CLI (Typer)  |  MCP Server (FastMCP)  |  Web API (FastAPI)
+                        |
+          Operations Layer (pure Python)
+     text_ops | layer_ops | geometry_ops | block_ops
+     xref_ops | drawing_ops | audit_ops | compliance_ops
+                        |
+              AutoCADPort (Protocol)
+                        |
+        ┌───────────────┼───────────────┐
+  MockAdapter      AutoCAD COM     BricsCAD COM
+  (any platform)   (Windows)       ZWCAD COM</div>
+
+                            <h4>Key Design Principles</h4>
+                            <ul>
+                                <li><strong>One-way dependencies:</strong> CLI/MCP/Web &rarr; Operations &rarr; Port. Operations never import from entry points.</li>
+                                <li><strong>Pydantic models:</strong> All data flows through typed request/result models defined in <code>models.py</code>.</li>
+                                <li><strong>Factory pattern:</strong> <code>get_acad_adapter()</code> auto-selects MockAdapter on macOS or the correct COM adapter on Windows.</li>
+                                <li><strong>Multi-CAD support:</strong> <code>COMAdapterBase</code> contains all COM logic. AutoCAD, BricsCAD, and ZWCAD are thin subclasses that only set <code>_dispatch_name</code>.</li>
+                            </ul>
+
+                            <h4>AutoCADPort Protocol (25 methods)</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Category</th><th>Methods</th></tr></thead>
+                                <tbody>
+                                    <tr><td><strong>Lifecycle</strong></td><td><code>open_drawing</code>, <code>save_drawing</code>, <code>close_drawing</code></td></tr>
+                                    <tr><td><strong>Text</strong></td><td><code>get_text_entities</code>, <code>set_text_value</code></td></tr>
+                                    <tr><td><strong>Layers</strong></td><td><code>get_layers</code>, <code>rename_layer</code>, <code>create_layer</code>, <code>set_layer_properties</code>, <code>delete_layer</code></td></tr>
+                                    <tr><td><strong>Geometry</strong></td><td><code>get_dimensions</code>, <code>get_polylines</code>, <code>get_entity_coordinates</code>, <code>get_drawing_extents</code></td></tr>
+                                    <tr><td><strong>Blocks</strong></td><td><code>get_blocks</code>, <code>get_block_attributes</code>, <code>set_block_attribute</code>, <code>insert_block</code></td></tr>
+                                    <tr><td><strong>XREFs</strong></td><td><code>get_xrefs</code>, <code>reload_xref</code>, <code>attach_xref</code>, <code>detach_xref</code></td></tr>
+                                    <tr><td><strong>Layouts</strong></td><td><code>get_layouts</code>, <code>get_viewports</code></td></tr>
+                                    <tr><td><strong>Utility</strong></td><td><code>plot_layout</code>, <code>purge</code>, <code>audit_drawing</code></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Operations Reference -->
+                    <div class="guide-section">
+                        <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                            <span class="step-num">2</span>
+                            <h3>CAD Operations Reference</h3>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                        <div class="guide-body hidden">
+                            <p>All operations follow the same pattern: <code>(adapter, request) &rarr; result</code>. They iterate <code>.dwg</code> files in a folder, open each drawing via the adapter, perform the operation, and return a typed result.</p>
+
+                            <h4>Geometry &amp; Measurement</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Operation</th><th>Module</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>extract_dimensions</code></td><td>geometry_ops</td><td>Extract dimension entities (linear, aligned, angular, radial, diametric) with values, layers, and associated points.</td></tr>
+                                    <tr><td><code>extract_areas</code></td><td>geometry_ops</td><td>Extract areas from closed polylines. Filter by layer, min/max area.</td></tr>
+                                    <tr><td><code>measure_compliance</code></td><td>geometry_ops</td><td>Auto-compare drawing dimensions against UBBL rule thresholds using layer-to-rule mapping (<code>dimension_mapping.json</code>).</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h4>Text &amp; Layers</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Operation</th><th>Module</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>batch_find_replace</code></td><td>text_ops</td><td>Find and replace text across drawings with layer and case filters.</td></tr>
+                                    <tr><td><code>batch_rename_layer</code></td><td>layer_ops</td><td>Rename a specific layer across all drawings.</td></tr>
+                                    <tr><td><code>batch_standardize_layers</code></td><td>layer_ops</td><td>Standardize layer names to AIA, BS1192, or UBBL conventions.</td></tr>
+                                    <tr><td><code>audit_drawings</code></td><td>audit_ops</td><td>Audit layer compliance against naming standards.</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h4>Blocks &amp; Schedules</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Operation</th><th>Module</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>batch_update_title_blocks</code></td><td>block_ops</td><td>Update title block attributes (project no., date, drawn by) across all drawings.</td></tr>
+                                    <tr><td><code>extract_schedule</code></td><td>block_ops</td><td>Extract door/window/room schedules from block attributes.</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h4>XREFs &amp; Utilities</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Operation</th><th>Module</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>manage_xrefs</code></td><td>xref_ops</td><td>List, reload, attach, or detach external references.</td></tr>
+                                    <tr><td><code>batch_purge</code></td><td>drawing_ops</td><td>Purge unused items and optionally audit for errors.</td></tr>
+                                    <tr><td><code>batch_plot</code></td><td>drawing_ops</td><td>Batch plot layouts to PDF or DWF.</td></tr>
+                                    <tr><td><code>drawing_search</code></td><td>drawing_ops</td><td>Search text, attributes, and layers across drawings.</td></tr>
+                                    <tr><td><code>get_drawing_info</code></td><td>drawing_ops</td><td>Comprehensive info summary per file (layers, blocks, dims, extents).</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h4>Compliance</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Operation</th><th>Module</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>check_compliance</code></td><td>compliance_ops</td><td>Check applicable rules from rule set JSON files.</td></tr>
+                                    <tr><td><code>query_knowledge_base</code></td><td>knowledge/loader</td><td>Search the Markdown knowledge base by keywords.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- CLI Reference -->
+                    <div class="guide-section">
+                        <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                            <span class="step-num">3</span>
+                            <h3>CLI Command Reference</h3>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                        <div class="guide-body hidden">
+                            <p>All commands use <code>autocad-cmd &lt;command&gt;</code>. Add <code>--mock</code> for mock adapter on macOS/Linux.</p>
+
+                            <table class="endpoint-table">
+                                <thead><tr><th>Command</th><th>Description</th><th>Key Options</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>change-text</code></td><td>Find &amp; replace text</td><td><code>--find</code>, <code>--replace</code>, <code>--layers</code></td></tr>
+                                    <tr><td><code>rename-layer</code></td><td>Rename a layer</td><td><code>--old</code>, <code>--new</code></td></tr>
+                                    <tr><td><code>standardize</code></td><td>Standardize layer names</td><td><code>--standard</code> (AIA/BS1192/UBBL)</td></tr>
+                                    <tr><td><code>audit</code></td><td>Audit layer compliance</td><td><code>--standard</code></td></tr>
+                                    <tr><td><code>extract-dims</code></td><td>Extract dimensions</td><td><code>--layers</code>, <code>--types</code></td></tr>
+                                    <tr><td><code>extract-areas</code></td><td>Extract polyline areas</td><td><code>--min-area</code>, <code>--max-area</code></td></tr>
+                                    <tr><td><code>check-drawing</code></td><td>Measure vs. UBBL rules</td><td><code>--rules</code>, <code>--building-type</code></td></tr>
+                                    <tr><td><code>update-titleblock</code></td><td>Update title blocks</td><td><code>--updates</code> (TAG=VALUE,...)</td></tr>
+                                    <tr><td><code>extract-schedule</code></td><td>Extract block schedules</td><td><code>--block-name</code>, <code>--tags</code></td></tr>
+                                    <tr><td><code>manage-xrefs</code></td><td>XREF management</td><td><code>--action</code> (list/reload/attach/detach)</td></tr>
+                                    <tr><td><code>search-drawings</code></td><td>Search across drawings</td><td><code>--text</code>, <code>--search-in</code></td></tr>
+                                    <tr><td><code>batch-plot</code></td><td>Plot to PDF/DWF</td><td><code>--output-dir</code>, <code>--format</code></td></tr>
+                                    <tr><td><code>purge</code></td><td>Purge unused items</td><td><code>--no-audit</code>, <code>--no-backup</code></td></tr>
+                                    <tr><td><code>drawing-info</code></td><td>Drawing info summary</td><td>&mdash;</td></tr>
+                                    <tr><td><code>query</code></td><td>Search knowledge base</td><td>&mdash;</td></tr>
+                                    <tr><td><code>check-compliance</code></td><td>Check compliance rules</td><td><code>--rules</code>, <code>--building-type</code></td></tr>
+                                    <tr><td><code>list-rules</code></td><td>List rule sets</td><td>&mdash;</td></tr>
+                                    <tr><td><code>serve</code></td><td>Start web server</td><td><code>--port</code></td></tr>
+                                    <tr><td><code>version</code></td><td>Show version</td><td>&mdash;</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- API Reference -->
+                    <div class="guide-section">
+                        <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                            <span class="step-num">4</span>
+                            <h3>Web API Reference</h3>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                        <div class="guide-body hidden">
+                            <table class="endpoint-table">
+                                <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><span class="method method-get">GET</span></td><td><code>/</code></td><td>Web UI (this page)</td></tr>
+                                    <tr><td><span class="method method-get">GET</span></td><td><code>/api/health</code></td><td>Health check &mdash; includes <code>chat_enabled</code> flag</td></tr>
+                                    <tr><td><span class="method method-post">POST</span></td><td><code>/api/query</code></td><td>Search knowledge base. Body: <code>{"question": "..."}</code></td></tr>
+                                    <tr><td><span class="method method-get">GET</span></td><td><code>/api/rules</code></td><td>List all compliance rule sets</td></tr>
+                                    <tr><td><span class="method method-get">GET</span></td><td><code>/api/rules/{name}</code></td><td>Get rules in a specific set</td></tr>
+                                    <tr><td><span class="method method-post">POST</span></td><td><code>/api/compliance/check</code></td><td>Run compliance check. Body: <code>ComplianceCheckRequest</code></td></tr>
+                                    <tr><td><span class="method method-post">POST</span></td><td><code>/api/chat/session</code></td><td>Create chat session with consent</td></tr>
+                                    <tr><td><span class="method method-post">POST</span></td><td><code>/api/chat</code></td><td>Send message &rarr; SSE streamed response</td></tr>
+                                    <tr><td><span class="method method-post">POST</span></td><td><code>/api/feedback</code></td><td>Submit thumbs up/down feedback on AI response</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h4>Example: Search Knowledge Base</h4>
+                            <div class="code-block">curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"question": "minimum corridor width for commercial building"}'</div>
+
+                            <h4>Example: Compliance Check</h4>
+                            <div class="code-block">curl -X POST http://localhost:8000/api/compliance/check \
+  -H "Content-Type: application/json" \
+  -d '{
+    "rule_sets": ["ubbl-spatial", "ubbl-fire"],
+    "building_type": "residential",
+    "categories": ["escape"]
+  }'</div>
+                        </div>
+                    </div>
+
+                    <!-- Configuration -->
+                    <div class="guide-section">
+                        <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                            <span class="step-num">5</span>
+                            <h3>Configuration &amp; Environment Variables</h3>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                        <div class="guide-body hidden">
+                            <p>All settings use the <code>ACAD_CMD_</code> prefix and are managed by pydantic-settings.</p>
+
+                            <h4>Core Settings</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>ACAD_CMD_LOG_LEVEL</code></td><td><code>INFO</code></td><td>Logging level</td></tr>
+                                    <tr><td><code>ACAD_CMD_CAD_ENGINE</code></td><td><code>auto</code></td><td>CAD engine: <code>auto</code>, <code>autocad</code>, <code>bricscad</code>, <code>zwcad</code>, <code>mock</code></td></tr>
+                                </tbody>
+                            </table>
+
+                            <h4>AI Chat Settings</h4>
+                            <table class="endpoint-table">
+                                <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>ACAD_CMD_CHAT_ENABLED</code></td><td><code>false</code></td><td>Enable AI Chat feature</td></tr>
+                                    <tr><td><code>ACAD_CMD_OPENAI_API_KEY</code></td><td>&mdash;</td><td>OpenAI API key</td></tr>
+                                    <tr><td><code>ACAD_CMD_OPENAI_MODEL</code></td><td><code>gpt-5-mini</code></td><td>Chat completion model</td></tr>
+                                    <tr><td><code>ACAD_CMD_OPENAI_EMBEDDING_MODEL</code></td><td><code>text-embedding-3-small</code></td><td>Embedding model</td></tr>
+                                    <tr><td><code>ACAD_CMD_SUPABASE_URL</code></td><td>&mdash;</td><td>Supabase project URL</td></tr>
+                                    <tr><td><code>ACAD_CMD_SUPABASE_KEY</code></td><td>&mdash;</td><td>Supabase publishable/anon key</td></tr>
+                                    <tr><td><code>ACAD_CMD_CHAT_MAX_HISTORY</code></td><td><code>10</code></td><td>Max conversation turns sent to LLM</td></tr>
+                                    <tr><td><code>ACAD_CMD_CHAT_MAX_CONTEXT_CHUNKS</code></td><td><code>6</code></td><td>Max RAG chunks retrieved per query</td></tr>
+                                    <tr><td><code>ACAD_CMD_CHAT_SIMILARITY_THRESHOLD</code></td><td><code>0.4</code></td><td>Minimum cosine similarity for retrieval</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Project Structure -->
+                    <div class="guide-section">
+                        <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                            <span class="step-num">6</span>
+                            <h3>Project Structure</h3>
+                            <span class="chevron">&#9660;</span>
+                        </div>
+                        <div class="guide-body hidden">
+                            <div class="code-block">src/autocad_batch_commander/
+  acad/                     <span class="comment"># Port/Adapter layer</span>
+    port.py                 <span class="comment"># AutoCADPort protocol (25 methods)</span>
+    mock_adapter.py         <span class="comment"># Mock adapter for testing</span>
+    com_base.py             <span class="comment"># Shared COM base class</span>
+    real_adapter.py         <span class="comment"># AutoCAD COM adapter</span>
+    bricscad_adapter.py     <span class="comment"># BricsCAD COM adapter</span>
+    zwcad_adapter.py        <span class="comment"># ZWCAD COM adapter</span>
+    factory.py              <span class="comment"># Adapter factory + sample data</span>
+  operations/               <span class="comment"># Business logic</span>
+    text_ops.py             <span class="comment"># Text find/replace</span>
+    layer_ops.py            <span class="comment"># Layer rename/standardize</span>
+    audit_ops.py            <span class="comment"># Layer compliance audit</span>
+    compliance_ops.py       <span class="comment"># Rule-based compliance checks</span>
+    geometry_ops.py         <span class="comment"># Dimensions, areas, measurement</span>
+    block_ops.py            <span class="comment"># Title blocks, schedules</span>
+    xref_ops.py             <span class="comment"># External reference management</span>
+    drawing_ops.py          <span class="comment"># Purge, plot, search, info</span>
+  cli/                      <span class="comment"># Typer CLI entry point</span>
+    app.py                  <span class="comment"># ~20 CLI commands</span>
+    formatters.py           <span class="comment"># Rich table output formatters</span>
+  mcp_server/               <span class="comment"># FastMCP server</span>
+    server.py               <span class="comment"># 19 MCP tools</span>
+    nl_router.py            <span class="comment"># Natural language intent router</span>
+  web/                      <span class="comment"># FastAPI web server</span>
+    api.py                  <span class="comment"># REST API endpoints</span>
+    templates/index.html    <span class="comment"># Single-page web UI</span>
+  chat/                     <span class="comment"># AI Chat RAG pipeline</span>
+    rag.py                  <span class="comment"># RAG orchestration</span>
+    embeddings.py           <span class="comment"># pgvector search</span>
+    prompts.py              <span class="comment"># System prompt template</span>
+  knowledge/                <span class="comment"># Knowledge base loader</span>
+    loader.py               <span class="comment"># Keyword-based file retrieval</span>
+  models.py                 <span class="comment"># All Pydantic v2 models</span>
+  config.py                 <span class="comment"># pydantic-settings config</span>
+
+knowledge/qa/               <span class="comment"># 49 Markdown knowledge files</span>
+standards/                  <span class="comment"># Layer naming standards</span>
+  rules/                    <span class="comment"># 8 compliance rule sets (JSON)</span>
+  dimension_mapping.json    <span class="comment"># Layer &rarr; rule parameter mapping</span></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -1231,7 +1550,40 @@ autocad-cmd rename-layer --folder ./plans --standard aia --mock
 <span class="comment"># Audit drawings against standards</span>
 autocad-cmd audit --folder ./plans --standard aia --mock</div>
 
-                        <p><strong>Note:</strong> Use <code>--mock</code> on macOS/Linux for testing. On Windows with AutoCAD running, omit <code>--mock</code> to operate on real DWG files.</p>
+                        <h4>Geometry &amp; Measurement</h4>
+                        <div class="code-block"><span class="comment"># Extract dimensions from drawings</span>
+autocad-cmd extract-dims --folder ./plans --mock
+
+<span class="comment"># Extract areas from closed polylines</span>
+autocad-cmd extract-areas --folder ./plans --mock
+
+<span class="comment"># Check drawing dimensions against UBBL rules</span>
+autocad-cmd check-drawing --folder ./plans --rules ubbl-spatial --mock</div>
+
+                        <h4>Blocks &amp; Schedules</h4>
+                        <div class="code-block"><span class="comment"># Update title blocks across all drawings</span>
+autocad-cmd update-titleblock --folder ./plans --updates "DATE=2024-06-01,DRAWN_BY=ZA" --mock
+
+<span class="comment"># Extract door/window schedules from block attributes</span>
+autocad-cmd extract-schedule --folder ./plans --block-name DOOR_SINGLE --mock</div>
+
+                        <h4>XREFs, Search &amp; Utilities</h4>
+                        <div class="code-block"><span class="comment"># List external references</span>
+autocad-cmd manage-xrefs-cmd --folder ./plans --action list --mock
+
+<span class="comment"># Search text across all drawings</span>
+autocad-cmd search-drawings --folder ./plans --text "TIMBER" --mock
+
+<span class="comment"># Batch plot to PDF</span>
+autocad-cmd batch-plot-cmd --folder ./plans --mock
+
+<span class="comment"># Purge unused items</span>
+autocad-cmd purge --folder ./plans --no-backup --mock
+
+<span class="comment"># Drawing info summary</span>
+autocad-cmd drawing-info --folder ./plans --mock</div>
+
+                        <p><strong>Note:</strong> Use <code>--mock</code> on macOS/Linux for testing. On Windows with AutoCAD/BricsCAD/ZWCAD running, omit <code>--mock</code> to operate on real DWG files.</p>
 
                         <h4>Web Server</h4>
                         <div class="code-block"><span class="comment"># Start the web UI (this page)</span>
@@ -1280,17 +1632,65 @@ autocad-cmd serve --port 3000</div>
 }</div>
                         <p>Replace <code>/path/to/cad-ai</code> with the actual path to your installation.</p>
 
-                        <h4>Available MCP Tools</h4>
+                        <h4>Available MCP Tools (19 tools)</h4>
+
+                        <p style="margin-bottom:0.5rem;"><strong>Knowledge &amp; Compliance</strong></p>
                         <table class="endpoint-table">
                             <thead><tr><th>Tool</th><th>Description</th></tr></thead>
                             <tbody>
-                                <tr><td><code>query_regulations</code></td><td>Search the knowledge base for Malaysian building regulations (UBBL, fire by-laws, standards)</td></tr>
-                                <tr><td><code>check_compliance</code></td><td>Run compliance checks against rule sets (spatial, fire, energy, accessibility)</td></tr>
+                                <tr><td><code>query_regulations</code></td><td>Search the knowledge base for Malaysian building regulations</td></tr>
+                                <tr><td><code>check_compliance_tool</code></td><td>Run compliance checks against rule sets (spatial, fire, energy, accessibility)</td></tr>
                                 <tr><td><code>list_available_rules</code></td><td>List all available compliance rule sets</td></tr>
-                                <tr><td><code>change_text</code></td><td>Find and replace text across DWG files <span class="badge badge-win">Windows</span></td></tr>
-                                <tr><td><code>rename_layer</code></td><td>Rename layers to match standards <span class="badge badge-win">Windows</span></td></tr>
-                                <tr><td><code>standardize_layers</code></td><td>Batch standardize layer names <span class="badge badge-win">Windows</span></td></tr>
-                                <tr><td><code>audit_drawings</code></td><td>Audit drawings against layer standards <span class="badge badge-win">Windows</span></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-bottom:0.5rem;"><strong>Text &amp; Layers</strong></p>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>batch_change_text</code></td><td>Find and replace text across DWG files</td></tr>
+                                <tr><td><code>batch_rename_layer_tool</code></td><td>Rename layers to match standards</td></tr>
+                                <tr><td><code>standardize_layers_tool</code></td><td>Batch standardize layer names (AIA, BS1192, UBBL)</td></tr>
+                                <tr><td><code>audit_drawings_tool</code></td><td>Audit drawings against layer standards</td></tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-bottom:0.5rem;"><strong>Geometry &amp; Measurement</strong></p>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>extract_dimensions_tool</code></td><td>Extract all dimension entities with values, types, layers</td></tr>
+                                <tr><td><code>extract_areas_tool</code></td><td>Extract areas from closed polylines with min/max filters</td></tr>
+                                <tr><td><code>measure_compliance_tool</code></td><td>Auto-measure dimensions against UBBL rule thresholds</td></tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-bottom:0.5rem;"><strong>Blocks &amp; Schedules</strong></p>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>update_title_blocks_tool</code></td><td>Update title block attributes (date, drawn by, project no.) across DWGs</td></tr>
+                                <tr><td><code>extract_schedule_tool</code></td><td>Extract door/window/room schedules from block attributes</td></tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-bottom:0.5rem;"><strong>XREFs, Search &amp; Utilities</strong></p>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>manage_xrefs_tool</code></td><td>List, reload, attach, or detach external references</td></tr>
+                                <tr><td><code>search_drawings_tool</code></td><td>Search text, attributes, and layers across project drawings</td></tr>
+                                <tr><td><code>batch_plot_tool</code></td><td>Batch plot layouts to PDF or DWF</td></tr>
+                                <tr><td><code>batch_purge_tool</code></td><td>Purge unused items and audit drawings</td></tr>
+                                <tr><td><code>get_drawing_info_tool</code></td><td>Comprehensive drawing info summary per file</td></tr>
+                            </tbody>
+                        </table>
+
+                        <p style="margin-bottom:0.5rem;"><strong>Natural Language</strong></p>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>ask_araiden</code></td><td>Natural language interface &mdash; ask questions or give instructions in plain English</td></tr>
                             </tbody>
                         </table>
 
@@ -1300,46 +1700,70 @@ autocad-cmd serve --port 3000</div>
                             <li>"What is the minimum corridor width for a commercial building under UBBL?"</li>
                             <li>"Check if a 25-storey residential building meets fire safety requirements"</li>
                             <li>"What purpose group does a hotel fall under?"</li>
-                            <li>"What are the travel distance limits for a factory?"</li>
-                            <li>"Find and replace 'PROPOSED' with 'AS-BUILT' in all DWG files in the project folder"</li>
+                            <li>"Extract all dimensions from my floor plan drawings"</li>
+                            <li>"Check if the corridor widths in my drawings comply with UBBL"</li>
+                            <li>"Update the title block date to 2025-01-15 across all drawings"</li>
+                            <li>"Generate a door schedule from the attributed blocks"</li>
+                            <li>"List all external references in the project"</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Step 4: Windows + AutoCAD -->
+                <!-- Step 4: Windows + CAD Setup -->
                 <div class="guide-section">
                     <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
                         <span class="step-num">4</span>
-                        <h3>Windows + AutoCAD Setup</h3>
+                        <h3>Windows + CAD Application Setup</h3>
                         <span class="badge badge-win">Windows Only</span>
                         <span class="chevron">&#9660;</span>
                     </div>
                     <div class="guide-body hidden">
-                        <p>For full CAD drawing operations, you need Windows with AutoCAD installed.</p>
+                        <p>For full CAD drawing operations, you need Windows with a supported CAD application.</p>
+
+                        <h4>Supported CAD Applications</h4>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Application</th><th>COM Dispatch Name</th><th>Engine Flag</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>AutoCAD</strong> 2020+</td><td><code>AutoCAD.Application</code></td><td><code>autocad</code></td></tr>
+                                <tr><td><strong>BricsCAD</strong></td><td><code>BricscadApp.AcadApplication</code></td><td><code>bricscad</code></td></tr>
+                                <tr><td><strong>ZWCAD</strong></td><td><code>ZWCAD.Application</code></td><td><code>zwcad</code></td></tr>
+                            </tbody>
+                        </table>
 
                         <h4>Prerequisites</h4>
                         <ul>
-                            <li>AutoCAD 2020 or later installed and running</li>
+                            <li>One of the supported CAD applications installed and <strong>running</strong></li>
                             <li>Python 3.10+ with pywin32</li>
                         </ul>
 
                         <h4>Install with Windows Extras</h4>
                         <div class="code-block">pip install -e ".[windows]"</div>
 
-                        <h4>AutoCAD Configuration</h4>
+                        <h4>CAD Configuration</h4>
                         <ol>
-                            <li>Open AutoCAD and type <code>SECURELOAD</code> at the command prompt</li>
+                            <li>Open your CAD application and type <code>SECURELOAD</code> at the command prompt</li>
                             <li>Set the value to <strong>0</strong> (allows COM automation)</li>
-                            <li>Keep AutoCAD running &mdash; the tool connects via COM to the live instance</li>
+                            <li>Keep the application running &mdash; the tool connects via COM to the live instance</li>
                         </ol>
 
-                        <h4>Usage on Windows</h4>
-                        <div class="code-block"><span class="comment"># No --mock needed on Windows with AutoCAD running</span>
-autocad-cmd change-text --folder "C:\Projects\Plans" --find "DRAFT" --replace "FINAL"
-autocad-cmd rename-layer --folder "C:\Projects\Plans" --standard aia
-autocad-cmd audit --folder "C:\Projects\Plans" --standard aia</div>
+                        <h4>CAD Engine Selection</h4>
+                        <p>By default, ARAIDEN auto-detects which CAD application is running. You can also set it explicitly:</p>
+                        <div class="code-block"><span class="comment"># Auto-detect (default)</span>
+export ACAD_CMD_CAD_ENGINE=auto
 
-                        <p>The tool auto-detects Windows and uses the real AutoCAD adapter. Backups are saved to a <code>.backups/</code> subdirectory next to each DWG file.</p>
+<span class="comment"># Force specific CAD engine</span>
+export ACAD_CMD_CAD_ENGINE=autocad
+export ACAD_CMD_CAD_ENGINE=bricscad
+export ACAD_CMD_CAD_ENGINE=zwcad</div>
+
+                        <h4>Usage on Windows</h4>
+                        <div class="code-block"><span class="comment"># No --mock needed on Windows with CAD running</span>
+autocad-cmd change-text --folder "C:\Projects\Plans" --find "DRAFT" --replace "FINAL"
+autocad-cmd extract-dims --folder "C:\Projects\Plans"
+autocad-cmd check-drawing --folder "C:\Projects\Plans" --rules ubbl-spatial
+autocad-cmd drawing-info --folder "C:\Projects\Plans"</div>
+
+                        <p>The tool auto-detects Windows and the running CAD application. All adapters share the same COM base class, so all operations work identically across AutoCAD, BricsCAD, and ZWCAD. Backups are saved to a <code>.backups/</code> subdirectory next to each DWG file.</p>
                     </div>
                 </div>
 
@@ -1447,7 +1871,7 @@ docker compose up</div>
 
     <!-- Command line / status bar -->
     <div class="cmdline">
-        <span>CAD Commander v0.1.0</span>
+        <span>ARAIDEN v0.1.0</span>
         <span class="coord" id="cmd-status">Ready</span>
         <span style="margin-left:auto;">UBBL 2021 | Fire By-Laws | MS Standards</span>
     </div>
@@ -1837,7 +2261,7 @@ docker compose up</div>
         // ── Setup Guide export ────────────────────────────
         function getSetupGuideMarkdown() {
             const sections = [
-                '# CAD Commander — Setup Guide\n',
+                '# ARAIDEN — Setup Guide\n',
                 '**Repository:** https://github.com/zemang86/cad-ai\n',
             ];
             document.querySelectorAll('#setup .guide-section').forEach(sec => {
@@ -1878,7 +2302,7 @@ docker compose up</div>
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'cad-commander-setup-guide.md';
+            a.download = 'araiden-setup-guide.md';
             a.click();
             URL.revokeObjectURL(url);
             setStatus('Downloaded setup guide');
@@ -1915,7 +2339,7 @@ docker compose up</div>
                 const res = await fetch('/api/health');
                 const data = await res.json();
                 if (data.chat_enabled) {
-                    document.getElementById('nav-chat').style.display = '';
+                    document.getElementById('sidebar-ai-section').style.display = '';
                     const mobileBtn = document.getElementById('mobile-nav-chat');
                     if (mobileBtn) mobileBtn.style.display = '';
                     if (chatConsentGiven) showChatUI();

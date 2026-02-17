@@ -29,10 +29,7 @@ class TestChunkMarkdown:
         assert chunks[2]["heading_hierarchy"] == ["Fire Safety", "Escape Routes"]
 
     def test_frontmatter_stripped(self):
-        text = (
-            "---\nsource: test\n---\n"
-            "## Section\nContent here."
-        )
+        text = "---\nsource: test\n---\n## Section\nContent here."
         chunks = chunk_markdown("test.md", text)
         assert len(chunks) == 1
         assert "---" not in chunks[0]["chunk_text"]

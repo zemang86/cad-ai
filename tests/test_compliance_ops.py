@@ -73,7 +73,10 @@ def test_check_compliance_category_filter():
     assert result.total_rules > 0
     for finding in result.findings:
         if finding.rule_id != "SYSTEM":
-            assert "corridor" in finding.tags or finding.parameter == "dead_end_corridor_length"
+            assert (
+                "corridor" in finding.tags
+                or finding.parameter == "dead_end_corridor_length"
+            )
 
 
 def test_check_compliance_missing_ruleset():

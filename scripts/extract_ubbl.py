@@ -53,8 +53,17 @@ def find_part_boundaries(lines: list[str]) -> list[tuple[int, str]]:
 def find_schedule_boundaries(lines: list[str]) -> list[tuple[int, str]]:
     """Find line indices where Schedules begin."""
     ordinals = [
-        "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH",
-        "SIXTH", "SEVENTH", "EIGHT", "NINTH", "TENTH", "ELEVENTH",
+        "FIRST",
+        "SECOND",
+        "THIRD",
+        "FOURTH",
+        "FIFTH",
+        "SIXTH",
+        "SEVENTH",
+        "EIGHT",
+        "NINTH",
+        "TENTH",
+        "ELEVENTH",
     ]
     boundaries = []
     for i, line in enumerate(lines):
@@ -62,7 +71,10 @@ def find_schedule_boundaries(lines: list[str]) -> list[tuple[int, str]]:
             continue
         stripped = line.strip()
         for ordinal in ordinals:
-            if f"{ordinal} SCHEDULE" in stripped and "BAHAGIAN" not in lines[max(0, i - 5):i + 1]:
+            if (
+                f"{ordinal} SCHEDULE" in stripped
+                and "BAHAGIAN" not in lines[max(0, i - 5) : i + 1]
+            ):
                 # Skip if this is in the Malay translation section (after ~line 16000)
                 if i > 16000:
                     continue
@@ -70,7 +82,11 @@ def find_schedule_boundaries(lines: list[str]) -> list[tuple[int, str]]:
                 title = ""
                 for j in range(i + 1, min(i + 5, len(lines))):
                     candidate = lines[j].strip()
-                    if candidate and not candidate.startswith("[") and candidate != stripped:
+                    if (
+                        candidate
+                        and not candidate.startswith("[")
+                        and candidate != stripped
+                    ):
                         title = candidate
                         break
                 boundaries.append((i, f"{ordinal} SCHEDULE — {title}"))
@@ -152,7 +168,9 @@ def main() -> None:
             bylaws_dir = output_dir / f"part_{filename}_bylaws"
             bylaws_dir.mkdir(exist_ok=True)
             for header, content in bylaws:
-                bylaw_filename = re.sub(r"[^a-zA-Z0-9]+", "_", header).strip("_").lower()
+                bylaw_filename = (
+                    re.sub(r"[^a-zA-Z0-9]+", "_", header).strip("_").lower()
+                )
                 (bylaws_dir / f"{bylaw_filename}.txt").write_text(
                     content, encoding="utf-8"
                 )

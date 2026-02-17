@@ -43,6 +43,7 @@ class Settings(BaseSettings):
     standards_dir: Path = _PROJECT_ROOT / "standards"
     knowledge_dir: Path = _PROJECT_ROOT / "knowledge"
     use_mock: bool = False
+    cad_engine: str = "auto"  # auto | autocad | bricscad | zwcad | mock
 
     # AI Chat settings
     openai_api_key: str = ""

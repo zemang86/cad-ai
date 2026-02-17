@@ -4,8 +4,6 @@ from pathlib import Path
 
 from autocad_batch_commander.models import (
     AuditFinding,
-    AuditResult,
-    FileDetail,
     LayerRenameRequest,
     LayerStandardizeRequest,
     OperationResult,

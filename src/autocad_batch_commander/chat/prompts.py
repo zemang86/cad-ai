@@ -23,9 +23,7 @@ architects and engineers need for compliance.
 - If the question is outside Malaysian building regulations, politely redirect.
 """
 
-FEW_SHOT_INTRO = (
-    "Here are examples of highly-rated previous answers for reference:\n\n"
-)
+FEW_SHOT_INTRO = "Here are examples of highly-rated previous answers for reference:\n\n"
 
 CONTEXT_INTRO = (
     "Use the following regulation excerpts to answer the user's question. "

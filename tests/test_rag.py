@@ -39,7 +39,10 @@ class TestFormatContextChunks:
 class TestFormatFewShot:
     def test_formats_examples(self):
         examples = [
-            {"question": "What is minimum corridor width?", "answer": "1,200 mm per By-Law 39."},
+            {
+                "question": "What is minimum corridor width?",
+                "answer": "1,200 mm per By-Law 39.",
+            },
         ]
         result = format_few_shot(examples)
         assert "**Q:**" in result
@@ -81,10 +84,7 @@ class TestBuildMessages:
         monkeypatch.setattr(
             "autocad_batch_commander.chat.rag.settings.chat_max_history", 2
         )
-        history = [
-            ChatMessage(role="user", content=f"msg {i}")
-            for i in range(10)
-        ]
+        history = [ChatMessage(role="user", content=f"msg {i}") for i in range(10)]
         messages = _build_messages("latest", history, [], [])
         # system + 2 history + current user = 4
         assert len(messages) == 4

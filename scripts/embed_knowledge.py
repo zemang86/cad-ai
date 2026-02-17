@@ -27,7 +27,7 @@ def _parse_frontmatter(text: str) -> tuple[dict, str]:
     end = text.find("---", 3)
     if end == -1:
         return {}, text
-    return {}, text[end + 3:].strip()
+    return {}, text[end + 3 :].strip()
 
 
 def _count_tokens(text: str) -> int:
@@ -66,17 +66,22 @@ def chunk_markdown(file_path: str, text: str, max_tokens: int = 800) -> list[dic
         if token_count > max_tokens * 2:
             _split_large(file_path, content, hierarchy, chunks, max_tokens)
         else:
-            chunks.append({
-                "file_path": file_path,
-                "chunk_index": len(chunks),
-                "heading_hierarchy": hierarchy,
-                "chunk_text": content,
-                "token_count": token_count,
-            })
+            chunks.append(
+                {
+                    "file_path": file_path,
+                    "chunk_index": len(chunks),
+                    "heading_hierarchy": hierarchy,
+                    "chunk_text": content,
+                    "token_count": token_count,
+                }
+            )
 
     def _split_large(
-        fp: str, content: str, hierarchy: list[str],
-        out: list[dict], max_tok: int,
+        fp: str,
+        content: str,
+        hierarchy: list[str],
+        out: list[dict],
+        max_tok: int,
     ) -> None:
         """Split oversized chunks by double-newline paragraphs."""
         paragraphs = content.split("\n\n")
@@ -85,25 +90,29 @@ def chunk_markdown(file_path: str, text: str, max_tokens: int = 800) -> list[dic
         for para in paragraphs:
             para_tokens = _count_tokens(para)
             if buffer and buffer_tokens + para_tokens > max_tok:
-                out.append({
-                    "file_path": fp,
-                    "chunk_index": len(out),
-                    "heading_hierarchy": hierarchy,
-                    "chunk_text": "\n\n".join(buffer),
-                    "token_count": buffer_tokens,
-                })
+                out.append(
+                    {
+                        "file_path": fp,
+                        "chunk_index": len(out),
+                        "heading_hierarchy": hierarchy,
+                        "chunk_text": "\n\n".join(buffer),
+                        "token_count": buffer_tokens,
+                    }
+                )
                 buffer = []
                 buffer_tokens = 0
             buffer.append(para)
             buffer_tokens += para_tokens
         if buffer:
-            out.append({
-                "file_path": fp,
-                "chunk_index": len(out),
-                "heading_hierarchy": hierarchy,
-                "chunk_text": "\n\n".join(buffer),
-                "token_count": buffer_tokens,
-            })
+            out.append(
+                {
+                    "file_path": fp,
+                    "chunk_index": len(out),
+                    "heading_hierarchy": hierarchy,
+                    "chunk_text": "\n\n".join(buffer),
+                    "token_count": buffer_tokens,
+                }
+            )
 
     for line in lines:
         if line.startswith("## ") and not line.startswith("### "):
@@ -163,22 +172,22 @@ def embed_and_upsert(chunks: list[dict], dry_run: bool = False) -> None:
 
     # Delete existing rows for this file_path
     file_path = chunks[0]["file_path"]
-    supabase.table("knowledge_embeddings").delete().eq(
-        "file_path", file_path
-    ).execute()
+    supabase.table("knowledge_embeddings").delete().eq("file_path", file_path).execute()
 
     # Insert fresh rows
     rows = []
     for chunk, embedding in zip(chunks, embeddings):
-        rows.append({
-            "file_path": chunk["file_path"],
-            "chunk_index": chunk["chunk_index"],
-            "heading_hierarchy": chunk["heading_hierarchy"],
-            "chunk_text": chunk["chunk_text"],
-            "token_count": chunk["token_count"],
-            "embedding": embedding,
-            "metadata": {},
-        })
+        rows.append(
+            {
+                "file_path": chunk["file_path"],
+                "chunk_index": chunk["chunk_index"],
+                "heading_hierarchy": chunk["heading_hierarchy"],
+                "chunk_text": chunk["chunk_text"],
+                "token_count": chunk["token_count"],
+                "embedding": embedding,
+                "metadata": {},
+            }
+        )
 
     # Insert in batches of 50
     batch_size = 50
@@ -192,8 +201,12 @@ def embed_and_upsert(chunks: list[dict], dry_run: bool = False) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Embed knowledge base into pgvector")
     parser.add_argument("--force", action="store_true", help="Re-embed all files")
-    parser.add_argument("--file", type=str, help="Single file relative to knowledge/qa/")
-    parser.add_argument("--dry-run", action="store_true", help="Preview chunks without embedding")
+    parser.add_argument(
+        "--file", type=str, help="Single file relative to knowledge/qa/"
+    )
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Preview chunks without embedding"
+    )
     args = parser.parse_args()
 
     files = discover_files(args.file)

@@ -109,7 +109,7 @@ def _parse_frontmatter(text: str) -> tuple[dict[str, str | list[str]], str]:
     if end == -1:
         return {}, text
     fm_block = text[3:end].strip()
-    body = text[end + 3:].strip()
+    body = text[end + 3 :].strip()
     meta: dict[str, str | list[str]] = {}
     for line in fm_block.splitlines():
         if ":" not in line:
@@ -119,7 +119,9 @@ def _parse_frontmatter(text: str) -> tuple[dict[str, str | list[str]], str]:
         if val.startswith("["):
             # Simple list parse: ["a", "b"]
             items = val.strip("[]").split(",")
-            meta[key.strip()] = [i.strip().strip('"').strip("'") for i in items if i.strip()]
+            meta[key.strip()] = [
+                i.strip().strip('"').strip("'") for i in items if i.strip()
+            ]
         else:
             meta[key.strip()] = val
     return meta, body
@@ -175,15 +177,17 @@ def load_ubbl_content() -> list[dict]:
         is_new_2021 = source_short == "UBBL 2021" or "(NEW)" in text[:500]
         has_2021_changes = "Amendment 2021" in text or "(Amendment 2021)" in text
 
-        sections.append({
-            "id": path.stem,
-            "title": title,
-            "category": _categorize(sections_covered),
-            "sections_covered": sections_covered,
-            "source_short": source_short,
-            "is_new_2021": is_new_2021,
-            "has_2021_changes": has_2021_changes,
-            "content": body,
-        })
+        sections.append(
+            {
+                "id": path.stem,
+                "title": title,
+                "category": _categorize(sections_covered),
+                "sections_covered": sections_covered,
+                "source_short": source_short,
+                "is_new_2021": is_new_2021,
+                "has_2021_changes": has_2021_changes,
+                "content": body,
+            }
+        )
 
     return sections

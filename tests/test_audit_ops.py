@@ -48,7 +48,9 @@ def test_audit_finds_non_standard_layers(tmp_path: Path):
 
     # The non-compliant file should have findings for WALL and DOOR
     noncompliant_findings = [f for f in result.findings if "noncompliant" in f.file]
-    non_std = [f for f in noncompliant_findings if f.finding_type == "non_standard_layer"]
+    non_std = [
+        f for f in noncompliant_findings if f.finding_type == "non_standard_layer"
+    ]
     assert len(non_std) == 2
 
 
@@ -67,5 +69,9 @@ def test_audit_compliant_file_has_no_findings(tmp_path: Path):
     request = AuditRequest(folder=tmp_path, standard="AIA")
     result = audit_drawings(adapter, request)
 
-    compliant_findings = [f for f in result.findings if "compliant.dwg" in f.file and "noncompliant" not in f.file]
+    compliant_findings = [
+        f
+        for f in result.findings
+        if "compliant.dwg" in f.file and "noncompliant" not in f.file
+    ]
     assert len(compliant_findings) == 0

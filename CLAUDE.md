@@ -34,6 +34,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 .venv/bin/autocad-cmd check-compliance-cmd --rules ubbl-spatial --building-type residential --mock
 .venv/bin/autocad-cmd list-rules
 
+# Geometry / block / drawing commands (new)
+.venv/bin/autocad-cmd extract-dims --folder ./sample --mock
+.venv/bin/autocad-cmd extract-areas --folder ./sample --mock
+.venv/bin/autocad-cmd check-drawing --folder ./sample --rules ubbl-spatial --mock
+.venv/bin/autocad-cmd update-titleblock --folder ./sample --updates "DATE=2024-06-01,DRAWN_BY=ZA" --mock
+.venv/bin/autocad-cmd extract-schedule --folder ./sample --block-name DOOR_SINGLE --mock
+.venv/bin/autocad-cmd manage-xrefs-cmd --folder ./sample --action list --mock
+.venv/bin/autocad-cmd search-drawings --folder ./sample --text TIMBER --mock
+.venv/bin/autocad-cmd batch-plot-cmd --folder ./sample --mock
+.venv/bin/autocad-cmd purge --folder ./sample --no-backup --mock
+.venv/bin/autocad-cmd drawing-info --folder ./sample --mock
+
 # Web server (requires [web] extras)
 .venv/bin/autocad-cmd serve
 .venv/bin/autocad-cmd serve --port 3000
@@ -46,51 +58,103 @@ Port/Adapter pattern — all business logic depends on `AutoCADPort` (Protocol),
 ```
 CLI (Typer) / MCP Server (FastMCP) / Web API (FastAPI)
         ↓
-Operations (text_ops, layer_ops, audit_ops, compliance_ops)  ← pure Python, testable
-Knowledge loader (knowledge/loader.py)                       ← reads Markdown knowledge base
+Operations (text_ops, layer_ops, audit_ops, compliance_ops,
+            geometry_ops, block_ops, xref_ops, drawing_ops)     ← pure Python, testable
+Knowledge loader (knowledge/loader.py)                          ← reads Markdown knowledge base
         ↓
-AutoCADPort (Protocol in acad/port.py)
+AutoCADPort (Protocol in acad/port.py)                          ← ~25 methods
         ↓
-MockAutoCADAdapter (any platform)  or  RealAutoCADAdapter (Windows + pywin32)
+MockAutoCADAdapter (any platform)
+  or  COMAdapterBase → RealAutoCADAdapter (Windows + AutoCAD)
+                      → BricsCADAdapter   (Windows + BricsCAD)
+                      → ZWCADAdapter      (Windows + ZWCAD)
 ```
 
 **Dependency flow is one-way:** CLI/MCP → operations → acad port. Operations never import from `cli/` or `mcp_server/`.
 
-The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. All CLI commands accept `--mock` to force the mock adapter. When `--mock` is used from CLI, the factory pre-populates the adapter with sample architectural drawing data (text entities and layers) for every `.dwg` file found in the target folder, so commands produce realistic output.
+The factory (`acad/factory.py`) auto-selects MockAdapter on non-Windows. On Windows, it auto-detects which CAD app is running (AutoCAD, BricsCAD, or ZWCAD) via `cad_engine` param or `ACAD_CMD_CAD_ENGINE` env var. All CLI commands accept `--mock` to force the mock adapter. When `--mock` is used, the factory pre-populates the adapter with sample architectural drawing data (text, layers, dimensions, polylines, blocks with attributes, xrefs, layouts, viewports) for every `.dwg` file found in the target folder.
 
 ## Key Patterns
 
-- **Operations** all follow the same shape: take an `AutoCADPort` adapter + a Pydantic request model, iterate `.dwg` files via `utils/file_ops.get_dwg_files()`, open/modify/save/close each file, return an `OperationResult` or `AuditResult`.
+- **Operations** all follow the same shape: take an `AutoCADPort` adapter + a Pydantic request model, iterate `.dwg` files via `utils/file_ops.get_dwg_files()`, open/modify/save/close each file, return a result model.
 - **Standards** are JSON files in `standards/` with `mappings` (old→new layer names) and `required_layers`. Used by `layer_ops.batch_standardize_layers()` and `audit_ops.audit_drawings()`.
-- **Compliance rules** are JSON files in `standards/rules/` (e.g. `ubbl-spatial.json`, `ubbl-fire.json`). Each contains a `ComplianceRuleSet` with numeric thresholds, by-law references, and building-type filters. Used by `compliance_ops.check_compliance()`.
+- **Compliance rules** are JSON files in `standards/rules/` (e.g. `ubbl-spatial.json`, `ubbl-fire.json`). Each contains a `ComplianceRuleSet` with numeric thresholds, by-law references, and building-type filters. Used by `compliance_ops.check_compliance()` and `geometry_ops.measure_compliance()`.
+- **Dimension mapping** (`standards/dimension_mapping.json`) maps layer name patterns to compliance rule parameters, enabling automated measurement checking in `geometry_ops.measure_compliance()`.
 - **Knowledge base** is Markdown files in `knowledge/qa/` organized by source (ubbl/, fire-bylaws/). A topic index (`_index.md`) maps keywords to files. The loader (`knowledge/loader.py`) finds relevant files via keyword matching and returns content for Claude to synthesize. For AI Chat, the knowledge base is also embedded into Supabase pgvector (463 chunks) for semantic retrieval. Each file includes a `## Cross-References` section linking related By-Laws, Schedules, Acts, and Standards across the knowledge base.
 - **Config** uses pydantic-settings with env prefix `ACAD_CMD_` (e.g. `ACAD_CMD_LOG_LEVEL`). `standards_dir` points to `<repo>/standards/`, `knowledge_dir` points to `<repo>/knowledge/`.
 - **Backups** go to `.backups/` subdirectory relative to each DWG file, with timestamped filenames.
 
 ## Testing Patterns
 
-- `conftest.py` provides `mock_adapter` (pre-loaded with two drawings) and `dwg_folder` (tmp_path with dummy .dwg files).
+- `conftest.py` provides `mock_adapter` (pre-loaded with two drawings), `full_mock_adapter` (one drawing with all entity types), and `dwg_folder` (tmp_path with dummy .dwg files).
 - Operation tests define a local `_adapter_with_dwg_files(tmp_path)` helper that writes real dummy `.dwg` bytes to disk (so `get_dwg_files()` discovers them) AND registers those exact paths in MockAutoCADAdapter via `add_mock_drawing()`. Both steps are required.
 - CLI tests use `typer.testing.CliRunner` with `--mock` and `--no-backup` flags. With `--mock`, the factory auto-populates sample data for files in the folder, so CLI tests get non-zero results.
 - All tests run on macOS via the mock adapter — no AutoCAD needed.
 
+## AutoCADPort Protocol (`acad/port.py`)
+
+The protocol defines ~25 methods across 8 categories:
+
+| Category | Methods |
+|----------|---------|
+| Lifecycle | `open_drawing`, `close_drawing`, `save_drawing` |
+| Text | `get_text_entities`, `set_text` |
+| Layers | `get_layers`, `rename_layer`, `create_layer`, `set_layer_properties`, `delete_layer` |
+| Geometry | `get_dimensions`, `get_polylines`, `get_drawing_extents` |
+| Blocks | `get_blocks`, `get_block_attributes`, `set_block_attribute`, `insert_block` |
+| XREFs | `get_xrefs`, `reload_xref`, `attach_xref`, `detach_xref` |
+| Layouts | `get_layouts`, `get_viewports` |
+| Plot | `plot_layout` |
+| Utility | `purge`, `audit_drawing` |
+
 ## Models (models.py)
 
-All Pydantic v2 models live in one file. Entities (`TextEntity`, `LayerEntity`) represent drawing objects. Request models (`TextReplaceRequest`, `LayerRenameRequest`, `ComplianceCheckRequest`, etc.) are operation inputs. Result models (`OperationResult`, `AuditResult`, `ComplianceCheckResult`, `RegulationResult`) are outputs. Compliance models (`ComplianceRule`, `ComplianceRuleSet`, `ComplianceFinding`) represent structured regulation rules.
+All Pydantic v2 models live in one file:
+
+- **Geometry primitives**: `Point2D`, `Point3D`
+- **Entities**: `TextEntity`, `LayerEntity`, `DimensionEntity`, `PolylineEntity`, `BlockReference`, `BlockAttribute`, `XrefInfo`, `LayoutInfo`, `ViewportInfo`, `DrawingExtents`, `AuditIssue`
+- **Requests**: `TextReplaceRequest`, `LayerRenameRequest`, `LayerStandardizeRequest`, `AuditRequest`, `DimensionExtractionRequest`, `AreaExtractionRequest`, `ComplianceMeasurementRequest`, `TitleBlockUpdateRequest`, `ScheduleExtractionRequest`, `BlockInsertRequest`, `XrefManageRequest`, `DrawingSearchRequest`, `BatchPlotRequest`, `BatchPurgeRequest`, `DrawingInfoRequest`, `ComplianceCheckRequest`
+- **Results**: `OperationResult`, `AuditResult`, `DimensionExtractionResult`, `AreaExtractionResult`, `ComplianceMeasurementResult`, `ScheduleResult`, `XrefListResult`, `DrawingSearchResult`, `PlotResult`, `PurgeResult`, `DrawingInfoResult`, `ComplianceCheckResult`
+- **Compliance**: `ComplianceRule`, `ComplianceRuleSet`, `ComplianceFinding`
+
+## Operations
+
+| Module | Functions |
+|--------|-----------|
+| `text_ops.py` | `batch_find_replace` |
+| `layer_ops.py` | `batch_rename_layer`, `batch_standardize_layers` |
+| `audit_ops.py` | `audit_drawings` |
+| `compliance_ops.py` | `check_compliance`, `list_rule_sets`, `load_rule_set` |
+| `geometry_ops.py` | `extract_dimensions`, `extract_areas`, `measure_compliance` |
+| `block_ops.py` | `batch_update_title_blocks`, `extract_schedule`, `batch_insert_blocks` |
+| `xref_ops.py` | `manage_xrefs` (list/reload/attach/detach) |
+| `drawing_ops.py` | `batch_purge`, `batch_plot`, `drawing_search`, `get_drawing_info` |
+
+## Multi-CAD Support
+
+Three COM adapters share a common base class (`acad/com_base.py`):
+
+| Adapter | COM ProgID | File |
+|---------|-----------|------|
+| `RealAutoCADAdapter` | `AutoCAD.Application` | `acad/real_adapter.py` |
+| `BricsCADAdapter` | `BricscadApp.AcadApplication` | `acad/bricscad_adapter.py` |
+| `ZWCADAdapter` | `ZWCAD.Application` | `acad/zwcad_adapter.py` |
+
+Set `ACAD_CMD_CAD_ENGINE` to `auto` (default), `autocad`, `bricscad`, `zwcad`, or `mock`.
 
 ## Windows Deployment
 
 See `docs/windows-setup.md` for full guide. Key points:
 
 - Install with `pip install -e ".[windows]"` to get pywin32
-- AutoCAD must be **running** — the RealAutoCADAdapter connects via COM to the live instance
+- AutoCAD/BricsCAD/ZWCAD must be **running** — adapters connect via COM to the live instance
 - Set `SECURELOAD=0` in AutoCAD to allow COM automation
-- On Windows, the factory auto-selects `RealAutoCADAdapter` (no `--mock` needed)
+- On Windows, the factory auto-detects which CAD app is running (no `--mock` needed)
 - CLI commands work the same, just without `--mock` — they operate on real DWG files
 
 ## MCP Server
 
-The MCP server (`mcp_server/server.py`) exposes seven MCP tools: the original four drawing operations plus `query_regulations`, `check_compliance_tool`, and `list_available_rules`. Launch with:
+The MCP server (`mcp_server/server.py`) exposes **18 structured MCP tools** plus the `ask_araiden` natural language tool. Launch with:
 
 ```bash
 # Windows
@@ -99,6 +163,23 @@ The MCP server (`mcp_server/server.py`) exposes seven MCP tools: the original fo
 # macOS (mock only)
 .venv/bin/python -m autocad_batch_commander.mcp_server.server
 ```
+
+### MCP Tools
+
+| Category | Tools |
+|----------|-------|
+| Text | `batch_change_text` |
+| Layers | `batch_rename_layer_tool`, `standardize_layers_tool`, `audit_drawings_tool` |
+| Geometry | `extract_dimensions_tool`, `extract_areas_tool`, `measure_compliance_tool` |
+| Blocks | `update_title_blocks_tool`, `extract_schedule_tool` |
+| XREFs | `manage_xrefs_tool` |
+| Drawing | `search_drawings_tool`, `batch_plot_tool`, `batch_purge_tool`, `get_drawing_info_tool` |
+| Knowledge | `query_regulations`, `check_compliance_tool`, `list_available_rules` |
+| NL | `ask_araiden` — natural language → structured operation routing |
+
+### `ask_araiden` NL Tool
+
+`mcp_server/nl_router.py` classifies user intent via regex patterns and routes to the appropriate structured operation. Supports intents: dimensions, areas, compliance, title blocks, schedules, xrefs, search, purge, plot, drawing info, layers, regulations, rules.
 
 For Claude Desktop integration, add to `claude_desktop_config.json` — see `docs/windows-setup.md`.
 
@@ -149,6 +230,7 @@ standards/
     energy-efficiency.json      # 8 energy rules (OTTV, RTTV, roof U-values, BEI)
     environmental.json          # 10 environmental rules (EIA thresholds, effluent, noise)
     accessibility.json          # 12 accessibility rules (ramps, handrails, toilets, lifts)
+  dimension_mapping.json        # Layer name → rule parameter mapping for automated measurement
 scripts/
   extract_ubbl.py               # PDF extraction tool — reads UBBL PDF, splits by Part/Schedule/By-law
   embed_knowledge.py            # Embed knowledge base Markdown into Supabase pgvector
@@ -283,6 +365,7 @@ ACAD_CMD_CHAT_ENABLED            — Feature flag (default: false)
 ACAD_CMD_CHAT_MAX_HISTORY        — Max conversation turns sent to LLM (default: 10)
 ACAD_CMD_CHAT_MAX_CONTEXT_CHUNKS — Max RAG chunks retrieved (default: 6)
 ACAD_CMD_CHAT_SIMILARITY_THRESHOLD — Minimum cosine similarity (default: 0.4)
+ACAD_CMD_CAD_ENGINE              — CAD engine: auto | autocad | bricscad | zwcad | mock (default: auto)
 ```
 
 ### Setup

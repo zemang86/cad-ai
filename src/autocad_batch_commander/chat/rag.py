@@ -76,7 +76,11 @@ def _persist_messages(
     # Assistant message
     assistant_id = str(uuid.uuid4())
     chunk_refs = [
-        {"file_path": c["file_path"], "chunk_index": c["chunk_index"], "score": c["score"]}
+        {
+            "file_path": c["file_path"],
+            "chunk_index": c["chunk_index"],
+            "score": c["score"],
+        }
         for c in context_chunks
     ]
     supabase.table("chat_messages").insert(
@@ -93,9 +97,9 @@ def _persist_messages(
     ).execute()
 
     # Update session last_active_at
-    supabase.table("chat_sessions").update(
-        {"last_active_at": "now()"}
-    ).eq("id", session_id).execute()
+    supabase.table("chat_sessions").update({"last_active_at": "now()"}).eq(
+        "id", session_id
+    ).execute()
 
     return assistant_id
 
