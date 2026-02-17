@@ -15,9 +15,16 @@ Each entry lists the file path, source document, and key topics covered.
 | `ubbl/06-accessibility-requirements.md` | OKU access, ramps, handrails, accessible toilets, signage |
 | `ubbl/07-temporary-works.md` | hoarding, scaffolding, site safety, temporary structures, construction safety |
 | `ubbl/08-structural-requirements.md` | structural loads, foundations, vehicle barriers, retaining walls, By-Law 71 |
-| `ubbl/09-constructional-requirements.md` | materials, roof coverings, lifts, construction methods, By-Law 115, By-Law 124 |
+| `ubbl/09-constructional-requirements.md` | materials, roof coverings, lifts, construction methods, By-Law 115, By-Law 124, swimming pools, staircases, handrails |
 | `ubbl/10-2021-amendment.md` | energy efficiency, By-Law 38a, OTTV, RTTV, lightning protection, roof U-value, Schedule 11, By-Law 224A, 2021 amendment summary |
 | `ubbl/11-demolition.md` | demolition, demolition plan, PM 2318, building demolition, Part 1A |
+| `ubbl/12-fire-alarm-systems.md` | fire alarm, fire extinguishment, smoke control, atrium, emergency power, emergency lighting, dry riser, wet riser, fire lift, fire command centre, Part VIII |
+| `ubbl/13-miscellaneous.md` | Part IX, buildings exempted, standard supersession, building failure, compliance period |
+| `ubbl/14-schedule-fifth.md` | purpose groups, building dimensions, compartment dimensions, Fifth Schedule |
+| `ubbl/15-schedule-seventh.md` | travel distance, occupant load, exit capacity, Seventh Schedule |
+| `ubbl/16-schedule-ninth.md` | fire resistance periods, elements of structure, Ninth Schedule |
+| `ubbl/17-schedule-tenth.md` | fire alarm requirements, extinguishment requirements, sprinkler, hose reel, water storage, Tenth Schedule |
+| `ubbl/18-schedule-eleventh.md` | staircase landing, landing width, landing depth, bed evacuation, Eleventh Schedule |
 
 ## Fire By-Laws
 
@@ -105,7 +112,6 @@ Each entry lists the file path, source document, and key topics covered.
 - **open space** → `ubbl/03-spatial-requirements.md`
 - **fire resistance** → `ubbl/04-fire-requirements.md`
 - **compartmentation** → `ubbl/04-fire-requirements.md`
-- **purpose group** → `ubbl/04-fire-requirements.md`
 - **escape route** → `ubbl/04-fire-requirements.md`, `fire-bylaws/02-fire-escape.md`
 - **fire door** → `ubbl/04-fire-requirements.md`, `fire-bylaws/04-fire-door-ratings.md`
 - **parking** → `ubbl/05-parking-requirements.md`, `local-authority/02-dbkl-requirements.md`
@@ -133,9 +139,7 @@ Each entry lists the file path, source document, and key topics covered.
 - **hose reel** → `fire-bylaws/03-fire-fighting-systems.md`
 - **hydrant** → `fire-bylaws/03-fire-fighting-systems.md`
 - **sprinkler** → `fire-bylaws/03-fire-fighting-systems.md`, `standards/04-ms-fire-standards.md`
-- **dry riser** → `fire-bylaws/03-fire-fighting-systems.md`
-- **fire alarm** → `fire-bylaws/03-fire-fighting-systems.md`
-- **emergency power** → `fire-bylaws/03-fire-fighting-systems.md`
+- **fire alarm** → `fire-bylaws/03-fire-fighting-systems.md`, `ubbl/12-fire-alarm-systems.md`, `ubbl/17-schedule-tenth.md`
 - **high-rise** → `fire-bylaws/05-highrise-fire.md`, `building-types/01-highrise.md`
 - **refuge floor** → `fire-bylaws/05-highrise-fire.md`, `building-types/01-highrise.md`
 - **pressurized staircase** → `fire-bylaws/05-highrise-fire.md`
@@ -225,6 +229,36 @@ Each entry lists the file path, source document, and key topics covered.
 - **classroom** → `building-types/04-educational.md`
 - **MOE** → `building-types/04-educational.md`
 - **Bomba** → `fire-bylaws/01-fire-certificate.md`, `fire-bylaws/03-fire-fighting-systems.md`, `fire-bylaws/05-highrise-fire.md`
+- **smoke control** → `ubbl/12-fire-alarm-systems.md`
+- **atrium** → `ubbl/12-fire-alarm-systems.md`
+- **emergency power** → `fire-bylaws/03-fire-fighting-systems.md`, `ubbl/12-fire-alarm-systems.md`
+- **emergency lighting** → `ubbl/12-fire-alarm-systems.md`
+- **fire command centre** → `ubbl/12-fire-alarm-systems.md`, `fire-bylaws/05-highrise-fire.md`
+- **fire lift** → `ubbl/12-fire-alarm-systems.md`, `fire-bylaws/05-highrise-fire.md`
+- **dry riser** → `fire-bylaws/03-fire-fighting-systems.md`, `ubbl/12-fire-alarm-systems.md`
+- **wet riser** → `fire-bylaws/03-fire-fighting-systems.md`, `ubbl/12-fire-alarm-systems.md`
+- **fire mode** → `ubbl/12-fire-alarm-systems.md`
+- **electrical isolation** → `ubbl/12-fire-alarm-systems.md`
+- **fireman intercom** → `ubbl/12-fire-alarm-systems.md`
+- **swimming pool** → `ubbl/09-constructional-requirements.md`
+- **diving board** → `ubbl/09-constructional-requirements.md`
+- **purpose group** → `ubbl/04-fire-requirements.md`, `ubbl/14-schedule-fifth.md`
+- **compartment dimensions** → `ubbl/14-schedule-fifth.md`
+- **occupant load** → `ubbl/15-schedule-seventh.md`
+- **exit capacity** → `ubbl/15-schedule-seventh.md`
+- **fire resistance period** → `ubbl/16-schedule-ninth.md`
+- **elements of structure** → `ubbl/16-schedule-ninth.md`
+- **fire alarm requirements** → `ubbl/17-schedule-tenth.md`
+- **water storage** → `ubbl/17-schedule-tenth.md`
+- **staircase landing** → `ubbl/18-schedule-eleventh.md`
+- **bed evacuation** → `ubbl/18-schedule-eleventh.md`
+- **stretcher evacuation** → `ubbl/18-schedule-eleventh.md`
+- **plan submission** → `ubbl/02-building-operations.md`
+- **plan scale** → `ubbl/02-building-operations.md`
+- **building failure** → `ubbl/13-miscellaneous.md`
+- **buildings exempted** → `ubbl/13-miscellaneous.md`
+- **staircase dimensions** → `ubbl/09-constructional-requirements.md`
+- **handrail height** → `ubbl/09-constructional-requirements.md`
 - **demolition** → `ubbl/11-demolition.md`
 - **SPAH** → `ubbl/01-general-provisions.md`, `ubbl/09-constructional-requirements.md`
 - **rainwater harvesting** → `ubbl/01-general-provisions.md`, `ubbl/09-constructional-requirements.md`

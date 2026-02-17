@@ -111,6 +111,89 @@ The 2021 Amendment replaced By-Law 86 with enhanced acoustic and fire requiremen
 
 > **Citation**: Uniform Building By-Laws 1984, Part VI
 
+## By-Law 106: Dimensions of Staircases
+
+- Staircase dimensions must comply with the relevant building use and occupancy
+- Minimum staircase width for means of escape: **1,050 mm** (≤2 storeys above exit) or **1,200 mm** (>2 storeys)
+- Riser height: maximum **175 mm** for common staircases
+- Tread depth: minimum **250 mm** (going)
+- Headroom: minimum **2,000 mm** measured vertically from the pitch line
+
+> **Citation**: UBBL 1984, Part VI, By-Law 106
+
+## By-Law 107: Handrails
+
+- Handrails required on both sides of staircases wider than **1,000 mm**
+- Handrail height: **840 mm to 1,000 mm** measured from the pitch line or floor level
+- Handrails must be continuous and graspable
+- For staircases wider than **2,200 mm**, an intermediate handrail must be provided
+
+> **Citation**: UBBL 1984, Part VI, By-Law 107
+
+## By-Law 108: Maximum Flights
+
+- Maximum number of risers in a single flight: **16 risers**
+- Landings must be provided at every 16th riser
+- Landing depth: not less than the width of the staircase
+
+> **Citation**: UBBL 1984, Part VI, By-Law 108
+
+## By-Laws 125–132: Swimming Pools
+
+### By-Law 125: Swimming Pool Construction
+
+- Floor and wall surfaces shall be **smooth and free from cracks**
+- Swimming pools shall be completely surrounded by an **overflow channel** constructed so that:
+  - Overflow and floating matter cannot return to the pool
+  - Arms or legs of swimmers cannot be trapped by the channel
+  - Swimmers can take hold of the edge but cannot touch the bottom of the channel with fingers
+
+### By-Law 126: Steps and Footway
+
+- Steps at side walls near ends of pool, not higher than internal wall facing
+- Steps constructed of **non-ferrous materials** with **non-slip surface** and handrail
+- **Non-slip footway** provided around every swimming pool
+
+### By-Law 127: Openings into Swimming Pool
+
+- Water inlets distributed for **uniform circulation** avoiding dead points of stagnant water
+
+### By-Law 128: Depth of Water
+
+Depth markings required on side walls indicating:
+- Depth at shallow and deep ends
+- Zone where depth is between **1.3m and 1.8m**
+- Depth figures shown above overflow channel
+
+**Minimum depths for diving:**
+
+| Facility | Min Depth at 1.53m from Free End |
+|---|---|
+| Diving board up to **3m** above water | **3.3 metres** |
+| Platform up to **9.7m** above water | **4.5 metres** |
+
+### By-Law 129: Location of Diving Boards
+
+- Diving boards, platforms and water chutes: not less than **1.8 metres** from pool sides or from any other diving board/platform/chute
+
+### By-Law 130: Changing Rooms
+
+- Separate changing rooms for each sex
+- Flooring: **non-slip impermeable material**, graded to drainage outlets
+- Walls: **smooth, impermeable, easy to clean** up to **1.8 metres** height
+
+### By-Law 131: Footbaths and Showers
+
+- Sufficient footbaths (min **0.9m** each dimension) around the pool with shower over entrance
+- Running water required
+
+### By-Law 132: Private Residential Swimming Pools
+
+- By-laws 125–131 apply to **public and commercial** swimming pools only
+- Private, residential or special purpose pools: approval at discretion of local authority
+
+> **Citation**: UBBL 1984, Part VI, By-Laws 125–132
+
 ## Deleted By-Laws (2021 Amendment)
 
 The following constructional by-laws were deleted or substantially replaced in 2021:

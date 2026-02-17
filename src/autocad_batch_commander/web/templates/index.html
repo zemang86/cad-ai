@@ -1,171 +1,459 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCAD Batch Commander</title>
+    <title>CAD Commander</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
+        :root[data-theme="dark"] {
+            --bg-primary: #1b1d23;
+            --bg-secondary: #23262e;
+            --bg-tertiary: #2a2d36;
+            --bg-hover: #31343e;
+            --bg-input: #191b20;
+            --border: #3a3d47;
+            --border-subtle: #2e3139;
+            --text-primary: #e4e6eb;
+            --text-secondary: #9ca0ab;
+            --text-muted: #6b7080;
+            --accent: #4da6ff;
+            --accent-dim: rgba(77,166,255,0.12);
+            --accent-hover: #6db8ff;
+            --grid-line: rgba(77,166,255,0.04);
+            --grid-line-strong: rgba(77,166,255,0.08);
+            --crosshair: rgba(77,166,255,0.15);
+            --red: #ff6b6b;
+            --orange: #ffa94d;
+            --green: #69db7c;
+            --cyan: #66d9e8;
+            --shadow: rgba(0,0,0,0.3);
+            --header-bg: #16181d;
+        }
+        :root[data-theme="light"] {
+            --bg-primary: #f0f1f4;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f7f8fa;
+            --bg-hover: #ebedf2;
+            --bg-input: #ffffff;
+            --border: #d0d3da;
+            --border-subtle: #e2e4e9;
+            --text-primary: #1a1c24;
+            --text-secondary: #5a5e6b;
+            --text-muted: #8b8f9c;
+            --accent: #2b7de9;
+            --accent-dim: rgba(43,125,233,0.08);
+            --accent-hover: #1a6dd6;
+            --grid-line: rgba(43,125,233,0.03);
+            --grid-line-strong: rgba(43,125,233,0.06);
+            --crosshair: rgba(43,125,233,0.08);
+            --red: #e03131;
+            --orange: #e67700;
+            --green: #2b8a3e;
+            --cyan: #1098ad;
+            --shadow: rgba(0,0,0,0.06);
+            --header-bg: #ffffff;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #f5f7fa;
-            color: #1a1a2e;
+            font-family: "SF Mono", "Cascadia Code", "JetBrains Mono", "Fira Code", Consolas, monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
+            background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+            min-height: 100vh;
         }
+
+        /* ── Header / Toolbar ─────────────────────────── */
         header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-            padding: 1.5rem 2rem;
-        }
-        header h1 { font-size: 1.5rem; font-weight: 600; }
-        header p { opacity: 0.8; font-size: 0.9rem; margin-top: 0.25rem; }
-
-        .container { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
-
-        /* Tabs */
-        .tabs {
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 48px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 4px var(--shadow);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-left: 1rem;
+        }
+        .logo {
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo svg { width: 24px; height: 24px; }
+        .app-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+        .app-title span { color: var(--accent); }
+        .header-right {
+            display: flex;
+            align-items: center;
             gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 0;
+            padding-right: 1rem;
         }
-        .tab {
-            padding: 0.75rem 1.25rem;
-            border: none;
-            background: none;
+        .theme-toggle {
+            width: 36px; height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
             cursor: pointer;
-            font-size: 0.95rem;
-            color: #666;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            font-size: 1.1rem;
         }
-        .tab:hover { color: #1a1a2e; }
-        .tab.active { color: #1a1a2e; border-bottom-color: #0f3460; font-weight: 600; }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* Cards */
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            margin-bottom: 1rem;
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+        .status-bar {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
+        }
+        .status-dot {
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            margin-right: 4px;
+            vertical-align: middle;
         }
 
-        /* Forms */
-        label { display: block; font-weight: 500; margin-bottom: 0.4rem; font-size: 0.9rem; }
-        input[type="text"], select {
+        /* ── Layout ──────────────────────────────────── */
+        .layout {
+            display: flex;
             width: 100%;
-            padding: 0.6rem 0.8rem;
-            border: 1px solid #d0d0d0;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
+            min-height: calc(100vh - 48px);
         }
-        input[type="text"]:focus, select:focus {
-            outline: none;
-            border-color: #0f3460;
-            box-shadow: 0 0 0 2px rgba(15,52,96,0.15);
-        }
-        button.btn {
-            background: #0f3460;
-            color: white;
-            border: none;
-            padding: 0.65rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: background 0.2s;
-        }
-        button.btn:hover { background: #1a4a7a; }
-        button.btn:disabled { background: #999; cursor: not-allowed; }
 
-        /* Results */
-        .results {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: #fafbfc;
-            border: 1px solid #e8e8e8;
-            border-radius: 6px;
-            max-height: 600px;
+        /* ── Sidebar ─────────────────────────────────── */
+        .sidebar {
+            width: 220px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 1rem 0;
+            flex-shrink: 0;
+        }
+        .sidebar-section {
+            padding: 0 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .sidebar-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+            transition: all 0.15s;
+            margin-bottom: 2px;
+        }
+        .nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .nav-item.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-color: rgba(77,166,255,0.2);
+        }
+        .nav-icon {
+            width: 18px; height: 18px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ── Main content ────────────────────────────── */
+        .main {
+            flex: 1;
+            padding: 1.5rem 2rem;
             overflow-y: auto;
         }
-        .results h3 { font-size: 1rem; margin-bottom: 0.75rem; color: #0f3460; }
-        .results .file-section { margin-bottom: 1.5rem; }
-        .results .file-section h4 {
-            font-size: 0.85rem;
-            color: #666;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 0.3rem;
-            margin-bottom: 0.5rem;
-        }
-        .results .md-content { font-size: 0.9rem; }
-        .results .md-content h1 { font-size: 1.2rem; margin: 0.8rem 0 0.4rem; }
-        .results .md-content h2 { font-size: 1.05rem; margin: 0.7rem 0 0.3rem; }
-        .results .md-content h3 { font-size: 0.95rem; margin: 0.5rem 0 0.25rem; }
-        .results .md-content blockquote {
-            border-left: 3px solid #0f3460;
-            padding: 0.4rem 0.8rem;
-            margin: 0.5rem 0;
-            background: #f0f4f8;
-            font-size: 0.85rem;
-        }
-        .results .md-content ul, .results .md-content ol { padding-left: 1.5rem; }
-        .results .md-content table { border-collapse: collapse; width: 100%; margin: 0.5rem 0; font-size: 0.85rem; }
-        .results .md-content th, .results .md-content td { border: 1px solid #ddd; padding: 0.35rem 0.6rem; text-align: left; }
-        .results .md-content th { background: #f0f4f8; }
-        .empty { color: #999; font-style: italic; }
 
-        /* Finding cards */
-        .finding {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
         }
-        .finding .rule-id { font-weight: 600; color: #0f3460; }
-        .finding .by-law { font-size: 0.8rem; color: #888; }
-        .finding .threshold { font-weight: 500; color: #333; }
+        .panel-header h2 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .panel-header .cmd {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        /* ── Card ─────────────────────────────────────── */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Forms ────────────────────────────────────── */
+        label {
+            display: block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 0.55rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            margin-bottom: 0.85rem;
+            transition: border-color 0.15s;
+        }
+        input[type="text"]::placeholder { color: var(--text-muted); }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-dim);
+        }
+        select { cursor: pointer; }
+        select option { background: var(--bg-secondary); color: var(--text-primary); }
+
+        .btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: all 0.15s;
+        }
+        .btn:hover { background: var(--accent-hover); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .input-row {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-end;
+        }
+        .input-row .input-group { flex: 1; }
+        .input-row .btn { margin-bottom: 0.85rem; white-space: nowrap; }
+
+        /* ── Results panel ────────────────────────────── */
+        .results {
+            margin-top: 0.75rem;
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+        .results::-webkit-scrollbar { width: 6px; }
+        .results::-webkit-scrollbar-track { background: transparent; }
+        .results::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        .results::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .results-header .count {
+            background: var(--accent-dim);
+            padding: 0.1rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* ── File sections (search results) ──────────── */
+        .file-section {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            user-select: none;
+        }
+        .file-header:hover { background: var(--bg-hover); }
+        .file-header .chevron {
+            transition: transform 0.2s;
+            font-size: 0.6rem;
+        }
+        .file-header.collapsed .chevron { transform: rotate(-90deg); }
+        .file-body { padding: 0.75rem 1rem; }
+        .file-body.hidden { display: none; }
+
+        .md-content { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; }
+        .md-content h1 { font-size: 1.1rem; color: var(--text-primary); margin: 1rem 0 0.4rem; font-weight: 600; }
+        .md-content h2 { font-size: 0.95rem; color: var(--text-primary); margin: 0.8rem 0 0.3rem; font-weight: 600; }
+        .md-content h3 { font-size: 0.85rem; color: var(--text-primary); margin: 0.6rem 0 0.25rem; font-weight: 600; }
+        .md-content strong { color: var(--accent); font-weight: 600; }
+        .md-content blockquote {
+            border-left: 2px solid var(--accent);
+            padding: 0.4rem 0.75rem;
+            margin: 0.5rem 0;
+            background: var(--accent-dim);
+            border-radius: 0 4px 4px 0;
+            font-size: 0.78rem;
+        }
+        .md-content ul, .md-content ol { padding-left: 1.4rem; margin: 0.3rem 0; }
+        .md-content li { margin-bottom: 0.15rem; }
+        .md-content table { border-collapse: collapse; width: 100%; margin: 0.5rem 0; font-size: 0.78rem; }
+        .md-content th, .md-content td { border: 1px solid var(--border); padding: 0.3rem 0.6rem; text-align: left; }
+        .md-content th { background: var(--bg-tertiary); color: var(--text-primary); font-weight: 600; }
+        .md-content code {
+            background: var(--bg-tertiary);
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-size: 0.78rem;
+        }
+        .md-content hr { border: none; border-top: 1px solid var(--border-subtle); margin: 0.75rem 0; }
+
+        .empty { color: var(--text-muted); font-style: italic; font-size: 0.82rem; padding: 1rem 0; }
+
+        /* ── Findings ─────────────────────────────────── */
+        .finding {
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 0.65rem 0.85rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.82rem;
+            background: var(--bg-secondary);
+            transition: border-color 0.15s;
+        }
+        .finding:hover { border-color: var(--text-muted); }
+        .finding-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+        .finding .rule-id {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.78rem;
+        }
+        .finding .by-law {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+        }
+        .finding .desc { color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .finding .threshold {
+            font-size: 0.78rem;
+            color: var(--cyan);
+            font-weight: 500;
+        }
         .finding .tags { margin-top: 0.3rem; }
         .finding .tag {
             display: inline-block;
-            background: #e8f0fe;
-            color: #0f3460;
-            padding: 0.1rem 0.5rem;
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 0.08rem 0.45rem;
             border-radius: 3px;
-            font-size: 0.75rem;
-            margin-right: 0.3rem;
+            font-size: 0.68rem;
+            margin-right: 0.25rem;
+            letter-spacing: 0.3px;
         }
-        .severity-error { border-left: 3px solid #e74c3c; }
-        .severity-warning { border-left: 3px solid #f39c12; }
-        .severity-info { border-left: 3px solid #3498db; }
+        .severity-error { border-left: 3px solid var(--red); }
+        .severity-warning { border-left: 3px solid var(--orange); }
+        .severity-info { border-left: 3px solid var(--cyan); }
 
-        /* Rule browser */
-        .rule-set-btn {
-            display: inline-block;
-            margin: 0.25rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid #d0d0d0;
-            border-radius: 6px;
-            background: white;
+        /* ── Rule set chips ──────────────────────────── */
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+        .chip {
+            padding: 0.4rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-tertiary);
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            transition: all 0.15s;
+            font-family: inherit;
         }
-        .rule-set-btn:hover { border-color: #0f3460; color: #0f3460; }
-        .rule-set-btn.active { background: #0f3460; color: white; border-color: #0f3460; }
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+        .chip.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
 
+        /* ── Spinner ──────────────────────────────────── */
         .spinner {
             display: inline-block;
-            width: 16px; height: 16px;
-            border: 2px solid #ddd;
-            border-top-color: #0f3460;
+            width: 14px; height: 14px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 0.6s linear infinite;
             margin-right: 0.5rem;
@@ -173,84 +461,643 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        @media (max-width: 640px) {
-            .container { padding: 1rem; }
-            header { padding: 1rem; }
-            .tabs { overflow-x: auto; }
-            .tab { white-space: nowrap; font-size: 0.85rem; padding: 0.6rem 0.8rem; }
+        .loading-msg {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            padding: 1rem 0;
         }
+
+        /* ── Command line (bottom bar) ────────────────── */
+        .cmdline {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: var(--header-bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            gap: 1.5rem;
+            z-index: 100;
+        }
+        .cmdline .coord { color: var(--text-secondary); }
+
+        /* ── Responsive ──────────────────────────────── */
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .mobile-nav {
+                display: flex !important;
+                gap: 0.25rem;
+                padding: 0.5rem 1rem;
+                overflow-x: auto;
+                background: var(--bg-secondary);
+                border-bottom: 1px solid var(--border);
+            }
+            .mobile-nav .chip { white-space: nowrap; flex-shrink: 0; }
+            .main { padding: 1rem; }
+            .input-row { flex-direction: column; }
+            .input-row .btn { margin-bottom: 0; }
+        }
+        @media (min-width: 769px) {
+            .mobile-nav { display: none !important; }
+        }
+
+        /* Ensure body has bottom padding for cmdline */
+        .layout { padding-bottom: 28px; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ── Setup guide styles ─────────────────────── */
+        .guide-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .guide-section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+            cursor: pointer;
+            user-select: none;
+        }
+        .guide-section-header:hover { background: var(--bg-hover); }
+        .guide-section-header h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .guide-section-header .step-num {
+            background: var(--accent);
+            color: #fff;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .guide-section-header .chevron {
+            margin-left: auto;
+            transition: transform 0.2s;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+        }
+        .guide-section-header.collapsed .chevron { transform: rotate(-90deg); }
+        .guide-body { padding: 1rem 1.25rem; }
+        .guide-body.hidden { display: none; }
+        .guide-body p { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.6rem; }
+        .guide-body ul, .guide-body ol { font-size: 0.82rem; color: var(--text-secondary); padding-left: 1.4rem; margin-bottom: 0.6rem; }
+        .guide-body li { margin-bottom: 0.3rem; }
+        .guide-body h4 {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            margin: 1rem 0 0.4rem;
+            font-weight: 600;
+        }
+        .code-block {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0 0.75rem;
+            font-size: 0.78rem;
+            color: var(--cyan);
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.7;
+            position: relative;
+        }
+        .code-block .comment { color: var(--text-muted); }
+        .code-block .copy-btn {
+            position: absolute;
+            top: 0.4rem;
+            right: 0.4rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .code-block .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+        .config-json {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0 0.75rem;
+            font-size: 0.76rem;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.6;
+        }
+        .config-json .key { color: var(--accent); }
+        .config-json .string { color: var(--green); }
+        .config-json .comment { color: var(--text-muted); }
+        .badge {
+            display: inline-block;
+            padding: 0.12rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .badge-win { background: rgba(77,166,255,0.12); color: var(--accent); }
+        .badge-mac { background: rgba(105,219,124,0.12); color: var(--green); }
+        .badge-all { background: rgba(102,217,232,0.12); color: var(--cyan); }
+        .endpoint-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin: 0.5rem 0; }
+        .endpoint-table th, .endpoint-table td { border: 1px solid var(--border); padding: 0.35rem 0.65rem; text-align: left; }
+        .endpoint-table th { background: var(--bg-tertiary); color: var(--text-primary); font-weight: 600; }
+        .endpoint-table td code { background: var(--bg-tertiary); padding: 0.08rem 0.3rem; border-radius: 3px; color: var(--accent); font-size: 0.76rem; }
+        .method { font-weight: 600; }
+        .method-get { color: var(--green); }
+        .method-post { color: var(--orange); }
     </style>
 </head>
 <body>
+    <!-- Header toolbar -->
     <header>
-        <h1>AutoCAD Batch Commander</h1>
-        <p>Malaysian Building Regulations Knowledge Base & Compliance Checker</p>
+        <div class="header-left">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="9" y1="9" x2="9" y2="21"/>
+                    <path d="M13 13h4M13 17h4"/>
+                </svg>
+            </div>
+            <span class="app-title"><span>CAD</span> Commander</span>
+        </div>
+        <div class="header-right">
+            <span class="status-bar"><span class="status-dot"></span>READY</span>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" id="theme-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon-dark" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon-light">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="tabs">
-            <button class="tab active" data-tab="search">Regulation Search</button>
-            <button class="tab" data-tab="compliance">Compliance Checker</button>
-            <button class="tab" data-tab="rules">Rule Browser</button>
-        </div>
+    <!-- Mobile nav -->
+    <div class="mobile-nav">
+        <button class="chip active" data-tab="search" onclick="switchTab('search', this)">Search</button>
+        <button class="chip" data-tab="compliance" onclick="switchTab('compliance', this)">Compliance</button>
+        <button class="chip" data-tab="rules" onclick="switchTab('rules', this)">Rules</button>
+        <button class="chip" data-tab="setup" onclick="switchTab('setup', this)">Setup</button>
+    </div>
 
-        <!-- Search Tab -->
-        <div id="search" class="tab-content active">
-            <div class="card">
-                <label for="query-input">Search building regulations</label>
-                <input type="text" id="query-input" placeholder="e.g. minimum corridor width, fire escape requirements, parking ratio">
-                <button class="btn" id="search-btn" onclick="doSearch()">Search</button>
+    <div class="layout">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-label">Tools</div>
+                <div class="nav-item active" data-tab="search" onclick="switchTab('search', this)">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                    Regulation Search
+                </div>
+                <div class="nav-item" data-tab="compliance" onclick="switchTab('compliance', this)">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                    Compliance Check
+                </div>
+                <div class="nav-item" data-tab="rules" onclick="switchTab('rules', this)">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                    Rule Browser
+                </div>
+                <div class="nav-item" data-tab="setup" onclick="switchTab('setup', this)">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="6" x2="12" y2="14"/><polyline points="8 10 12 14 16 10"/></svg></div>
+                    Setup Guide
+                </div>
             </div>
-            <div id="search-results"></div>
-        </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label">Info</div>
+                <div class="nav-item" style="cursor:default; font-size:0.72rem; color:var(--text-muted);">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                    <div>
+                        <div style="color:var(--text-secondary)">Malaysian UBBL</div>
+                        <div>Fire, Spatial, Access</div>
+                    </div>
+                </div>
+                <div id="sidebar-rule-count" class="nav-item" style="cursor:default; font-size:0.72rem; color:var(--text-muted);">
+                    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+                    <div>
+                        <div style="color:var(--text-secondary);" id="rule-count-text">Loading...</div>
+                        <div>Rule sets</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-        <!-- Compliance Tab -->
-        <div id="compliance" class="tab-content">
-            <div class="card">
-                <label for="rule-select">Rule Sets</label>
-                <select id="rule-select" multiple style="height: 120px;">
-                    <!-- populated dynamically -->
-                </select>
-                <label for="building-type">Building Type (optional)</label>
-                <input type="text" id="building-type" placeholder="e.g. residential, commercial, office">
-                <button class="btn" id="compliance-btn" onclick="doCompliance()">Check Compliance</button>
+        <!-- Main content -->
+        <main class="main">
+            <!-- Search Tab -->
+            <div id="search" class="tab-content active">
+                <div class="panel-header">
+                    <h2>Regulation Search</h2>
+                    <span class="cmd">QUERY</span>
+                </div>
+                <div class="card">
+                    <label for="query-input">Search query</label>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <input type="text" id="query-input" placeholder="e.g. minimum corridor width, fire escape, parking ratio...">
+                        </div>
+                        <button class="btn" onclick="doSearch()">Search</button>
+                    </div>
+                </div>
+                <div id="search-results"></div>
             </div>
-            <div id="compliance-results"></div>
-        </div>
 
-        <!-- Rules Tab -->
-        <div id="rules" class="tab-content">
-            <div class="card">
-                <p style="margin-bottom: 0.75rem; font-size: 0.9rem; color: #666;">Select a rule set to browse its rules:</p>
-                <div id="rule-set-list"></div>
+            <!-- Compliance Tab -->
+            <div id="compliance" class="tab-content">
+                <div class="panel-header">
+                    <h2>Compliance Checker</h2>
+                    <span class="cmd">CHECK</span>
+                </div>
+                <div class="card">
+                    <label for="rule-select">Rule sets (hold Ctrl/Cmd to select multiple)</label>
+                    <select id="rule-select" multiple style="height: 110px;"></select>
+                    <label for="building-type">Building type (optional)</label>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <input type="text" id="building-type" placeholder="e.g. residential, commercial, office, industrial">
+                        </div>
+                        <button class="btn" onclick="doCompliance()">Run Check</button>
+                    </div>
+                </div>
+                <div id="compliance-results"></div>
             </div>
-            <div id="rules-results"></div>
-        </div>
+
+            <!-- Rules Tab -->
+            <div id="rules" class="tab-content">
+                <div class="panel-header">
+                    <h2>Rule Browser</h2>
+                    <span class="cmd">BROWSE</span>
+                </div>
+                <div class="card">
+                    <label>Select rule set</label>
+                    <div class="chip-group" id="rule-set-list"></div>
+                </div>
+                <div id="rules-results"></div>
+            </div>
+
+            <!-- Setup Guide Tab -->
+            <div id="setup" class="tab-content">
+                <div class="panel-header">
+                    <h2>Setup Guide</h2>
+                    <span class="cmd">INSTALL</span>
+                </div>
+
+                <!-- Step 1: Installation -->
+                <div class="guide-section">
+                    <div class="guide-section-header" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                        <span class="step-num">1</span>
+                        <h3>Installation</h3>
+                        <span class="badge badge-all">All Platforms</span>
+                        <span class="chevron">&#9660;</span>
+                    </div>
+                    <div class="guide-body">
+                        <p>Clone the repository and set up a Python virtual environment:</p>
+                        <div class="code-block"><span class="comment"># Clone the repo</span>
+git clone https://github.com/your-org/cad-ai.git
+cd cad-ai
+
+<span class="comment"># Create virtual environment</span>
+python -m venv .venv
+
+<span class="comment"># Activate (macOS/Linux)</span>
+source .venv/bin/activate
+
+<span class="comment"># Activate (Windows)</span>
+.venv\Scripts\activate</div>
+
+                        <h4>Install Options</h4>
+                        <div class="code-block"><span class="comment"># Basic install (CLI + knowledge base)</span>
+pip install -e .
+
+<span class="comment"># With web server support</span>
+pip install -e ".[web]"
+
+<span class="comment"># With Windows AutoCAD support (Windows only)</span>
+pip install -e ".[windows]"
+
+<span class="comment"># Development (includes testing + linting)</span>
+pip install -e ".[dev]"</div>
+
+                        <p>After installation, the <code>autocad-cmd</code> CLI is available in your path.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2: CLI Usage -->
+                <div class="guide-section">
+                    <div class="guide-section-header" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                        <span class="step-num">2</span>
+                        <h3>CLI Usage</h3>
+                        <span class="badge badge-all">All Platforms</span>
+                        <span class="chevron">&#9660;</span>
+                    </div>
+                    <div class="guide-body">
+                        <h4>Knowledge Base Queries</h4>
+                        <div class="code-block"><span class="comment"># Search Malaysian building regulations</span>
+autocad-cmd query "minimum corridor width"
+autocad-cmd query "fire escape requirements"
+autocad-cmd query "swimming pool depth"
+autocad-cmd query "purpose group classification"</div>
+
+                        <h4>Compliance Checking</h4>
+                        <div class="code-block"><span class="comment"># Check all rules for a building type</span>
+autocad-cmd check-compliance-cmd --rules ubbl-spatial --building-type residential --mock
+
+<span class="comment"># List available rule sets</span>
+autocad-cmd list-rules</div>
+
+                        <h4>CAD Drawing Operations <span class="badge badge-win">Windows</span></h4>
+                        <div class="code-block"><span class="comment"># Find and replace text in DWG files</span>
+autocad-cmd change-text --folder ./plans --find "OLD" --replace "NEW" --mock
+
+<span class="comment"># Rename layers to match standards</span>
+autocad-cmd rename-layer --folder ./plans --standard aia --mock
+
+<span class="comment"># Audit drawings against standards</span>
+autocad-cmd audit --folder ./plans --standard aia --mock</div>
+
+                        <p><strong>Note:</strong> Use <code>--mock</code> on macOS/Linux for testing. On Windows with AutoCAD running, omit <code>--mock</code> to operate on real DWG files.</p>
+
+                        <h4>Web Server</h4>
+                        <div class="code-block"><span class="comment"># Start the web UI (this page)</span>
+autocad-cmd serve
+autocad-cmd serve --port 3000</div>
+                    </div>
+                </div>
+
+                <!-- Step 3: MCP Server -->
+                <div class="guide-section">
+                    <div class="guide-section-header" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                        <span class="step-num">3</span>
+                        <h3>MCP Server for Claude Desktop</h3>
+                        <span class="badge badge-all">All Platforms</span>
+                        <span class="chevron">&#9660;</span>
+                    </div>
+                    <div class="guide-body">
+                        <p>The MCP (Model Context Protocol) server lets Claude Desktop access the CAD knowledge base and compliance tools directly. Claude can then answer questions about Malaysian building regulations and check compliance rules.</p>
+
+                        <h4>Start the MCP Server</h4>
+                        <div class="code-block"><span class="comment"># macOS/Linux</span>
+.venv/bin/python -m autocad_batch_commander.mcp_server.server
+
+<span class="comment"># Windows</span>
+.venv\Scripts\python -m autocad_batch_commander.mcp_server.server</div>
+
+                        <h4>Configure Claude Desktop</h4>
+                        <p>Add the following to your Claude Desktop config file:</p>
+                        <ul>
+                            <li><strong>macOS:</strong> <code>~/Library/Application Support/Claude/claude_desktop_config.json</code></li>
+                            <li><strong>Windows:</strong> <code>%APPDATA%\Claude\claude_desktop_config.json</code></li>
+                        </ul>
+                        <div class="config-json">{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"cad-commander"</span>: {
+      <span class="key">"command"</span>: <span class="string">"/path/to/cad-ai/.venv/bin/python"</span>,
+      <span class="key">"args"</span>: [
+        <span class="string">"-m"</span>,
+        <span class="string">"autocad_batch_commander.mcp_server.server"</span>
+      ],
+      <span class="key">"env"</span>: {
+        <span class="key">"PYTHONPATH"</span>: <span class="string">"/path/to/cad-ai/src"</span>
+      }
+    }
+  }
+}</div>
+                        <p>Replace <code>/path/to/cad-ai</code> with the actual path to your installation.</p>
+
+                        <h4>Available MCP Tools</h4>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>query_regulations</code></td><td>Search the knowledge base for Malaysian building regulations (UBBL, fire by-laws, standards)</td></tr>
+                                <tr><td><code>check_compliance</code></td><td>Run compliance checks against rule sets (spatial, fire, energy, accessibility)</td></tr>
+                                <tr><td><code>list_available_rules</code></td><td>List all available compliance rule sets</td></tr>
+                                <tr><td><code>change_text</code></td><td>Find and replace text across DWG files <span class="badge badge-win">Windows</span></td></tr>
+                                <tr><td><code>rename_layer</code></td><td>Rename layers to match standards <span class="badge badge-win">Windows</span></td></tr>
+                                <tr><td><code>standardize_layers</code></td><td>Batch standardize layer names <span class="badge badge-win">Windows</span></td></tr>
+                                <tr><td><code>audit_drawings</code></td><td>Audit drawings against layer standards <span class="badge badge-win">Windows</span></td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Example Prompts for Claude</h4>
+                        <p>Once connected, you can ask Claude things like:</p>
+                        <ul>
+                            <li>"What is the minimum corridor width for a commercial building under UBBL?"</li>
+                            <li>"Check if a 25-storey residential building meets fire safety requirements"</li>
+                            <li>"What purpose group does a hotel fall under?"</li>
+                            <li>"What are the travel distance limits for a factory?"</li>
+                            <li>"Find and replace 'PROPOSED' with 'AS-BUILT' in all DWG files in the project folder"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Step 4: Windows + AutoCAD -->
+                <div class="guide-section">
+                    <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                        <span class="step-num">4</span>
+                        <h3>Windows + AutoCAD Setup</h3>
+                        <span class="badge badge-win">Windows Only</span>
+                        <span class="chevron">&#9660;</span>
+                    </div>
+                    <div class="guide-body hidden">
+                        <p>For full CAD drawing operations, you need Windows with AutoCAD installed.</p>
+
+                        <h4>Prerequisites</h4>
+                        <ul>
+                            <li>AutoCAD 2020 or later installed and running</li>
+                            <li>Python 3.10+ with pywin32</li>
+                        </ul>
+
+                        <h4>Install with Windows Extras</h4>
+                        <div class="code-block">pip install -e ".[windows]"</div>
+
+                        <h4>AutoCAD Configuration</h4>
+                        <ol>
+                            <li>Open AutoCAD and type <code>SECURELOAD</code> at the command prompt</li>
+                            <li>Set the value to <strong>0</strong> (allows COM automation)</li>
+                            <li>Keep AutoCAD running &mdash; the tool connects via COM to the live instance</li>
+                        </ol>
+
+                        <h4>Usage on Windows</h4>
+                        <div class="code-block"><span class="comment"># No --mock needed on Windows with AutoCAD running</span>
+autocad-cmd change-text --folder "C:\Projects\Plans" --find "DRAFT" --replace "FINAL"
+autocad-cmd rename-layer --folder "C:\Projects\Plans" --standard aia
+autocad-cmd audit --folder "C:\Projects\Plans" --standard aia</div>
+
+                        <p>The tool auto-detects Windows and uses the real AutoCAD adapter. Backups are saved to a <code>.backups/</code> subdirectory next to each DWG file.</p>
+                    </div>
+                </div>
+
+                <!-- Step 5: Web API -->
+                <div class="guide-section">
+                    <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                        <span class="step-num">5</span>
+                        <h3>Web API &amp; Docker Deployment</h3>
+                        <span class="badge badge-all">All Platforms</span>
+                        <span class="chevron">&#9660;</span>
+                    </div>
+                    <div class="guide-body hidden">
+                        <h4>API Endpoints</h4>
+                        <table class="endpoint-table">
+                            <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="method method-get">GET</span></td><td><code>/</code></td><td>This web UI</td></tr>
+                                <tr><td><span class="method method-get">GET</span></td><td><code>/api/health</code></td><td>Health check</td></tr>
+                                <tr><td><span class="method method-post">POST</span></td><td><code>/api/query</code></td><td>Search knowledge base</td></tr>
+                                <tr><td><span class="method method-get">GET</span></td><td><code>/api/rules</code></td><td>List all rule sets</td></tr>
+                                <tr><td><span class="method method-get">GET</span></td><td><code>/api/rules/{name}</code></td><td>Get rules in a set</td></tr>
+                                <tr><td><span class="method method-post">POST</span></td><td><code>/api/compliance/check</code></td><td>Run compliance check</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4>API Examples</h4>
+                        <div class="code-block"><span class="comment"># Search knowledge base</span>
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"question": "minimum corridor width"}'
+
+<span class="comment"># List rule sets</span>
+curl http://localhost:8000/api/rules
+
+<span class="comment"># Run compliance check</span>
+curl -X POST http://localhost:8000/api/compliance/check \
+  -H "Content-Type: application/json" \
+  -d '{"rule_sets": ["ubbl-spatial"], "building_type": "residential"}'</div>
+
+                        <h4>Docker Deployment</h4>
+                        <div class="code-block"><span class="comment"># Build and run</span>
+docker build -t cad-ai .
+docker run -p 8000:8000 cad-ai
+
+<span class="comment"># Or with Docker Compose</span>
+docker compose up</div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Knowledge Base -->
+                <div class="guide-section">
+                    <div class="guide-section-header collapsed" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+                        <span class="step-num">6</span>
+                        <h3>Knowledge Base Coverage</h3>
+                        <span class="chevron">&#9660;</span>
+                    </div>
+                    <div class="guide-body hidden">
+                        <p>The knowledge base covers Malaysian building regulations from official gazette sources:</p>
+
+                        <h4>UBBL 1984 (with 2021 Amendment)</h4>
+                        <ul>
+                            <li><strong>Part I</strong> &mdash; Preliminary (definitions, interpretation)</li>
+                            <li><strong>Part IA</strong> &mdash; Demolition of Buildings</li>
+                            <li><strong>Part II</strong> &mdash; Plan Submission (By-laws 3&ndash;29)</li>
+                            <li><strong>Part III</strong> &mdash; Space, Light &amp; Ventilation (room sizes, corridors, ceiling heights)</li>
+                            <li><strong>Part IV</strong> &mdash; Temporary Works</li>
+                            <li><strong>Part V</strong> &mdash; Structural Requirements (loads, foundations)</li>
+                            <li><strong>Part VI</strong> &mdash; Constructional Requirements (staircases, swimming pools, party walls, lifts)</li>
+                            <li><strong>Part VII</strong> &mdash; Fire Safety (compartmentation, escape routes, fire doors)</li>
+                            <li><strong>Part VIII</strong> &mdash; Fire Alarm &amp; Extinguishment (smoke control, atriums, risers, emergency power)</li>
+                            <li><strong>Part IX</strong> &mdash; Miscellaneous</li>
+                            <li><strong>Schedules 5, 7, 9, 10, 11</strong> &mdash; Purpose groups, travel distances, fire resistance periods, alarm requirements, staircase landings</li>
+                        </ul>
+
+                        <h4>Other Sources</h4>
+                        <ul>
+                            <li><strong>Fire By-Laws</strong> &mdash; Bomba requirements, fire certificates, fire fighting systems</li>
+                            <li><strong>Legislation</strong> &mdash; Act 133 (SDBA), Act 172 (Planning), Strata Management, Housing Development</li>
+                            <li><strong>Standards</strong> &mdash; MS 1525 (Energy), MS 2680 (Residential Energy), MS 1184 (Accessibility), MS Fire Standards</li>
+                            <li><strong>Agencies</strong> &mdash; JKR, CIDB, DOE requirements</li>
+                            <li><strong>Green Building</strong> &mdash; GBI certification, solar/renewable energy</li>
+                            <li><strong>Building Types</strong> &mdash; High-rise, industrial, healthcare, educational</li>
+                        </ul>
+
+                        <h4>Compliance Rule Sets</h4>
+                        <p>Machine-readable rules with numeric thresholds for automated checking:</p>
+                        <ul>
+                            <li><code>ubbl-spatial</code> &mdash; 17 rules (rooms, corridors, stairs, ventilation)</li>
+                            <li><code>ubbl-fire</code> &mdash; 13 rules (fire resistance, compartmentation, escape)</li>
+                            <li><code>ubbl-fire-expanded</code> &mdash; 25 rules (Part VIII thresholds, atriums, smoke control)</li>
+                            <li><code>ubbl-constructional</code> &mdash; 16 rules (staircases, swimming pools, party walls)</li>
+                            <li><code>bomba-fire-systems</code> &mdash; 12 rules (hose reel, hydrant, dry riser, fire doors)</li>
+                            <li><code>accessibility</code> &mdash; 12 rules (ramps, handrails, toilets, lifts)</li>
+                            <li><code>energy-efficiency</code> &mdash; 8 rules (OTTV, RTTV, roof U-values, BEI)</li>
+                            <li><code>environmental</code> &mdash; 10 rules (EIA, effluent, noise)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Command line / status bar -->
+    <div class="cmdline">
+        <span>CAD Commander v0.1.0</span>
+        <span class="coord" id="cmd-status">Ready</span>
+        <span style="margin-left:auto;">UBBL 2021 | Fire By-Laws | MS Standards</span>
     </div>
 
     <script>
-        // Tab switching
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(tab.dataset.tab).classList.add('active');
-            });
-        });
+        // ── Theme ────────────────────────────────────────
+        function getTheme() {
+            return localStorage.getItem('cad-theme') || 'dark';
+        }
+        function applyTheme(t) {
+            document.documentElement.setAttribute('data-theme', t);
+            document.getElementById('theme-icon-dark').style.display = t === 'dark' ? 'none' : 'block';
+            document.getElementById('theme-icon-light').style.display = t === 'dark' ? 'block' : 'none';
+        }
+        function toggleTheme() {
+            const next = getTheme() === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('cad-theme', next);
+            applyTheme(next);
+        }
+        applyTheme(getTheme());
+
+        // ── Tab switching ────────────────────────────────
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.mobile-nav .chip').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            if (el) el.classList.add('active');
+
+            // Sync sidebar + mobile
+            document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(e => e.classList.add('active'));
+        }
 
         // Enter key for search
         document.getElementById('query-input').addEventListener('keydown', e => {
             if (e.key === 'Enter') doSearch();
         });
 
-        // Load rule sets on page load
+        // ── Load rule sets ───────────────────────────────
         async function loadRuleSets() {
             try {
                 const res = await fetch('/api/rules');
                 const data = await res.json();
                 const select = document.getElementById('rule-select');
                 const list = document.getElementById('rule-set-list');
+                document.getElementById('rule-count-text').textContent = data.rule_sets.length + ' available';
+
                 data.rule_sets.forEach(name => {
                     const opt = document.createElement('option');
                     opt.value = name;
@@ -258,7 +1105,7 @@
                     select.appendChild(opt);
 
                     const btn = document.createElement('button');
-                    btn.className = 'rule-set-btn';
+                    btn.className = 'chip';
                     btn.textContent = name;
                     btn.onclick = () => browseRuleSet(name, btn);
                     list.appendChild(btn);
@@ -269,12 +1116,18 @@
         }
         loadRuleSets();
 
-        // Search
+        // ── Status helper ────────────────────────────────
+        function setStatus(msg) {
+            document.getElementById('cmd-status').textContent = msg;
+        }
+
+        // ── Search ───────────────────────────────────────
         async function doSearch() {
             const q = document.getElementById('query-input').value.trim();
             if (!q) return;
             const container = document.getElementById('search-results');
-            container.innerHTML = '<div class="card"><span class="spinner"></span> Searching...</div>';
+            container.innerHTML = '<div class="loading-msg"><span class="spinner"></span> Searching knowledge base...</div>';
+            setStatus('Searching: ' + q);
             try {
                 const res = await fetch('/api/query', {
                     method: 'POST',
@@ -283,31 +1136,38 @@
                 });
                 const data = await res.json();
                 if (data.files_loaded === 0) {
-                    container.innerHTML = '<div class="card"><p class="empty">No results found.</p></div>';
+                    container.innerHTML = '<p class="empty">No matching regulations found.</p>';
+                    setStatus('No results');
                     return;
                 }
-                let html = `<div class="results"><h3>${data.files_loaded} file(s) found</h3>`;
+                let html = '<div class="results"><div class="results-header"><span>Results</span><span class="count">' + data.files_loaded + ' file(s)</span></div>';
                 for (const [file, content] of Object.entries(data.results)) {
-                    html += `<div class="file-section"><h4>${file}</h4><div class="md-content">${marked.parse(content)}</div></div>`;
+                    html += '<div class="file-section">';
+                    html += '<div class="file-header" onclick="this.classList.toggle(\'collapsed\');this.nextElementSibling.classList.toggle(\'hidden\')"><span class="chevron">&#9660;</span> ' + file + '</div>';
+                    html += '<div class="file-body"><div class="md-content">' + marked.parse(content) + '</div></div>';
+                    html += '</div>';
                 }
                 html += '</div>';
                 container.innerHTML = html;
+                setStatus(data.files_loaded + ' result(s) for "' + q + '"');
             } catch (e) {
-                container.innerHTML = `<div class="card" style="color:#e74c3c;">Error: ${e.message}</div>`;
+                container.innerHTML = '<div class="card" style="color:var(--red);">Error: ' + e.message + '</div>';
+                setStatus('Error');
             }
         }
 
-        // Compliance check
+        // ── Compliance ───────────────────────────────────
         async function doCompliance() {
             const select = document.getElementById('rule-select');
             const selected = Array.from(select.selectedOptions).map(o => o.value);
             if (selected.length === 0) {
-                alert('Please select at least one rule set.');
+                alert('Select at least one rule set.');
                 return;
             }
             const bt = document.getElementById('building-type').value.trim() || null;
             const container = document.getElementById('compliance-results');
-            container.innerHTML = '<div class="card"><span class="spinner"></span> Checking compliance...</div>';
+            container.innerHTML = '<div class="loading-msg"><span class="spinner"></span> Running compliance check...</div>';
+            setStatus('Checking: ' + selected.join(', '));
             try {
                 const res = await fetch('/api/compliance/check', {
                     method: 'POST',
@@ -315,57 +1175,60 @@
                     body: JSON.stringify({rule_sets: selected, building_type: bt}),
                 });
                 const data = await res.json();
-                let html = `<div class="results"><h3>${data.total_rules} rules checked across ${data.rule_sets_loaded} rule set(s)</h3>`;
+                let html = '<div class="results"><div class="results-header"><span>Findings</span><span class="count">' + data.total_rules + ' rules</span><span class="count">' + data.rule_sets_loaded + ' set(s)</span></div>';
                 if (data.findings.length === 0) {
                     html += '<p class="empty">No applicable rules found for the selected filters.</p>';
                 } else {
                     data.findings.forEach(f => {
-                        html += `<div class="finding severity-${f.severity}">
-                            <span class="rule-id">${f.rule_id}</span>
-                            <span class="by-law">${f.by_law}</span>
-                            <div>${f.description}</div>`;
+                        html += '<div class="finding severity-' + f.severity + '">';
+                        html += '<div class="finding-header"><span class="rule-id">' + f.rule_id + '</span><span class="by-law">' + f.by_law + '</span></div>';
+                        html += '<div class="desc">' + f.description + '</div>';
                         if (f.threshold != null) {
-                            html += `<div class="threshold">${f.check_type}: ${f.parameter} ${f.threshold} ${f.unit}</div>`;
+                            html += '<div class="threshold">' + f.check_type + ': ' + f.parameter + ' ' + f.threshold + ' ' + f.unit + '</div>';
                         }
                         if (f.tags && f.tags.length) {
-                            html += '<div class="tags">' + f.tags.map(t => `<span class="tag">${t}</span>`).join('') + '</div>';
+                            html += '<div class="tags">' + f.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>';
                         }
                         html += '</div>';
                     });
                 }
                 html += '</div>';
                 container.innerHTML = html;
+                setStatus(data.total_rules + ' rules checked');
             } catch (e) {
-                container.innerHTML = `<div class="card" style="color:#e74c3c;">Error: ${e.message}</div>`;
+                container.innerHTML = '<div class="card" style="color:var(--red);">Error: ' + e.message + '</div>';
+                setStatus('Error');
             }
         }
 
-        // Browse rule set
+        // ── Browse rule set ──────────────────────────────
         async function browseRuleSet(name, btn) {
-            document.querySelectorAll('.rule-set-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#rule-set-list .chip').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const container = document.getElementById('rules-results');
-            container.innerHTML = '<div class="card"><span class="spinner"></span> Loading rules...</div>';
+            container.innerHTML = '<div class="loading-msg"><span class="spinner"></span> Loading ' + name + '...</div>';
+            setStatus('Loading: ' + name);
             try {
-                const res = await fetch(`/api/rules/${name}`);
+                const res = await fetch('/api/rules/' + name);
                 const data = await res.json();
-                let html = `<div class="results"><h3>${data.source_short} &mdash; ${data.category}</h3>
-                    <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">${data.source_document}</p>`;
+                let html = '<div class="results"><div class="results-header"><span>' + data.source_short + '</span><span class="count">' + data.rules.length + ' rules</span></div>';
+                html += '<p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;">' + data.source_document + '</p>';
                 data.rules.forEach(r => {
-                    html += `<div class="finding severity-${r.severity}">
-                        <span class="rule-id">${r.id}</span>
-                        <span class="by-law">${r.by_law}</span>
-                        <div>${r.description}</div>
-                        <div class="threshold">${r.check_type}: ${r.parameter} ${r.threshold} ${r.unit}</div>`;
+                    html += '<div class="finding severity-' + r.severity + '">';
+                    html += '<div class="finding-header"><span class="rule-id">' + r.id + '</span><span class="by-law">' + r.by_law + '</span></div>';
+                    html += '<div class="desc">' + r.description + '</div>';
+                    html += '<div class="threshold">' + r.check_type + ': ' + r.parameter + ' ' + r.threshold + ' ' + r.unit + '</div>';
                     if (r.tags && r.tags.length) {
-                        html += '<div class="tags">' + r.tags.map(t => `<span class="tag">${t}</span>`).join('') + '</div>';
+                        html += '<div class="tags">' + r.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>';
                     }
                     html += '</div>';
                 });
                 html += '</div>';
                 container.innerHTML = html;
+                setStatus(data.rules.length + ' rules in ' + name);
             } catch (e) {
-                container.innerHTML = `<div class="card" style="color:#e74c3c;">Error: ${e.message}</div>`;
+                container.innerHTML = '<div class="card" style="color:var(--red);">Error: ' + e.message + '</div>';
+                setStatus('Error');
             }
         }
     </script>

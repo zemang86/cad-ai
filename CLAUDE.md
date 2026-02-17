@@ -106,8 +106,26 @@ Malaysian building regulations knowledge base in `knowledge/qa/`, covering UBBL,
 ```
 knowledge/
   qa/
-    _index.md                   # Topic map — keyword → file mapping (~130 keyword entries)
-    ubbl/                       # 10 files: general, operations, spatial, fire, parking, accessibility, temporary works, structural, constructional, 2021 amendment
+    _index.md                   # Topic map — keyword → file mapping (~160 keyword entries)
+    ubbl/                       # 18 files covering all UBBL Parts and key Schedules
+      01-general-provisions.md      # Part I — definitions, interpretation
+      02-building-operations.md     # Part II — plan submission (By-laws 3–29)
+      03-spatial-requirements.md    # Part III — room sizes, corridors, ventilation
+      04-fire-requirements.md       # Part VII — fire resistance, compartmentation, escape
+      05-parking-requirements.md    # Parking ratios, bay dimensions
+      06-accessibility-requirements.md  # OKU access, ramps, handrails
+      07-temporary-works.md         # Part IV — hoarding, scaffolding
+      08-structural-requirements.md # Part V — loads, foundations
+      09-constructional-requirements.md # Part VI — staircases, swimming pools, party walls, lifts
+      10-2021-amendment.md          # 2021 Amendment summary (energy, OTTV, lightning)
+      11-demolition.md              # Part IA — demolition
+      12-fire-alarm-systems.md      # Part VIII — smoke control, atriums, risers, emergency power
+      13-miscellaneous.md           # Part IX — exemptions, standards, building failure
+      14-schedule-fifth.md          # Schedule 5 — purpose groups, compartment dimensions
+      15-schedule-seventh.md        # Schedule 7 — travel distances, occupant load, exit capacity
+      16-schedule-ninth.md          # Schedule 9 — fire resistance periods
+      17-schedule-tenth.md          # Schedule 10 — fire alarm/extinguishment requirements
+      18-schedule-eleventh.md       # Schedule 11 — staircase landing dimensions
     fire-bylaws/                # 5 files: fire certificate, fire escape, fire fighting systems, fire door ratings, highrise fire
     legislation/                # 4 files: Act 133 SDBA, Act 172 planning, strata management, housing development
     agencies/                   # 3 files: JKR, CIDB, DOE
@@ -119,14 +137,17 @@ knowledge/
     building-types/             # 4 files: high-rise, industrial, healthcare, educational
   raw/                          # Source PDFs (gitignored)
 standards/
-  rules/                        # Machine-readable compliance rules (7 rule sets)
+  rules/                        # Machine-readable compliance rules (8 rule sets)
     ubbl-spatial.json           # 17 dimensional rules (rooms, corridors, stairs, ventilation)
     ubbl-fire.json              # 13 fire safety rules (resistance, compartmentation, escape)
-    ubbl-fire-expanded.json     # 14 expanded fire rules (purpose group compartments, travel distances, exit width)
+    ubbl-fire-expanded.json     # 25 expanded fire rules (Part VIII, atriums, smoke control, risers, emergency power)
+    ubbl-constructional.json    # 16 constructional rules (staircases, swimming pools, party walls, lifts)
     bomba-fire-systems.json     # 12 fire fighting system rules (hose reel, hydrant, dry riser, fire doors)
     energy-efficiency.json      # 8 energy rules (OTTV, RTTV, roof U-values, BEI)
     environmental.json          # 10 environmental rules (EIA thresholds, effluent, noise)
     accessibility.json          # 12 accessibility rules (ramps, handrails, toilets, lifts)
+scripts/
+  extract_ubbl.py               # PDF extraction tool — reads UBBL PDF, splits by Part/Schedule/By-law
 ```
 
 Each Markdown file has YAML frontmatter (`source_document`, `source_short`, `sections_covered`, `last_verified`) and content with bold thresholds and `> **Citation**` blocks.
@@ -135,9 +156,30 @@ Each JSON rule file contains a `ComplianceRuleSet` with rules that have: `id`, `
 
 To add new regulations: create Markdown files under the appropriate `knowledge/qa/` subdirectory, add entries to `_index.md`, and optionally add structured rules to `standards/rules/`.
 
+### PDF Extraction Script
+
+`scripts/extract_ubbl.py` extracts raw text from the UBBL PDF, split by Part and By-law, for creating curated knowledge base files:
+
+```bash
+# Install pymupdf
+.venv/bin/pip install pymupdf
+
+# Extract to temp directory
+.venv/bin/python scripts/extract_ubbl.py "sample/UKBS 1984 1C.pdf" --output-dir /tmp/ubbl-extract
+```
+
+The script outputs raw text files — final knowledge base files should be manually curated with proper formatting.
+
 ## Web API & UI
 
-FastAPI app in `web/api.py` exposes the knowledge base and compliance features over HTTP. Single-page web UI in `web/templates/index.html` (vanilla HTML/CSS/JS, no build step).
+FastAPI app in `web/api.py` exposes the knowledge base and compliance features over HTTP. Single-page web UI in `web/templates/index.html` (vanilla HTML/CSS/JS, no build step). CAD-inspired dark/light theme with blueprint grid background, sidebar navigation, and bottom status bar. Theme preference persists via localStorage. No LLM API — search returns raw markdown from knowledge base files.
+
+### Tabs
+
+- **Regulation Search** — keyword search across the knowledge base, renders Markdown results
+- **Compliance Check** — select rule sets and building type, returns matching rules with thresholds
+- **Rule Browser** — browse individual rule sets and their rules
+- **Setup Guide** — installation, CLI usage, MCP server configuration, Windows/AutoCAD setup, API docs, knowledge base coverage
 
 ### Endpoints
 
